@@ -1,0 +1,51 @@
+Prduct Backlog
+
+===========================================================
+
+User Story 1.0 - Login Landing Page
+
+Create the login landing page with all its elements for
+users to be able to login after being registered in the 
+system
+
+===========================================================
+
+User Story 2.0 - Main Page
+
+Create main page layout with hardcoded postings / tags
+for the user to interact with. Interaction functionality
+does not need to be done
+
+===========================================================
+
+User Story 3.0 - Account Page
+
+Create account page with basic layout of an account for
+users to see. Data should be hardcoded for now, when user
+registers these fields are empty until user edits
+
+===========================================================
+
+User Story 4.0 - Manage Page
+
+Create a page in which users can manage postings they have
+interacted with, wheter they are an [Applicant], [Member]
+or [Leader] of a posting
+
+===========================================================
+
+User Story 5.0 - Header
+
+Create the header layout that will go on most pages, this
+allows the user to treavel between pages on the website.
+Is linked to [Main] and [Manage], with a profile icon on
+the top right that allows user to access [Account]
+
+===========================================================
+
+User Story 6.0 - Create Posting
+
+Create the button that prompts user for information that
+allows a posting to be created. Attach to header later on.
+**Does not need to create a posting as yet, just need the
+view of the prompt to work**
