@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import Manage from "./views/Manage";
+import Signup from "./views/Signup/Signup";
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={Login} />
+                <Route path="/signup" component={Signup} />
                 <Route path="/home" component={Home} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/manage" component={Manage} />

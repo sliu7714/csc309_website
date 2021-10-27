@@ -14,6 +14,7 @@
     border-radius: 5%;
     color: black;
     align: center;
+    position: relative;
 }
 .login_btn{
     background: darkseagreen;
@@ -27,14 +28,18 @@ input{
     font-size: 20px;
     width: 400px;
 }
-.incorrect_msg{
+.msg{
     font-size: 16px;
+    margin-top: 10px;
 }
 .signup{
     font-size: 12px;
     text-align: right;
     margin-right: 32px;
-    text-decoration: underline;
+    margin-top: 100px;
+    position: absolute;
+    bottom: 24px;
+    right: 0;
 }
 .signup_link{
     display: flex;
@@ -47,5 +52,5 @@ input{
     border-bottom: 10px solid transparent;
     border-left: 12px solid darkseagreen;
     margin-left: 8px;
-    margin-top: 4px;
+    margin-top: 6px;
 }

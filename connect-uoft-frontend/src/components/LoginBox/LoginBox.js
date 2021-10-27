@@ -9,7 +9,7 @@ const LoginBox = () => {
     const[password, updatePassword] = useState("")
     const[isIncorrectCredentials, updateIsIncorrectCredentials] = useState(false)
 
-    const incorrectCredentialsMsg = <div className="incorrect_msg">Incorrect login, please check your username and password</div>
+    const incorrectCredentialsMsg = <div className="msg">Incorrect login, please check your username and password</div>
 
     const login = () =>{
         // TODO (after phase 1) authenticate
@@ -47,11 +47,12 @@ const LoginBox = () => {
                 onChange={e => updatePassword(e.target.value)}/>
             <br/>
 
-
-
             <button
                 className="login_btn"
                 onClick={() => login()}>Login</button>
+
+            {/* render msg only if user has entered wrong credentials */}
+            {isIncorrectCredentials ? incorrectCredentialsMsg : null}
 
             <div className="signup">
                 <a href="/signup" className="signup_link">
@@ -60,9 +61,6 @@ const LoginBox = () => {
                 </a>
 
             </div>
-
-            {/* render msg only if user has entered wrong credentials */}
-            {isIncorrectCredentials ? incorrectCredentialsMsg : null}
         </div>
 
     )
