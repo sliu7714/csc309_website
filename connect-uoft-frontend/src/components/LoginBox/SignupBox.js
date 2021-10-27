@@ -26,9 +26,22 @@ const LoginBox = () => {
         if (matchingUsername.length === 0){
             // no other user with same username
             // code to create new user here
+            const new_user = {
+                id: users.length,
+                username: username,
+                password: password,
+                name: username,
+                bio: "",
+                isAdmin: false,
+                postings: [],
+                groups: [],
+                applying: [],
+            }
+            users.push(new_user) // new user only persists until next refresh (since this isn't writing to a file or data base or anything) 
             updatePassword("") // clear password from state
-            // redirect to profile page:
-            history.push("/profile")
+
+            // redirect to login page:
+            history.push("/")
         }
         else{
             // incorrect username

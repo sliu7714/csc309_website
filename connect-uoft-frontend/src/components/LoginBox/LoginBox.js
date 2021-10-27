@@ -3,7 +3,7 @@ import {useState} from 'react'
 import {users} from '../../Data/data'
 
 
-const LoginBox = () => {
+const LoginBox = ({updateUserID}) => {
 
     const[username, updateUsername] = useState("")
     const[password, updatePassword] = useState("")
@@ -12,13 +12,12 @@ const LoginBox = () => {
     const incorrectCredentialsMsg = <div className="msg">Incorrect login, please check your username and password</div>
 
     const login = () =>{
-        // TODO (after phase 1) authenticate
+        // TODO (after phase 1) authenticate using backend
         console.log(`username:${username} password:${password}`) // make sure to delete later - security flaw
         const matchingUsername = users.filter((user) => user.username == username )
         if (matchingUsername.length === 1 && matchingUsername[0].password === password){
-            // clear password from state
-            updatePassword("")
-            // TODO: call parent function to set user id and stuff
+            updatePassword("") // clear password from state
+            updateUserID(matchingUsername[0].id) // this updates the state in App.js
             console.log(`user id: ${matchingUsername[0].id}`)
         }
         else{
