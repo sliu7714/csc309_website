@@ -1,11 +1,13 @@
 import './App.css';
-import Login from "./views/Login";
+import Login from "./views/Login/Login";
 import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
 import Manage from "./views/Manage";
 
 function App() {
+
+
   return (
     <div className="App">
         {/* routes to different pages based on url */}

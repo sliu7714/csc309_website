@@ -1,6 +1,6 @@
 // here is where the hardcoded data would live
 // write it here and imported where it needs to be used,
-// keeping in mind how data would actually get passed when we have a backend
+// keeping in mind how data would actually get passed when we have a backenduse
 
 // for example: (user and posting objects will probably be more complicated later)
 export const users = [
