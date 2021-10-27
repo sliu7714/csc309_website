@@ -22,7 +22,7 @@ const LoginBox = () => {
         //      dont forget to clear password from state
 
         console.log(`username:${username} password:${password}`) // make sure to delete later - security flaw
-        const matchingUsername = users.filter((user) => user.username == username )
+        const matchingUsername = users.filter((user) => user.username === username )
         if (matchingUsername.length === 0){
             // no other user with same username
             // code to create new user here

@@ -11,9 +11,8 @@ import Header from "./components/Header/Header";
 function App() {
     // user id of the user currently logged in, null if no one is logged in
     // be careful of userID = 0 since 0 is false in javascript
-    const[userID, updateUserID] = useState(null)
-
-
+    // null is true as well so be careful of that
+    const [userID, updateUserID] = useState(localStorage.getItem('userID'))
 
   return (
     <div className="App">
@@ -21,7 +20,7 @@ function App() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
-                    {userID || userID == 0 ? <Home/> : <Login updateUserID={updateUserID}/>}
+                    {userID >= 0 ? <Home/> : <Login updateUserID={updateUserID}/>}
                 </Route>
                 <Route path="/signup" >
                     <Signup/>
@@ -42,6 +41,10 @@ function App() {
                 </Route>
             </Switch>
         </BrowserRouter>
+
+        {/*TEMPORARY*/}
+        <button onClick={()=>{localStorage.setItem('userID', null);
+                            updateUserID(undefined);}}>logout (temporary - need additional refresh)</button>
     </div>
   );
 }

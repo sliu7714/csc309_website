@@ -13,11 +13,12 @@ const LoginBox = ({updateUserID}) => {
 
     const login = () =>{
         // TODO (after phase 1) authenticate using backend
-        console.log(`username:${username} password:${password}`) // make sure to delete later - security flaw
-        const matchingUsername = users.filter((user) => user.username == username )
+        console.log(`username: ${username} \n password: ${password}`) // make sure to delete later - security flaw
+        const matchingUsername = users.filter((user) => user.username === username )
         if (matchingUsername.length === 1 && matchingUsername[0].password === password){
             updatePassword("") // clear password from state
             updateUserID(matchingUsername[0].id) // this updates the state in App.js
+            localStorage.setItem('userID', matchingUsername[0].id) // this updates the local storage
             console.log(`user id: ${matchingUsername[0].id}`)
         }
         else{
