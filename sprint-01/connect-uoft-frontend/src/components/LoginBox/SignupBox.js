@@ -1,6 +1,6 @@
 import './styles.css' // use same styles as LoginBox
 import {useState} from 'react'
-import {users} from '../../Data/data'
+import {users} from '../../data/data'
 import {useHistory} from "react-router-dom"
 
 

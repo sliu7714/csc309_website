@@ -1,6 +1,6 @@
 import './styles.css'
 import {useState} from 'react'
-import {users} from '../../Data/data'
+import {users} from '../../data/data'
 
 
 const LoginBox = ({updateUserID}) => {
