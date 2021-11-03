@@ -1,0 +1,105 @@
+.createButton {
+    position: absolute;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.innerCreate {
+    position: relative;
+    padding: 23px;
+    width: 100%;
+    max-width: 300px;
+    height: 400px;
+    background-color: white;
+}
+
+.innerCreate .closeButton{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.inputList {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 60px;
+    left: 75px;
+    right: 40px;
+    list-style-type: none;
+    margin: 0;
+}
+
+.descriptionInput {
+    height: 50px;
+    max-height: 150px;
+    min-height: 30px;
+    width: 100%;
+    position: relative;
+    margin: 8px 0;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 14px;
+}
+
+.standardInput {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    margin: 8px 0;
+    font-family: monospace;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.tagList {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 0px;
+    left: -30px;
+    max-width: 50px;
+    list-style-type: none;
+    margin: 0;
+}
+
+.tagForm {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 60px;
+    left: 10px;
+    max-width: 50px;
+}
+
+.smallInput {
+    width: 57.5px;
+    height: fit-content;
+    position: relative;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-family: monospace;
+    font-size: 14px;
+
+}
+
+.createHeader {
+    position: absolute;
+    margin-top: 0;
+    padding: 0;
+    top: 16px;
+    left: 16px;
+}
+
+.submitButton {
+    width: fit-content;
+    font-family: monospace;
+    box-sizing: border-box;
+    font-size: 14px;
+}
