@@ -12,7 +12,7 @@ function App() {
     // user id of the user currently logged in, null if no one is logged in
     // be careful of userID = 0 since 0 is false in javascript
     // null is true as well so be careful of that
-    const [userID, updateUserID] = useState(localStorage.getItem('userID'))
+    const [userID, setUserID] = useState(localStorage.getItem('userID'))
 
   return (
     <div className="App">
@@ -20,7 +20,7 @@ function App() {
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
-                    {userID >= 0 ? <Home/> : <Login updateUserID={updateUserID}/>}
+                    {userID >= 0 ? <Home/> : <Login setUserID={setUserID}/>}
                 </Route>
                 <Route path="/signup" >
                     <Signup/>
@@ -44,7 +44,7 @@ function App() {
 
         {/*TEMPORARY*/}
         <button onClick={()=>{localStorage.setItem('userID', null);
-                            updateUserID(undefined);}}>logout (temporary - need additional refresh)</button>
+                            setUserID(undefined);}}>logout (temporary - need additional refresh)</button>
     </div>
   );
 }
