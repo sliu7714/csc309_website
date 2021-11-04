@@ -1,12 +1,12 @@
 import Header from "../components/Header/Header";
-
+import SearchTag from "../components/SearchTag/SearchTag";
 
 const Home = () => {
 
     return(
         <div>
             <Header></Header>
-            this is a placeholder for the home page
+            <SearchTag ></SearchTag>
         </div>
     )
 
