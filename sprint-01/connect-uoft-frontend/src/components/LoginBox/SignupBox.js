@@ -6,8 +6,9 @@ import {useHistory} from "react-router-dom"
 
 const LoginBox = () => {
     const history = useHistory()
-    const[username, updateUsername] = useState("")
-    const[password, updatePassword] = useState("")
+    const[username, setUsername] = useState("")
+    const[password, setPassword] = useState("")
+    const[email, setEmail] = useState("")
     const[isUniqueUsername, updateIsUniqueUsername] = useState(true)
 
     const nonUniqueUsernameMsg =
@@ -31,6 +32,7 @@ const LoginBox = () => {
                 username: username,
                 password: password,
                 name: username,
+                email: email,
                 bio: "",
                 isAdmin: false,
                 postings: [],
@@ -38,7 +40,7 @@ const LoginBox = () => {
                 applying: [],
             }
             users.push(new_user) // new user only persists until next refresh (since this isn't writing to a file or data base or anything) 
-            updatePassword("") // clear password from state
+            setPassword("") // clear password from state
 
             // redirect to login page:
             history.push("/")
@@ -47,8 +49,6 @@ const LoginBox = () => {
             // incorrect username
             updateIsUniqueUsername(false)
         }
-
-
     }
 
     return(
@@ -57,19 +57,27 @@ const LoginBox = () => {
             <br/>
 
             <input
-                className="username_input"
+                id="username_input"
                 type="text"
                 placeholder="username"
                 value={username}
-                onChange={e => updateUsername(e.target.value)}/>
+                onChange={e => setUsername(e.target.value)}/>
             <br/>
 
             <input
-                className="password_input"
+                id="email_input"
+                type="email"
+                placeholder="email"
+                value={email}
+                onChange={e => setEmail(e.target.value)}/>
+            <br/>
+
+            <input
+                id="password_input"
                 type="password"
                 placeholder="password"
                 value={password}
-                onChange={e => updatePassword(e.target.value)}/>
+                onChange={e => setPassword(e.target.value)}/>
             <br/>
 
             <button
