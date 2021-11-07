@@ -10,6 +10,7 @@ export const users = [
         password: "admin",  // change to more secure method later
         name: "Kimmy",
         bio: "Hi I'm Kimmy",
+        courses: ["CSC309"],
         isAdmin: true,
         postings: [0,1], // the posts that this user has made
         groups: [2], // postings that this user is a member of (not sure if want to overlap or not
@@ -21,6 +22,7 @@ export const users = [
         password: "user",
         name: "Timmy",
         bio: "Hi I'm Timmy",
+        courses: ["CSC309"],
         isAdmin: false,
         postings: [2],
         groups: [0],

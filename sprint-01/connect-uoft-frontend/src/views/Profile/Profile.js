@@ -1,5 +1,5 @@
-import Header from "../../components/Header/Header";
-import { users } from "../../components/ProfileSection/Extra/data";
+import { useState } from "react";
+import { users } from "../../data/data";
 import Bio from "../../components/ProfileSection/Bio";
 import UserHandle from "../../components/ProfileSection/UserHandle";
 import Courses  from "../../components/ProfileSection/Courses";
@@ -9,6 +9,7 @@ import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
 import './styles.css'
+// import { BrowserRouter, Route } from "react-router-dom";
 
 
 const userID = localStorage.getItem('userID')
@@ -16,7 +17,7 @@ const user = users[userID]
 const _bio = user.bio
 const _isAdmin = user.isAdmin
 const _courses = user.courses
-const _groups = user.Groups
+const _groups = user.postings
 
 const Profile = () => {
 
@@ -24,6 +25,12 @@ const Profile = () => {
     //                        <ReportedUsers groups={_groups}/>
     //                        <ReportedGroups groups={_groups}/>
     //                        </div>
+
+    // const logout = () =>{
+    //     localStorage.setItem('userID', null)
+    //     setUserID(undefined)
+    // }
+
     const regUser = <div id="profile_page">
                         <UserHandle user={userID}/>
                         <div id='column1'>
@@ -38,6 +45,10 @@ const Profile = () => {
                             <Groups groups={_groups}/>
                             <LeadGroups groups={_groups}/>
                         </div>
+                        {/* <BrowserRouter>
+                            <Route path="/logout" />
+>                        </BrowserRouter>
+                        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}
                         
                     </div>
 
@@ -59,12 +70,14 @@ const Profile = () => {
                             <LeadGroups groups={_groups}/>
                             <ReportedGroups groups={_groups}/>
                         </div>
+                        {/* <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}
+
                     </div>
     return(
         <div>
-            <Header/>
             {/* Displays appropriate page depending on if the user is an admin or not */}
-            {_isAdmin ? adminUser : regUser} 
+            {_isAdmin ? adminUser : regUser}
+             
         </div>
     )
 
