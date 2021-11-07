@@ -35,6 +35,7 @@ export const users = [
 export const postings = [
     {
         id: 0,
+        component: "posting",
         creator: 0, // id of the user who created the post
         title: "Posting 0",
         desc: "this is about posting 0",
@@ -46,6 +47,7 @@ export const postings = [
     },
     {
         id: 1,
+        component: "posting",
         creator: 0,
         title: "Posting 1",
         desc: "this is about posting 1",
@@ -57,6 +59,7 @@ export const postings = [
     },
     {
         id: 2,
+        component: "posting",
         creator: 1,
         title: "Posting 2",
         desc: "this is about posting 2",
