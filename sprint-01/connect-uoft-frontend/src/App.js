@@ -3,7 +3,7 @@ import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import {useState, useEffect} from "react";
 import Login from "./views/Login/Login";
 import Home from "./views/Home";
-import Profile from "./views/Profile";
+import Profile from "./views/Profile/Profile";
 import Manage from "./views/Manage";
 import Signup from "./views/Signup/Signup";
 import Header from "./components/Header/Header";
@@ -23,6 +23,7 @@ function App() {
     // executes every time the dependencies change
     useEffect(() =>{
         setIsUserLoggedIn(checkUserLoggedIn(userID))
+        // eslint-disable-next-line
     }, [userID])
 
     const logout = () =>{

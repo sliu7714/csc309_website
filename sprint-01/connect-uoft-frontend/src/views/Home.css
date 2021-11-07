@@ -1,0 +1,26 @@
+.gridBox {
+    left: 425px !important;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(Min(20em, 100%), .2fr));
+    grid-template-rows: masonry;
+    justify-content: left;
+    margin-left: 405px;
+    grid-gap: 3px;
+    padding: 13px;
+}
+
+.mainSearchContainer {
+    height: 100% !important;
+    width: fit-content;
+    padding-left: 20px;
+    top: 50px;
+    left: 0;
+    background: none;
+    position: fixed;
+    padding-top: 20px;
+    z-index: 1;
+}
+
+.searchBar {
+    width: 160px;
+}

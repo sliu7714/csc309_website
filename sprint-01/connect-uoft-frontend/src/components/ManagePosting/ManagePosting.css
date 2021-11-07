@@ -1,0 +1,43 @@
+.posting {
+    border: solid;
+    width: 300px;
+    height: fit-content;
+    justify-content: left;
+    text-align: left;
+}
+
+.postingTitle {
+    padding-left: 10px;
+}
+
+.postingCreator {
+    padding-left: 10px;
+}
+
+.postingDesc {
+    padding-left: 10px;
+    height: 250px;
+}
+
+.capacity {
+    padding-left: 10px;
+    width: fit-content;
+    position: relative;
+}
+
+.applyButton {
+    margin-right: 10px;
+    padding: 8 8 8 8;
+    margin-top: 16px;
+    float: right;
+}
+
+.applicantList {
+    list-style-type: none;
+    padding-left: 10px;
+    height: fit-content;
+    top: 25px;
+    left: 0px;
+    position: relative;
+    width: 100%;
+}

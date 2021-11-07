@@ -9,7 +9,9 @@ export const users = [
         username: "admin",
         password: "admin",  // change to more secure method later
         name: "Kimmy",
+        email: "kimmyadmin@mail.utoronto.ca",
         bio: "Hi I'm Kimmy",
+        courses: ["CSC309"],
         isAdmin: true,
         postings: [0,1], // the posts that this user has made
         groups: [2], // postings that this user is a member of (not sure if want to overlap or not
@@ -20,7 +22,9 @@ export const users = [
         username: "user",
         password: "user",
         name: "Timmy",
+        email: "timmyuser@mail.utoronto.ca",
         bio: "Hi I'm Timmy",
+        courses: ["CSC309"],
         isAdmin: false,
         postings: [2],
         groups: [0],
@@ -31,6 +35,7 @@ export const users = [
 export const postings = [
     {
         id: 0,
+        component: "posting",
         creator: 0, // id of the user who created the post
         title: "Posting 0",
         desc: "this is about posting 0",
@@ -42,17 +47,19 @@ export const postings = [
     },
     {
         id: 1,
+        component: "posting",
         creator: 0,
         title: "Posting 1",
         desc: "this is about posting 1",
         endDate: "2020-11-30",
         capacity: 2,
         tags: ["art"],
-        members: [],
+        members: [0],
         applicants: [1],
     },
     {
         id: 2,
+        component: "posting",
         creator: 1,
         title: "Posting 2",
         desc: "this is about posting 2",

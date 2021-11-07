@@ -1,1 +1,2 @@
-[{"id":0,"username":"admin","password":"admin","name":"Kimmy","bio":"Hi I'm Kimmy","isAdmin":true,"postings":[0,1],"groups":[2],"applying":[]},{"id":1,"username":"user","password":"user","name":"Timmy","bio":"Hi I'm Timmy","isAdmin":false,"postings":[2],"groups":[0],"applying":[1]}]
+[{"id":0,"username":"admin","password":"admin","name":"Kimmy","bio":"Hi I'm Kimmy","isAdmin":true,"postings":[0,1],"groups":[2],"applying":[]},
+{"id":1,"username":"user","password":"user","name":"Timmy","bio":"Hi I'm Timmy","isAdmin":false,"postings":[2],"groups":[0],"applying":[1]}]
