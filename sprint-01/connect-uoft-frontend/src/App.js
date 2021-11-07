@@ -23,6 +23,7 @@ function App() {
     // executes every time the dependencies change
     useEffect(() =>{
         setIsUserLoggedIn(checkUserLoggedIn(userID))
+        // eslint-disable-next-line
     }, [userID])
 
     const logout = () =>{
