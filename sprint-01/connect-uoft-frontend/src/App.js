@@ -34,7 +34,7 @@ function App() {
   return (
     <div className="App">
         {/* routes to different pages based on url */}
-        <Header isUserLoggedIn={isUserLoggedIn}/>
+        <Header isUserLoggedIn={isUserLoggedIn} userID={userID}/>
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >

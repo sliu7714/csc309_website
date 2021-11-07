@@ -1,4 +1,4 @@
-.createButton {
+.createSection {
     position: absolute;
     top: 0 !important;
     left: 0 !important;
@@ -8,13 +8,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
 }
 
 .innerCreate {
     position: relative;
     padding: 23px;
     width: 100%;
-    max-width: 300px;
+    max-width: 500px;
     height: 400px;
     background-color: white;
 }
@@ -30,7 +31,7 @@
     display: inline-block;
     text-align: left;
     top: 60px;
-    left: 75px;
+    left: 150px;
     right: 40px;
     list-style-type: none;
     margin: 0;
@@ -64,7 +65,7 @@
     text-align: left;
     top: 0px;
     left: -30px;
-    max-width: 50px;
+    max-width: 140px;
     list-style-type: none;
     margin: 0;
 }
@@ -79,7 +80,7 @@
 }
 
 .smallInput {
-    width: 57.5px;
+    width: 140px;
     height: fit-content;
     position: relative;
     margin: 8px 0;
@@ -102,4 +103,8 @@
     font-family: monospace;
     box-sizing: border-box;
     font-size: 14px;
+}
+
+.create_post_tag{
+    color: red;
 }
