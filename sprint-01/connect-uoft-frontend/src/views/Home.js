@@ -1,7 +1,9 @@
+
 import Header from "../components/Header/Header";
 import {postings} from "../data/data"
 import Components from "../components/Posting/PostingCreate";
 import "./Home.css"
+import SearchTag from "../components/SearchTag/SearchTag";
 
 
 const Home = () => {
@@ -11,7 +13,8 @@ const Home = () => {
             <Header></Header>
             <div className = "mainSearchContainer">
                 {/*Replace with tag add function*/}
-                <input className = "searchBar" placeholder = "Placeholder Tag Search"></input>
+                <SearchTag ></SearchTag>
+                {/*<input className = "searchBar" placeholder = "Placeholder Tag Search"></input>*/}
             </div>
             <div className = "gridBox">
             {postings.map(block => Components(block))}

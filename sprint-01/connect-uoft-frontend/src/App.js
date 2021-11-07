@@ -1,6 +1,6 @@
 import './App.css';
-import {BrowserRouter, Switch, Route} from "react-router-dom";
-import {useState} from "react";
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import {useState, useEffect} from "react";
 import Login from "./views/Login/Login";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
@@ -12,39 +12,62 @@ function App() {
     // user id of the user currently logged in, null if no one is logged in
     // be careful of userID = 0 since 0 is false in javascript
     // null is true as well so be careful of that
-    const [userID, updateUserID] = useState(localStorage.getItem('userID'))
+    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+
+    const checkUserLoggedIn = () => {
+        return userID >= 0
+    }
+
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(checkUserLoggedIn(userID))
+
+    // executes every time the dependencies change
+    useEffect(() =>{
+        setIsUserLoggedIn(checkUserLoggedIn(userID))
+    }, [userID])
+
+    const logout = () =>{
+        localStorage.setItem('userID', null)
+        setUserID(undefined)
+    }
+
 
   return (
     <div className="App">
         {/* routes to different pages based on url */}
+        <Header isUserLoggedIn={isUserLoggedIn}/>
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
-                    {userID >= 0 ? <Home/> : <Login updateUserID={updateUserID}/>}
+                    {isUserLoggedIn ? <Redirect to="/home" /> : <Redirect to="/login"/>}
+                </Route>
+                <Route path="/login">
+                    {isUserLoggedIn ? <Redirect to="/home" /> :<Login setUserID={setUserID} />}
                 </Route>
                 <Route path="/signup" >
                     <Signup/>
                 </Route>
                 <Route path="/home" component={Home} >
-                    <Home/>
+                    {isUserLoggedIn ? <Home /> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/profile" >
-                    <Profile/>
+                    {isUserLoggedIn ? <Profile /> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/manage" >
-                    <Manage/>
+                    {isUserLoggedIn ? <Manage /> : <Redirect to="/login" />}
+                </Route>
+                <Route path="/logout">
+
+
                 </Route>
 
                 <Route>
-                    <Header/>
                     <h1>404 page not found</h1>
                 </Route>
             </Switch>
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        <button onClick={()=>{localStorage.setItem('userID', null);
-                            updateUserID(undefined);}}>logout (temporary - need additional refresh)</button>
+        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>
     </div>
   );
 }
