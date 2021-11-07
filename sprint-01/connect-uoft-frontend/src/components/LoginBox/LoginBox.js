@@ -3,11 +3,11 @@ import {useState} from 'react'
 import {users} from '../../data/data'
 
 
-const LoginBox = ({updateUserID}) => {
+const LoginBox = ({setUserID}) => {
 
-    const[username, updateUsername] = useState("")
-    const[password, updatePassword] = useState("")
-    const[isIncorrectCredentials, updateIsIncorrectCredentials] = useState(false)
+    const[username, setUsername] = useState("")
+    const[password, setPassword] = useState("")
+    const[isIncorrectCredentials, setIsIncorrectCredentials] = useState(false)
 
     const incorrectCredentialsMsg = <div className="msg">Incorrect login, please check your username and password</div>
 
@@ -16,13 +16,13 @@ const LoginBox = ({updateUserID}) => {
         console.log(`username: ${username} \n password: ${password}`) // make sure to delete later - security flaw
         const matchingUsername = users.filter((user) => user.username === username )
         if (matchingUsername.length === 1 && matchingUsername[0].password === password){
-            updatePassword("") // clear password from state
-            updateUserID(matchingUsername[0].id) // this updates the state in App.js
+            setPassword("") // clear password from state
+            setUserID(matchingUsername[0].id) // this updates the state in App.js
             localStorage.setItem('userID', matchingUsername[0].id) // this updates the local storage
             console.log(`user id: ${matchingUsername[0].id}`)
         }
         else{
-            updateIsIncorrectCredentials(true)
+            setIsIncorrectCredentials(true)
         }
     }
 
@@ -36,7 +36,7 @@ const LoginBox = ({updateUserID}) => {
                 type="text"
                 placeholder="username"
                 value={username}
-                onChange={e => updateUsername(e.target.value)}/>
+                onChange={e => setUsername(e.target.value)}/>
                 <br/>
 
             <input
@@ -44,7 +44,7 @@ const LoginBox = ({updateUserID}) => {
                 type="password"
                 placeholder="password"
                 value={password}
-                onChange={e => updatePassword(e.target.value)}/>
+                onChange={e => setPassword(e.target.value)}/>
             <br/>
 
             <button
