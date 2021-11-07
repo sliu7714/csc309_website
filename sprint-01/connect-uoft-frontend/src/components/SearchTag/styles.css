@@ -8,6 +8,12 @@
 #search_bar{
     max-width: 250px;
 }
+#search_title{
+    text-align: left;
+    margin-left: 22px;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
 
 button{
     padding: 4px 12px;

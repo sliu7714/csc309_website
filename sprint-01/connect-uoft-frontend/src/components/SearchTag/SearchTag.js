@@ -24,6 +24,7 @@ const SearchTag = () =>{
 
     return(
         <div id="search_section">
+            <div id="search_title">Search for Postings: </div>
             <input id="search_bar"
                 type="text"
                 value={currentSearchText}
