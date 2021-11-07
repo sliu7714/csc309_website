@@ -1,5 +1,5 @@
 import "./styles.css"
-import { users,postings } from "./Extra/data"
+import { users,postings } from "../../data/data"
 
 
 // class Group{
@@ -8,14 +8,6 @@ import { users,postings } from "./Extra/data"
 //     }
 // }
 const Groups = (props) => {
-    // const groups = props._groups
-    // const preLoad = () =>{
-
-    //     const group = document.createElement('tr')
-    //     group.className="group"
-
-    //     const name = document.createTextNode()
-    // }
     return (
         <div className='pcontainer'>
             <h1 className="section_title">My Groups</h1>

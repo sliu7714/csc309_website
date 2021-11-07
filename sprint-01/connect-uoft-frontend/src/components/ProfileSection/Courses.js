@@ -29,7 +29,7 @@ const Courses = (props) => {
     }
     const addCourse = () => {
         const courseName = document.getElementById('add_course_input').value
-        const when = document.getElementById("dates").value
+        // const when = document.getElementById("dates").value
         if(courseName !== ""){
             courses.push(new Course(courseName))
         
@@ -42,13 +42,13 @@ const Courses = (props) => {
         const newCourseNameContainer = document.createElement('td')
         newCourseNameContainer.appendChild(newCourseName)
 
-        const newCourseDay = document.createTextNode(when)
-        const newCourseDayContainer = document.createElement('td')
-        newCourseDayContainer.appendChild(newCourseDay)
+        // const newCourseDay = document.createTextNode(when)
+        // const newCourseDayContainer = document.createElement('td')
+        // newCourseDayContainer.appendChild(newCourseDay)
 
         
         newCourse.appendChild(newCourseNameContainer)
-        newCourse.appendChild(newCourseDayContainer)
+        // newCourse.appendChild(newCourseDayContainer)
         courseTableBody.appendChild(newCourse)
         }
     

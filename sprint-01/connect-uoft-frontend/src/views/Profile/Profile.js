@@ -66,7 +66,7 @@ const Profile = () => {
                             
                         </div>
                         <div id='column3'>
-                             <Courses courses={_courses}/>
+                            <Courses courses={_courses}/>
                             <LeadGroups groups={_groups}/>
                             <ReportedGroups groups={_groups}/>
                         </div>

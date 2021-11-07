@@ -9,6 +9,7 @@ export const users = [
         username: "admin",
         password: "admin",  // change to more secure method later
         name: "Kimmy",
+        email: "kimmyadmin@mail.utoronto.ca",
         bio: "Hi I'm Kimmy",
         courses: ["CSC309"],
         isAdmin: true,
@@ -21,6 +22,7 @@ export const users = [
         username: "user",
         password: "user",
         name: "Timmy",
+        email: "timmyuser@mail.utoronto.ca",
         bio: "Hi I'm Timmy",
         courses: ["CSC309"],
         isAdmin: false,

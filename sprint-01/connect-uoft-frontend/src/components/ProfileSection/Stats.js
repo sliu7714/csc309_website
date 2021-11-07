@@ -1,7 +1,6 @@
 
 import "./styles.css"
-import { users } from "./Extra/data"
-
+import { users } from "../../data/data"
 
 const Stats = (props) => {
 
