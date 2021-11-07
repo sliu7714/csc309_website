@@ -167,3 +167,11 @@ li {
 .group {
   margin-bottom: 20px;
 }
+
+.reported_users {
+  position: relative;
+  top: 50px;
+}
+.reported_user {
+  margin-bottom: 20px;
+}

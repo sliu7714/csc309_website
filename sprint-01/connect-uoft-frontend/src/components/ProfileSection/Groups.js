@@ -36,7 +36,7 @@ const Groups = (props) => {
                     <tr className="group">
                         <td>Posting 0</td>
                         {viewing  ? details: null}
-                        <td><button className="_button" onClick={viewMore}>View More</button></td>
+                        <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
                     </tr>
                     {/* <tr className="group">
                         <td>CSC343 Study Session</td>
@@ -65,7 +65,7 @@ const LeadGroups = (props) => {
                     <tr className="group">
                         <td>Posting 0</td>
                         {viewing  ? details: null}
-                        <td><button className="_button" onClick={viewMore}>View More</button></td>
+                        <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
                     </tr>
                     {/* <tr className="group">
                         <td>CSC309 Study Session</td>
