@@ -3,7 +3,7 @@ import Popup from "../Popup/Popup";
 import { useState } from "react";
 
 
-const Header = ({isUserLoggedIn}) => {
+const Header = ({isUserLoggedIn, userID}) => {
 
     const [buttonPopup, setButtonPopup] = useState(false);
 
@@ -20,7 +20,7 @@ const Header = ({isUserLoggedIn}) => {
                     <button className='create_btn' onClick={() => setButtonPopup(true)}>Create +</button>
                     <a className='manage_btn' href='/manage'>Manage</a>
 
-                    <Popup trigger={buttonPopup} setTrigger={setButtonPopup}/>
+                    <Popup trigger={buttonPopup} setTrigger={setButtonPopup} userID={userID}/>
                 </div>
                 : null
             }
