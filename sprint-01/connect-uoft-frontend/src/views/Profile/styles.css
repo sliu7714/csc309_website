@@ -1,0 +1,19 @@
+#profile_page {
+  position: relative;
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 25px;
+}
+
+#column1 {
+  float: left;
+}
+#column2 {
+  margin-left: 25px;
+  float: left;
+}
+
+#column3 {
+  margin-left: 25px;
+  float: left;
+}
