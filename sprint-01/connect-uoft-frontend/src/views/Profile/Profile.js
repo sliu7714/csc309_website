@@ -9,17 +9,18 @@ import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
 import './styles.css'
-// import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 
 
-const userID = localStorage.getItem('userID')
-const user = users[userID]
-const _bio = user.bio
-const _isAdmin = user.isAdmin
-const _courses = user.courses
-const _groups = user.postings
 
 const Profile = () => {
+    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+    const user = users[userID]
+    const _bio = user.bio
+    const _isAdmin = user.isAdmin
+    const _courses = user.courses
+    const _groups = user.postings
+
 
     // const adminFunctions = <div id='column3'>
     //                        <ReportedUsers groups={_groups}/>
@@ -42,14 +43,13 @@ const Profile = () => {
                             <Courses courses={_courses}/>
                         </div>
                         <div id='column3'>
-                            <Groups groups={_groups}/>
+                            <Groups groups={_groups} user={userID}/>
                             <LeadGroups groups={_groups}/>
                         </div>
                         {/* <BrowserRouter>
                             <Route path="/logout" />
 >                        </BrowserRouter>
                         <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}
-                        
                     </div>
 
     const adminUser = <div id="profile_page">
@@ -62,12 +62,12 @@ const Profile = () => {
                         </div>
                         <div id='column2'>
                             <Bio bio={_bio}/>
-                            <Groups groups={_groups}/>
+                            <Groups groups={_groups} user={userID}/>
                             
                         </div>
                         <div id='column3'>
-                            <Courses courses={_courses}/>
-                            <LeadGroups groups={_groups}/>
+                            <Courses courses={_courses} user={userID}/>
+                            <LeadGroups groups={_groups} user={userID}/>
                             <ReportedGroups groups={_groups}/>
                         </div>
                         {/* <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}

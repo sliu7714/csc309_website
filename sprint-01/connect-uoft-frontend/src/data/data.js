@@ -52,7 +52,7 @@ export const postings = [
         endDate: "2020-11-30",
         capacity: 2,
         tags: ["art"],
-        members: [],
+        members: [0],
         applicants: [1],
     },
     {
