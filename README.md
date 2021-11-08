@@ -19,6 +19,12 @@ admin user credentials:
 
 ![login page screenshot](Files/screenshots_phase1/login.png)
 
+### Logout
+To logout you must navigate to localhost:3000/logout
+* From there you will be able to click the logout button to log out, 
+  then click another button to navigate to the login page
+* Due to no backend this our temporary work-around to logging out
+
 ### Signup
 Click on "create account" on the bottom left of the login box to navigate to the signup page \
 Since we are not connected to a backend, signing up for a new user will only work if you do not refresh the page 
