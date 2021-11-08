@@ -175,3 +175,7 @@ li {
 .reported_user {
   margin-bottom: 20px;
 }
+
+#tags_container{
+  margin-left: 10px;
+}
