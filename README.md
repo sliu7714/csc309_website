@@ -49,6 +49,8 @@ Once you are done, you may press the "Search" button to display a list of postin
 In the header, you will find a "Create+" button for creating posts.
 Clicking this button will prompt the user for information to create a new post
 * You must enter a title for the posting in the first input box
+* You must enter a date into the second input box
+  * The date will be the end-date of the posting
 * You must enter a description into the text area
 * You must enter a capacity for the posting in the last input box
 * You may add tags to your posting  in the input box to the left
@@ -57,15 +59,20 @@ Clicking this button will prompt the user for information to create a new post
 * You may click close at the top right to cancel the posting creation
 Once you are done, click submit to create a posting with the information provided
 
+![search section screenshot](Files/screenshots_phase1/create.png)
+
 ### View/Edit Profile
 Depending on who is logged in, a profile page will be shown to the user.
 By clicking on the rightmost green profile button icon on the heade,
 you are adding
+
 ### Manage Posts
 On this page you may find postings that you are a creator of
 * You will see a delete button on the postings you are creator of
 * You will see a list of applicants to your posting
   * You may accept or reject an applicant
+
+![search section screenshot](Files/screenshots_phase1/manage.png)
 
 ## External Libraries Used:
 * `react` and its dependencies

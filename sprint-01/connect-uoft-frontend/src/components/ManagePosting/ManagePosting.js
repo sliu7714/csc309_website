@@ -13,6 +13,7 @@ const Posting = (props) => (
     </div>
     <hr></hr>
     <p className = "capacity">{props.block.members.length} / {props.block.capacity}</p>
+    <hr></hr>
     <div className = "applicantList">
       <h4>Applicants</h4>
       <li>

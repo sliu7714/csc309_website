@@ -9,7 +9,7 @@ import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
 import './styles.css'
-import { BrowserRouter, Route } from "react-router-dom";
+//import { BrowserRouter, Route } from "react-router-dom";
 
 
 
