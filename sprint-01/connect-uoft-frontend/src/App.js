@@ -7,6 +7,8 @@ import Profile from "./views/Profile/Profile";
 import Manage from "./views/Manage";
 import Signup from "./views/Signup/Signup";
 import Header from "./components/Header/Header";
+import Logout from "./views/Logout/Logout";
+import {postings} from "./data/data";
 
 function App() {
     // user id of the user currently logged in, null if no one is logged in
@@ -24,18 +26,25 @@ function App() {
     useEffect(() =>{
         setIsUserLoggedIn(checkUserLoggedIn(userID))
         // eslint-disable-next-line
-    }, [userID])
+    }, [userID, checkUserLoggedIn])
 
     const logout = () =>{
         localStorage.setItem('userID', null)
         setUserID(undefined)
     }
 
+    // TEMP
+    const [posts, setPosts] = useState(postings)
+
+    useEffect(() => {
+        setPosts(postings)
+    }, [postings])
+
 
   return (
     <div className="App">
         {/* routes to different pages based on url */}
-        <Header isUserLoggedIn={isUserLoggedIn}/>
+        <Header isUserLoggedIn={isUserLoggedIn} userID={userID}/>
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
@@ -48,17 +57,16 @@ function App() {
                     <Signup/>
                 </Route>
                 <Route path="/home" component={Home} >
-                    {isUserLoggedIn ? <Home /> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Home posts={posts}/> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/profile" >
-                    {isUserLoggedIn ? <Profile /> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Profile userID={userID} logout={logout}/> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/manage" >
                     {isUserLoggedIn ? <Manage /> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/logout">
-
-
+                    <Logout logout={logout} isUserLoggedIn={isUserLoggedIn}/>
                 </Route>
 
                 <Route>
@@ -68,7 +76,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>
+        {/*<button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>*/}
     </div>
   );
 }

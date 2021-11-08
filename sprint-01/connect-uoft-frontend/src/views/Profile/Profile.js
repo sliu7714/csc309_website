@@ -9,12 +9,10 @@ import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
 import './styles.css'
-import { BrowserRouter, Route } from "react-router-dom";
 
 
 
-const Profile = () => {
-    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+const Profile = ({userID}) => {
     const user = users[userID]
     const _bio = user.bio
     const _isAdmin = user.isAdmin
@@ -27,10 +25,6 @@ const Profile = () => {
     //                        <ReportedGroups groups={_groups}/>
     //                        </div>
 
-    // const logout = () =>{
-    //     localStorage.setItem('userID', null)
-    //     setUserID(undefined)
-    // }
 
     const regUser = <div id="profile_page">
                         <UserHandle user={userID}/>
@@ -46,10 +40,6 @@ const Profile = () => {
                             <Groups groups={_groups} user={userID}/>
                             <LeadGroups groups={_groups}/>
                         </div>
-                        {/* <BrowserRouter>
-                            <Route path="/logout" />
->                        </BrowserRouter>
-                        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}
                     </div>
 
     const adminUser = <div id="profile_page">
@@ -70,7 +60,6 @@ const Profile = () => {
                             <LeadGroups groups={_groups} user={userID}/>
                             <ReportedGroups groups={_groups}/>
                         </div>
-                        {/* <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button> */}
 
                     </div>
     return(

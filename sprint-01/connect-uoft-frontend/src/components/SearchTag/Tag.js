@@ -3,7 +3,7 @@ import "./styles.css"
 const Tag = ({text}) =>{
 
     return(
-        <div className="tag">
+        <div className="tag_regular">
             {text}
         </div>
     )

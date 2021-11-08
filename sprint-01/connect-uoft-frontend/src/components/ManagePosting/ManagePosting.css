@@ -21,7 +21,7 @@
 
 .capacity {
     padding-left: 10px;
-    width: fit-content;
+    width: 100%;
     position: relative;
 }
 
@@ -36,7 +36,6 @@
     list-style-type: none;
     padding-left: 10px;
     height: fit-content;
-    top: 25px;
     left: 0px;
     position: relative;
     width: 100%;

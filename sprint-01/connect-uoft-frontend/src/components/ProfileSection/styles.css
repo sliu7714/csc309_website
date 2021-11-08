@@ -162,6 +162,7 @@ li {
 
 .groups {
   position: relative;
+
   top: 50px;
 }
 .group {
@@ -174,4 +175,8 @@ li {
 }
 .reported_user {
   margin-bottom: 20px;
+}
+
+#tags_container{
+  margin-left: 10px;
 }
