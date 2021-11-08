@@ -5,7 +5,7 @@ To run a local version, navigate to the `sprint1/connect-uoft-frontend` folder
 in your terminal and run `npm install` then `npm start` (if you are using npm as a package manager)
 
 ## Usage Instructions:
-note: some functionality will not be availble since we do not have a backend
+note: some functionality will not be available since we do not have a backend
 
 ### Login
 please note that you will stay logged in as a user until you decide to logout (logout in profile page)
