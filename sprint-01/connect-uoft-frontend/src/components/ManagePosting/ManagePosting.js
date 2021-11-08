@@ -5,6 +5,7 @@ const Posting = (props) => (
 
   <div className="posting">
     <h2 className = "postingTitle">{props.block.title}</h2>
+    <button className = "deleteButton"> Delete </button>
     <hr></hr>
     <h4 className = "postingCreator">Creator: {props.block.creator}</h4>
     <div className = "postingDesc">
@@ -13,7 +14,7 @@ const Posting = (props) => (
     <hr></hr>
     <p className = "capacity">{props.block.members.length} / {props.block.capacity}</p>
     <div className = "applicantList">
-      <p>Applicants</p>
+      <h4>Applicants</h4>
       <li>
         {props.block.applicants.map((applicants) => {return <ul>{applicants} <button>Accept</button><button>Reject</button></ul>;})}
       </li>
