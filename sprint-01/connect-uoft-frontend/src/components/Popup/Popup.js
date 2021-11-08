@@ -48,10 +48,23 @@ const Popup = ({trigger, setTrigger, userID}) => {
         setCurrentTags(currentTags.filter(tag => tag !== tagText))
     }
 
+    const clear_input = () => {
+        setTitle("")
+        setEndDate("")
+        setDescription("")
+        setCapacity(undefined)
+        setCurrentTags([])
+    }
+
+    const closePopup = () =>{
+        // clear state for next create post
+        clear_input()
+        setTrigger(false)
+    }
+
     const createPost = () =>{
-        // TODO: add post id
         const newPost = {
-            id: postings.length,
+            id: postings.length, // later backend should create post id
             creator: userID,
             title,
             endDate,
@@ -64,6 +77,7 @@ const Popup = ({trigger, setTrigger, userID}) => {
         console.log(newPost)
         // TODO: add fetch call to store post in backend
         postings.push(newPost) //TEMPORARY
+        closePopup()
     }
 
     return (trigger) ? (

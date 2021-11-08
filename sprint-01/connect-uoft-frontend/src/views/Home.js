@@ -2,9 +2,10 @@ import {postings} from "../data/data"
 import Components from "../components/Posting/PostingCreate";
 import "./Home.css"
 import SearchTag from "../components/SearchTag/SearchTag";
+import {useState, useEffect} from 'react'
 
 
-const Home = () => {
+const Home = ({posts}) => {
 
     return(
         <div>
@@ -12,7 +13,7 @@ const Home = () => {
                 <SearchTag ></SearchTag>
             </div>
             <div className = "gridBox">
-            {postings.map(block => Components(block))}
+            {posts.map(block => Components(block))}
             </div>
         </div>
     )
