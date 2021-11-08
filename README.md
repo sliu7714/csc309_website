@@ -49,7 +49,9 @@ Once you are done, you may press the "Search" button to display a list of postin
 
 
 ### View/Edit Profile
-
+Depending on who is logged in, a profile page will be shown to the user.
+By clicking on the rightmost green profile button icon on the heade,
+you are adding
 ### Manage Posts
 
 ## External Libraries Used:
