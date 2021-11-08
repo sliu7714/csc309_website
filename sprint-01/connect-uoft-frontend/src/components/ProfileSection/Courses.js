@@ -11,6 +11,7 @@ class Course {
 }
 const Courses = (props) => {
 
+
     // BEGIN TAG SECTION
 
     const [currentSearchText, setCurrentSearchText] = useState("")

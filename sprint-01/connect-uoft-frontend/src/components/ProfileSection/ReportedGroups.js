@@ -20,6 +20,7 @@ const ReportedGroups = () =>{
                         <td>Posting 0</td>
                         {viewing  ? details: null}
                         <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
+                        <td></td>
                         <td><button className="_button">Manage</button></td>
 
                     </tr>
