@@ -69,8 +69,8 @@ Once you are done, click submit to create a posting with the information provide
 
 ### View/Edit Profile
 Depending on who is logged in, a profile page will be shown to the user.
-By clicking on the rightmost green profile button icon on the heade,
-you are adding
+By clicking on the rightmost green profile button icon on the header,
+you are sent a profile page
 
 Regular User and Admin
 ![regular user profile](Files/screenshots_phase1/reg_user.png)
