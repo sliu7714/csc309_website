@@ -1,0 +1,56 @@
+
+.title{
+    font-size: 30px;
+}
+
+.login_box{
+    height: 400px;
+    width: 500px;
+    margin: 10vh auto;
+    text-align: center;
+    padding-top: 60px;
+    font-size: 34px;
+    background: #F0F0F0;
+    border-radius: 5%;
+    color: black;
+    align: center;
+    position: relative;
+}
+.login_btn{
+    background: darkseagreen;
+    border: none;
+    font-size: 20px;
+    padding: 8px;
+    width: 410px;
+    border-radius: 6px;
+}
+input{
+    font-size: 20px;
+    width: 400px;
+}
+.msg{
+    font-size: 16px;
+    margin-top: 10px;
+}
+.signup{
+    font-size: 12px;
+    text-align: right;
+    margin-right: 32px;
+    margin-top: 100px;
+    position: absolute;
+    bottom: 24px;
+    right: 0;
+}
+.signup_link{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.arrow{
+    height: 0;
+    width: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 12px solid darkseagreen;
+    margin-left: 8px;
+    margin-top: 6px;
+}
