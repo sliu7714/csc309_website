@@ -17,7 +17,7 @@ const Posting = (props) => (
     <div className = "applicantList">
       <h4>Applicants</h4>
       <li>
-        {props.block.applicants.map((applicants) => {return <ul>{applicants} <button>Accept</button><button>Reject</button></ul>;})}
+        {props.block.applicants.map((applicants) => {return <ul className = "applicantListItem">{applicants} <button>Accept</button><button>Reject</button></ul>;})}
       </li>
     </div>
   </div>
