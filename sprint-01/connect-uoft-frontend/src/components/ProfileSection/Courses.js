@@ -23,6 +23,7 @@ const Courses = (props) => {
     const courseHandler = () => {
         if(courses.length + preCourseList.length !== 6){
             addCourse()
+            document.getElementById('add_course_input').value = ''
         }
         else{
             setAddable(!isAddable)
