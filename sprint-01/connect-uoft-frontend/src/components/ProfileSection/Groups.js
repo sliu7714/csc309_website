@@ -8,7 +8,13 @@ import {useState} from 'react'
 //     }
 // }
 const Groups = (props) => {
+    // const groupStates = []
+    // const groupsSize = props._groups.length
+    // const preGroups = ((group) => {
+    //     groupStates.push(false)
+    // })
 
+    // const [gS, setGroupstates] = useState(groupStates)
     const [viewing, setViewing] = useState(false)
     // const preGroups = props._groups
     // const personalgroups = postings.filter(posting => posting.members.includes(props.userID))
