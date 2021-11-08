@@ -59,7 +59,7 @@ Clicking this button will prompt the user for information to create a new post
 * You may click close at the top right to cancel the posting creation
 Once you are done, click submit to create a posting with the information provided
 
-![search section screenshot](Files/screenshots_phase1/create.png)
+![create section screenshot](Files/screenshots_phase1/create.PNG)
 
 ### View/Edit Profile
 Depending on who is logged in, a profile page will be shown to the user.
@@ -86,7 +86,7 @@ On this page you may find postings that you are a creator of
 * You will see a list of applicants to your posting
   * You may accept or reject an applicant
 
-![search section screenshot](Files/screenshots_phase1/manage.png)
+![manage section screenshot](Files/screenshots_phase1/manage.PNG)
 
 ## External Libraries Used:
 * `react` and its dependencies
