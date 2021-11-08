@@ -10,6 +10,7 @@ class Course {
 const Courses = (props) => {
     const [isAddable, setAddable] = useState(true)
     const preCourses = props.courses
+    // NOT WORKINGs
     const preCourseList = preCourses.map((course) =>{
        return <tr className="course">
                         <td className="courseName">{course}</td>

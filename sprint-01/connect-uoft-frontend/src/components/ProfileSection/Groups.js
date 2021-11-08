@@ -1,6 +1,5 @@
 import "./styles.css"
 import {useState} from 'react'
-import { users,postings } from "../../data/data"
 
 
 // class Group{
@@ -24,7 +23,7 @@ const Groups = (props) => {
     // })
     // console.log(loadedGroups)
        
-    const viewMore = () => {
+    const viewMore = () => { 
         setViewing(!viewing)
     }
     return (
@@ -32,12 +31,13 @@ const Groups = (props) => {
             <h1 className="section_title">My Groups</h1>
             <table className="groups">
                 <tbody>
-                    {/* {loadedGroups} */}
                     <tr className="group">
-                        <td>Posting 0</td>
+                        <td>Posting 2</td>
                         {viewing  ? details: null}
                         <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
                     </tr>
+                    {/* {loadedGroups} */}
+                    
                     {/* <tr className="group">
                         <td>CSC343 Study Session</td>
                         <td><button className="_button">Manage</button></td>
@@ -67,14 +67,11 @@ const LeadGroups = (props) => {
                         {viewing  ? details: null}
                         <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
                     </tr>
-                    {/* <tr className="group">
-                        <td>CSC309 Study Session</td>
-                        <td><button className="_button">Manage</button></td>
-                    </tr>
                     <tr className="group">
-                        <td>CSC309 Meet Up</td>
-                        <td><button className="_button">Manage</button></td>
-                    </tr> */}
+                        <td>Posting 1</td>
+                        {viewing  ? details: null}
+                        <td><button className="_button" onClick={viewMore}>{viewing ? 'View Less': 'View More'}</button></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
