@@ -57,7 +57,7 @@ function App() {
                     <Signup/>
                 </Route>
                 <Route path="/home" component={Home} >
-                    {isUserLoggedIn ? <Home posts={posts}/> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Home posts={posts} userID={userID}/> : <Redirect to="/login" />}
                 </Route>
                 <Route path="/profile" >
                     {isUserLoggedIn ? <Profile userID={userID} logout={logout}/> : <Redirect to="/login" />}
