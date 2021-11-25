@@ -1,21 +1,27 @@
 import React from "react";
 import Posting from "./Posting";
+import PostingAdmin from "./PostingAdmin.js";
 
 const Components = {
-  posting: Posting,
+  posting: Posting, //User view of psotings
+  postingAdmin: PostingAdmin, //Admin view of postings
 };
 
-const CreatePosting = (block) => {
-  if (typeof Components[block.component] !== "undefined") {
-    return React.createElement(Components[block.component], {
+
+
+const CreatePosting = (block, isAdmin) => {
+  if (isAdmin) {
+    return React.createElement(Posting, {
       key: block.id,
       block: block
     });
   }
-  return React.createElement(
-    () => <div>The component {block.component} has not been created yet.</div>,
-    { key: block.id }
-  );
-};
+  else {
+    return React.createElement(Posting, {
+      key: block.id,
+      block: block
+    });
+  }
+}
 
 export default CreatePosting;
