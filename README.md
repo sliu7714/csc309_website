@@ -5,6 +5,7 @@ To run a local version, navigate to the `sprint1/connect-uoft-frontend` folder
 in your terminal and run `npm install` then `npm start` (if you are using npm as a package manager)
 
 ## Usage Instructions:
+note: some functionality will not be available since we do not have a backend
 
 ### Login
 please note that you will stay logged in as a user until you decide to logout (logout in profile page)
@@ -18,6 +19,12 @@ admin user credentials:
 * password: admin
 
 ![login page screenshot](Files/screenshots_phase1/login.png)
+
+### Logout
+To logout you must navigate to localhost:3000/logout
+* From there you will be able to click the logout button to log out, 
+  then click another button to navigate to the login page
+* Due to no backend this our temporary work-around to logging out
 
 ### Signup
 Click on "create account" on the bottom left of the login box to navigate to the signup page \
@@ -41,7 +48,7 @@ On the homepage, the left section can be used to search for posts.
     * If you already added a certain tag, you are not allowed to add a duplicate
 * If you want to delete a tag, click the white "x" on the right of the tag to remove it 
   from the list of tags to search for 
-Once you are done, you may press the "Search" button to display a list of postings that contain the matching tags
+Once you are done, you may press the "Search" button (since there is no backend, the search button does not do anything right now)
   
 ![search section screenshot](Files/screenshots_phase1/search.png)
 
@@ -58,13 +65,14 @@ Clicking this button will prompt the user for information to create a new post
     * If you already added a certain tag, you are not allowed to add a duplicate
 * You may click close at the top right to cancel the posting creation
 Once you are done, click submit to create a posting with the information provided
+(you may see the new posting object in the console but the UI will update when we connect with a backend)
 
 ![create section screenshot](Files/screenshots_phase1/create.PNG)
 
 ### View/Edit Profile
 Depending on who is logged in, a profile page will be shown to the user.
-By clicking on the rightmost green profile button icon on the heade,
-you are adding
+By clicking on the rightmost green profile button icon on the header,
+you are sent a profile page
 
 Regular User and Admin
 ![regular user profile](Files/screenshots_phase1/reg_user.png)

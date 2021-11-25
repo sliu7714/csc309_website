@@ -6,7 +6,7 @@ const Stats = (props) => {
 
     const user = users[props.user]
     return (
-        <div className="pcontainer">
+        <div className="profile-container">
             <h1 className="section_title">Stats</h1>
             <ul id="stats">
                 <li>Number of Courses: {user.courses.length}</li>
