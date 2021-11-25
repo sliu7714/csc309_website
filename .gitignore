@@ -1,23 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-old-do-not-use/node_modules
-old-do-not-use/.pnp
-connect-uoft-frontend.pnp.js
-
-# testing
-old-do-not-use/coverage
-
-# production
-old-do-not-use/build
-
-# misc
-old-do-not-use/DS_Store
-old-do-not-use/env.local
-old-do-not-use/env.development.local
-old-do-not-use/env.test.local
-old-do-not-use/env.production.local
-
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
