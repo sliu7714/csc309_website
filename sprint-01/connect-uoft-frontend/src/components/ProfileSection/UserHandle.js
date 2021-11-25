@@ -6,10 +6,24 @@ import { useState } from "react";
 const UserHandle = (props) => {
     const user = users[props.user];
     const [editProfilePopup, setEditProfilePopup] = useState(false);
+
+    const handleEdit = ({trigger, setTrigger, userID}) => {
+        // createSection
+        setEditProfilePopup(false);
+        return (editProfilePopup) ? (
+       <div className="edit-profile-container">
+            <div className="edit-profile-content-container">
+                <button className="edit-profile-content-container__button" onClick={() => setEditProfilePopup(false)}>close</button>
+            </div>
+        </div>
+        ): null;
+    }
+
+
     return (
         
         <div className="profile-user-handle-container">
-            <button className="profile-user-handle-container__button" title="Edit Profile Information" onClick={() => setEditProfilePopup(true)}>
+            <button className="profile-user-handle-container__button" title="Edit Profile Information" onClick={() => handleEdit(editProfilePopup, setEditProfilePopup, user.id)}>
 
                 <img className="profile-user-handle-container__button__img" src="/images/edit_icon.svg" alt="Edit Profile Information"></img>
             </button>
