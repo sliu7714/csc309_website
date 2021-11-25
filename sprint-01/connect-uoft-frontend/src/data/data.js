@@ -29,6 +29,7 @@ export const users = [
         postings: [2],
         groups: [0],
         applying: [1],
+        image: '/images/Timmy_Turner1.png'
     },
 ]
 

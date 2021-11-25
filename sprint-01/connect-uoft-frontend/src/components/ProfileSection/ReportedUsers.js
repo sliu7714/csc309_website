@@ -1,6 +1,6 @@
 const ReportedUsers = ()=>{
     return(
-        <div className="pcontainer">
+        <div className="profile-container">
             <h1 className="section_title">Reported Users</h1>
             <table className="reported_users">
                 <tbody>

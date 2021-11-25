@@ -1,3 +1,5 @@
+/* FOLLOWING BEM */
+
 tr,
 label,
 li {
@@ -17,30 +19,35 @@ li {
 
   cursor: pointer;
 }
-#profile_user_handle {
+
+/* MAIN USER HANDLE */
+.profile-user-handle-container {
+  position: relative;
   background-color: white;
-  width: 400px;
-  height: 100px;
+  width: 500px;
+  height: 150px;
   margin-top: 10px;
   margin-bottom: 20px;
   border-bottom: 1px solid grey;
 }
-.profile_picture_container {
-  width: 60px;
+.profile-picture-container {
+  width: 100px;
   float: left;
 }
-.profile_picture {
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 10px;
+.profile-picture-container {
+  width: 100px;
+  float: left;
+}
+.profile-picture-container__image {
+  margin: 10px;
   padding: 8px;
   background-color: darkseagreen;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
 }
 
-#username {
+.profile-user-handle-container__h1 {
   float: left;
   margin-top: 5px;
   margin-left: 35px;
@@ -48,10 +55,10 @@ li {
   padding-bottom: 5px;
 }
 
-#user_email {
+.profile-user-handle-container__h2 {
   position: absolute;
   top: 30px;
-  left: 96px;
+  left: 135px;
 
   /* margin-top: 0px;
   margin-left: 30px;
@@ -59,32 +66,63 @@ li {
   padding-bottom: 5px; */
 }
 
-.pcontainer {
+.profile-user-handle-container__h3 {
+  position: absolute;
+  top: 80px;
+  left: 135px;
+  color: rgb(65, 65, 65);
+}
+.profile-user-handle-container__button {
+  position: absolute;
+  right: 0px;
+  width: 30px;
+  height: 55px;
+  background-color: white;
+}
+
+.profile-user-handle-container__button:hover {
+  cursor: pointer;
+}
+
+.profile-user-handle-container__button__img {
+  position: absolute;
+  top: 0px;
+  margin: 0px;
+  width: 30px;
+  height: 55px;
+}
+/* USER BIO */
+.profile-container {
   position: relative;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
   margin-bottom: 20px;
-  text-align: left;
+
   min-height: 250px;
   height: auto;
   max-height: 800px;
-
   width: 500px;
-  background: #f0f0f0;
+
+  border-style: dashed;
   border-radius: 20px;
 }
+.contents-container {
+  text-align: left;
 
-.section_title {
+  margin: 20px;
+  min-height: 250px;
+  height: auto;
+  max-height: 800px;
+}
+
+.contents-container__h1 {
   position: absolute;
   margin-top: 0px;
 }
 
-#bio {
+.contents-container__p {
   position: absolute;
   top: 50px;
-  resize: none;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 #edit_button {
@@ -177,6 +215,6 @@ li {
   margin-bottom: 20px;
 }
 
-#tags_container{
+#tags_container {
   margin-left: 10px;
 }

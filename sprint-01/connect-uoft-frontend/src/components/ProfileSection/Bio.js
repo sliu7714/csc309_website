@@ -12,20 +12,18 @@ const Bio = (props) =>{
         updateEditState(!isEdit)
         
     }
-    console.log(bioDescription)
     return (
-        <div className="pcontainer">
-            <h1 className="section_title">About Me</h1>
-            <div>
+        <div className="profile-container">
+            <div className="contents-container">
+                <h1 className="contents-container__h1">About Me</h1>
+            
                 {/* Initializes the Bio with a stored bio and then saving will require a server call*/}
-                <textarea id="bio" placeholder="Tell us about yourself!" rows="8" cols="60" disabled={!isEdit} onChange={(b) => setBio(b)}>{bioDescription}</textarea> 
+                <p className="contents-container__p">{bioDescription}</p>
+                {/* <textarea border={!isEdit} id="bio" placeholder="Tell us about yourself!" rows="8" cols="60" disabled={!isEdit} onChange={(b) => setBio(b)}>{bioDescription}</textarea>  */}
                 <button id="edit_button" className="_button" onClick={handleClick}>{isEdit ? 'Submit' : 'Edit'}</button>
-            </div>
+            </div>        
         </div>
     );
-
-    //  onChange={b => setBio(b)}
-    // value={bioDescription}
 
 };
 

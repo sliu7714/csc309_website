@@ -33,7 +33,7 @@ const Groups = (props) => {
         setViewing(!viewing)
     }
     return (
-        <div className='pcontainer'>
+        <div className='profile-container'>
             <h1 className="section_title">My Groups</h1>
             <table className="groups">
                 <tbody>
@@ -64,7 +64,7 @@ const LeadGroups = (props) => {
     }
 
     return(
-        <div className='pcontainer'>
+        <div className='profile-container'>
             <h1 className="section_title">Lead Groups</h1>
             <table className="groups">
                 <tbody>
