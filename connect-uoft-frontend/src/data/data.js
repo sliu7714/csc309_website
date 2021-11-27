@@ -37,7 +37,12 @@ export const postings = [
     {
         id: 0,
         component: "posting",
-        creator: 0, // id of the user who created the post
+        creator: 0, // PLACEHOLDER SO OLD CODE DOES NOT BREAK
+        // post object would probably only store id of the creator and the backend code will return the creator info from another query?
+        creatorInfo: {
+            id: 0,
+            name: "Kimmy"
+        },
         title: "Posting 0",
         desc: "this is about posting 0",
         endDate: "2020-11-30",
@@ -49,7 +54,11 @@ export const postings = [
     {
         id: 1,
         component: "posting",
-        creator: 0,
+        creator: 0, // PLACEHOLDER
+        creatorInfo: {
+            id: 0,
+            name: "Kimmy"
+        },
         title: "Posting 1",
         desc: "this is about posting 1",
         endDate: "2020-11-30",
@@ -61,44 +70,50 @@ export const postings = [
     {
         id: 2,
         component: "posting",
-        creator: 1,
-        title: "Posting 2",
-        desc: "this is about posting 2",
+        creator: 1, // PLACEHOLDER
+        creatorInfo: {
+            id: 1,
+            name: "Jimmy"
+        },
+        title: "Study for Test 2",
+        desc: "We can meet up in the library or online to review practice problems and lab solutions to study for the test ",
+        // comments will be subdocument:
+        comments: [
+            {
+                id: 0,
+                creator: {
+                    id: 0,
+                    name: "Kimmy"
+                },
+                content: "The instructor just posted the rooms! We are taking the test in EX200",
+                // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
+                timestamp: Date('2020-11-12T012:00')
+            },
+            {
+                id: 0,
+                creator: {
+                    id: 1,
+                    name: "Jimmy"
+                },
+                content: 'We can chat here <discord.invite.link>',
+                // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
+                timestamp: Date('2020-11-12T015:00')
+            }
+        ],
+
         endDate: "2020-11-30",
         capacity: 4,
-        tags: ["csc369"],
+        tags: ["csc369", "study"],
         members: [0],
-        applicants: [],
-    },
+        applicantsInfo: [
+            {
+                id: 1,
+                name: 'Kimmy',
+                applicationMsg: "Hi I'm in LEC0101 and would love to join the study sessions"
+            }
 
-
-]
-
-
-export const tags = [
-    {
-        name: "csc309",
-        category: "courses",
-    },
-    {
-        name: "csc301",
-        category: "courses",
-    },
-    {
-        name: "csc369",
-        category: "courses",
-    },
-    {
-        name: "gym",
-        category: "interests",
-    },
-    {
-        name: "art",
-        category: "interests",
-    },
-    {
-        name: "movies",
-        category: "interests",
+        ],
     },
 
 ]
+

@@ -1,0 +1,69 @@
+.posting.manage {
+    position: relative;
+    border: solid;
+    border-radius: 16px;
+    width: 350px;
+    text-align: left;
+}
+.posting button:hover{
+    box-shadow: 2px 2px 1px darkgray;
+}
+.applicant-btn {
+    background-color: #F0F0F0;
+}
+
+.manage h4{
+    margin: 0px;
+}
+.manage h2{
+    margin-bottom: 0px;
+}
+
+.manage hr{
+    width: 100%;
+}
+
+.tag-section{
+    margin-left: 4px;
+}
+.posting-text {
+    padding-left: 10px;
+}
+
+.posting-desc {
+    height: 200px;
+}
+
+.deleteButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0px 0px;
+    padding: 10px;
+    background: indianred;
+    color: white;
+}
+
+.applicant.list-item{
+    margin: 10px 0px;
+
+}
+.applicant .row1{
+    display: flex;
+    justify-content: space-between;
+}
+
+.applicant-profile{
+    display: flex;
+    cursor: pointer;
+}
+.applicant-name{
+    margin-left: 5px;
+}
+
+.hr-dotted{
+    border-top:1px dotted darkseagreen;
+}
+
+
+

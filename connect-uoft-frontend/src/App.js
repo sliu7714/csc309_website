@@ -4,7 +4,7 @@ import {useState, useEffect} from "react";
 import Login from "./views/Login/Login";
 import Home from "./views/Home";
 import Profile from "./views/Profile/Profile";
-import Manage from "./views/Manage";
+import Manage from "./views/Manage/Manage";
 import Signup from "./views/Signup/Signup";
 import Header from "./components/Header/Header";
 import Logout from "./views/Logout/Logout";
