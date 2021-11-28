@@ -28,18 +28,18 @@ const Profile = ({userID}) => {
 
     const regUser = <div id="profile_page">
                         <UserHandle user={userID}/>
-                        {/* <div id='column1'>
-                            <EditProfile user={userID}/>
-                            <Stats user={userID}/>
-                        </div> */}
                         <div id='column1'>
                             <Bio bio={_bio}/>
+                            <Stats user={userID}/>
                             {/* <Courses courses={_courses}/> */}
                         </div>
-                        {/* <div id='column3'>
+                        <div id='column2'>
+                            <Courses courses={_courses}/>
+                        </div>
+                        <div id='column3'>
                             <Groups groups={_groups} user={userID}/>
                             <LeadGroups groups={_groups}/>
-                        </div> */}
+                        </div>
                     </div>
 
     const adminUser = <div id="profile_page">

@@ -1,9 +1,7 @@
 /* FOLLOWING BEM */
 
-tr,
-label,
-li {
-  font-weight: 500;
+tr {
+  font-weight: 2;
   font-size: large;
 }
 
@@ -43,10 +41,14 @@ li {
   padding: 8px;
   background-color: darkseagreen;
   border-radius: 50%;
+  border-width: 2px;
+  border-style: double;
   width: 100px;
   height: 100px;
 }
-
+.profile-picture-container__image:hover {
+  cursor: pointer;
+}
 .profile-user-handle-container__h1 {
   float: left;
   margin-top: 5px;
@@ -91,6 +93,10 @@ li {
   width: 30px;
   height: 55px;
 }
+.profile-user-handle-container__button__img:hover {
+  width: 35px;
+  height: 60px;
+}
 /* USER BIO */
 .profile-container {
   position: relative;
@@ -122,15 +128,20 @@ li {
   position: absolute;
   top: 50px;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
+}
+.contents-container__button:hover {
+  cursor: pointer;
+  border-style: solid;
+  border-width: 2px;
 }
 
-#edit_button {
+/* #edit_button {
   border-radius: 6px;
   position: absolute;
   right: 38px;
   bottom: 20px;
-}
+} */
 /* #settings {
   position: absolute;
   background-color: transparent;
@@ -148,26 +159,23 @@ li {
   height: 50px;
 } */
 
-/* PROFILE DETAILS */
-#profile_details {
-  position: relative;
+.contents-container__ul {
+  list-style: none;
+  list-style: " ⭐";
   position: absolute;
-  top: 75px;
+  left: 0px;
+  top: 50px;
 }
-.detail_input {
-  width: 300px;
-  margin-bottom: 10px;
-}
-#detail_submit {
-  position: relative;
-  left: 50%;
+.contents-container__li {
+  font-weight: 500;
+  font-size: large;
 }
 
-#stats {
-  position: relative;
-  top: 25px;
-}
 /* COURSES */
+
+.courses {
+  max-height: 250px;
+}
 #add_course_container {
   height: 50px;
   position: relative;
