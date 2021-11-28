@@ -32,25 +32,50 @@ const Courses = (props) => {
         setCurrentTags(currentTags.filter(tag => tag !== tagText))
     }
 
+    // return(
+    //     <div className="profile-container">
+    //         <h1 className="section_title">My Courses</h1>
+    //         <br/>
+    //         <br/>
+    //         <br/>
+    //         <input id="search_bar"
+    //                type="text"
+    //                value={currentSearchText}
+    //                onChange={e => setCurrentSearchText(e.target.value)}
+    //         />
+    //         <button id="add_tag_btn" onClick={() => addTag()}>
+    //             Add tag
+    //         </button>
+    //         <div id='tags_container'>
+    //             {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
+    //         </div>
+    //     </div>
+    // )
+
     return(
         <div className="profile-container">
-            <h1 className="section_title">My Courses</h1>
-            <br/>
-            <br/>
-            <br/>
-            <input id="search_bar"
-                   type="text"
-                   value={currentSearchText}
-                   onChange={e => setCurrentSearchText(e.target.value)}
-            />
-            <button id="add_tag_btn" onClick={() => addTag()}>
-                Add tag
-            </button>
-            <div id='tags_container'>
-                {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
+            <div className="courses contents-container">
+                <h1 className="contents-container__h1">My Courses</h1>
+            
+                <br/>
+                <br/>
+                <br/>
+                <input id="search_bar"
+                    type="text"
+                    value={currentSearchText}
+                    onChange={e => setCurrentSearchText(e.target.value)}
+                />
+                <button className="contents-container__button" id="add_tag_btn" onClick={() => addTag()}>
+                    Add tag
+                </button>
+                <div id='tags_container'>
+                    {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
+                </div>
             </div>
         </div>
     )
+    
+            
 
     // END TAG SECTION
 
