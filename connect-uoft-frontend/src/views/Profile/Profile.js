@@ -36,10 +36,10 @@ const Profile = ({userID}) => {
                         <div id='column2'>
                             <Courses courses={_courses}/>
                         </div>
-                        {/* <div id='column3'>
+                        <div id='column3'>
                             <Groups groups={_groups} user={userID}/>
                             <LeadGroups groups={_groups}/>
-                        </div> */}
+                        </div>
                     </div>
 
     const adminUser = <div id="profile_page">
