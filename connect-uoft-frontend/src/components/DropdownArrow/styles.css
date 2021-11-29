@@ -1,0 +1,7 @@
+.dropdown-arrow {
+    height: 18px;
+    float: right;
+    margin-right: 10px;
+    cursor: pointer;
+    user-select: none;
+}

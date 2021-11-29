@@ -4,6 +4,7 @@
     border-radius: 16px;
     width: 350px;
     text-align: left;
+    padding-bottom: 20px;
 }
 .posting button:hover{
     box-shadow: 2px 2px 1px darkgray;
@@ -27,7 +28,7 @@
     margin-left: 4px;
 }
 .posting-text {
-    padding-left: 10px;
+    margin-left: 10px;
 }
 
 .posting-desc {
@@ -43,14 +44,23 @@
     background: indianred;
     color: white;
 }
+.editButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0px 0px;
+    padding: 10px 14px;
+    background: darkseagreen;
+    color: white;
+}
 
 .applicant.list-item{
-    margin: 10px 0px;
 
 }
 .applicant .row1{
     display: flex;
     justify-content: space-between;
+    margin-left: 10px;
 }
 
 .applicant-profile{
@@ -60,10 +70,20 @@
 .applicant-name{
     margin-left: 5px;
 }
+.application-msg{
+    margin-left: 10px;
+}
 
 .hr-dotted{
     border-top:1px dotted darkseagreen;
+    width: 320px;
 }
 
-
+.green-text{
+    color: seagreen;
+    margin: 0px;
+}
+.comment{
+    margin-left: 10px;
+}
 

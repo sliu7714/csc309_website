@@ -1,9 +1,15 @@
 import React from "react";
-import "./ManagePostingCard.css"
+import "./styles.css"
 import ApplicantListItem from "./ApplicantListItem";
 import Tag from "../SearchTag/Tag";
+import {useState} from "react";
+import DropdownArrow from "../DropdownArrow/DropdownArrow";
+import Comment from "./Comment";
 
 const ManagePostingCard = ({posting, updatePostings}) => {
+
+    const [showComments, setShowComments] = useState(false)
+    const [showApplicants, setShowApplicants] = useState(false)
 
     const deletePosting = () =>{
         console.log("deletePosting not fully implemented")
@@ -20,10 +26,12 @@ const ManagePostingCard = ({posting, updatePostings}) => {
     }
 
     const acceptApplicant =(applicantID) =>{
+        // TODO connect to backend
         console.log('accept', applicantID)
     }
 
     const denyApplicant = (applicantID) =>{
+        // TODO connect to backend
         console.log('deny', applicantID)
     }
 
@@ -38,9 +46,10 @@ const ManagePostingCard = ({posting, updatePostings}) => {
                 }
             </div>
 
+            {/*<button className="deleteButton" onClick={deletePosting}> Delete</button>*/}
+            <button className="editButton" onClick={() => {alert("pressed")}}> Edit</button>
 
 
-            <button className="deleteButton" onClick={deletePosting}> Delete</button>
             <hr />
             <h4 className="posting-text">Creator: {posting.creatorInfo.name}</h4>
             <div className="posting-text posting-desc">
@@ -53,24 +62,26 @@ const ManagePostingCard = ({posting, updatePostings}) => {
             <hr />
             <p className="posting-text "> Spaces Filled: {posting.members.length} / {posting.capacity}</p>
             <hr />
-            <div className="posting-text">
-                <h4>Applicants</h4>
-                { posting.applicantsInfo ?
+            <div >
+                <b className="posting-text" >Applicants</b>
+                <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
+                { posting.applicantsInfo  && showApplicants ?
                     posting.applicantsInfo.map((applicant) =>
                         <ApplicantListItem applicant={applicant}
                                            acceptApplicant={acceptApplicant}
-                                           denyApplicant={denyApplicant}/>)
+                                           denyApplicant={denyApplicant}
+                                           />)
                     : null
                 }
             </div>
 
             <hr/>
-            <div>
-                <b>Comments</b>
-                {/*TEMPORARY SECTION WILL MOVE TO PAGE*/}
+            <div >
+                <b className="posting-text" >Comments</b>
+                <DropdownArrow show={showComments} setShow={setShowComments}/>
                 {
-                    posting.comments ?
-                        posting.comments.map(comment => <div> <hr className="hr-dotted"/>{comment.creator.name} <br/>{comment.content} </div>)
+                    posting.comments  && showComments ?
+                        posting.comments.map(comment => <Comment comment={comment}/>)
                         : null
                 }
             </div>
