@@ -9,6 +9,8 @@ import Signup from "./views/Signup/Signup";
 import Header from "./components/Header/Header";
 import Logout from "./views/Logout/Logout";
 import {postings} from "./data/data";
+import PostingDetailed from "./views/PostingDetailed/PostingDetailed";
+import User from "./views/User/User";
 
 function App() {
     // user id of the user currently logged in, null if no one is logged in
@@ -50,23 +52,37 @@ function App() {
                 <Route exact path="/" >
                     {isUserLoggedIn ? <Redirect to="/home" /> : <Redirect to="/login"/>}
                 </Route>
+
                 <Route path="/login">
                     {isUserLoggedIn ? <Redirect to="/home" /> :<Login setUserID={setUserID} />}
                 </Route>
+
                 <Route path="/signup" >
                     <Signup/>
                 </Route>
+
                 <Route path="/home" component={Home} >
                     {isUserLoggedIn ? <Home posts={posts} userID={userID}/> : <Redirect to="/login" />}
                 </Route>
+
                 <Route path="/profile" >
                     {isUserLoggedIn ? <Profile userID={userID} logout={logout}/> : <Redirect to="/login" />}
                 </Route>
+
                 <Route path="/manage" >
                     {isUserLoggedIn ? <Manage /> : <Redirect to="/login" />}
                 </Route>
+
                 <Route path="/logout">
                     <Logout logout={logout} isUserLoggedIn={isUserLoggedIn}/>
+                </Route>
+
+                <Route path="/posting/:id">
+                    <PostingDetailed/>
+                </Route>
+
+                <Route path="/user/:id">
+                    <User/>
                 </Route>
 
                 <Route>
