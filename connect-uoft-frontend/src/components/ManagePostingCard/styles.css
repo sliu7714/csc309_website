@@ -24,6 +24,10 @@
     width: 100%;
 }
 
+.posting-creator{
+    padding-left: 10px;
+}
+
 .tag-section{
     margin-left: 4px;
 }
@@ -35,15 +39,6 @@
     height: 200px;
 }
 
-.deleteButton{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 10px 10px 0px 0px;
-    padding: 10px;
-    background: indianred;
-    color: white;
-}
 .editButton{
     position: absolute;
     top: 0;

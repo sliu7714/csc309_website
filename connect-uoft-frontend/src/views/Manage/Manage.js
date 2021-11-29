@@ -2,12 +2,16 @@ import {postings} from "../../data/data" // TEMP
 import ManagePostingCard from "../../components/ManagePostingCard/ManagePostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
+import Popup from "../../components/Popup/Popup";
 
 
 
 const Manage = () => {
 
     const [userPostings, setUserPostings] = useState([])
+
+    const [showEditProfile, setShowEditProfile] = useState(false)
+    const [postingToEdit, setPostingToEdit] = useState({})
 
 
     // fetch once initially
@@ -35,10 +39,21 @@ const Manage = () => {
 
 
     return(
-        <div>
+        <div >
             <div className="manage">
-            {userPostings.map(posting => <ManagePostingCard posting={posting} updatePostings={fetchPostings}/>)}
+            {userPostings.map(posting =>
+                <ManagePostingCard
+                    posting={posting}
+                    updatePostings={fetchPostings}
+                    setShowEditProfile={setShowEditProfile}
+                    setPostingToEdit={setPostingToEdit}
+                />
+                )}
             </div>
+            <Popup trigger={showEditProfile}
+                   setTrigger={setShowEditProfile}
+                   isEditing={true}
+                   posting={postingToEdit}/>
         </div>
     )
 

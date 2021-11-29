@@ -5,34 +5,31 @@ import Tag from "../SearchTag/Tag";
 import {useState} from "react";
 import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import Comment from "./Comment";
+import Popup from "../Popup/Popup";
 
-const ManagePostingCard = ({posting, updatePostings}) => {
+const ManagePostingCard = ({posting, updatePostings, setShowEditProfile, setPostingToEdit}) => {
 
     const [showComments, setShowComments] = useState(false)
     const [showApplicants, setShowApplicants] = useState(false)
 
-    const deletePosting = () =>{
-        console.log("deletePosting not fully implemented")
-        // fetch(`api/postings/delete/${posting.id}`)
-        //     .then(res =>{
-        //         if (!res.ok){
-        //             // TODO: handle this - show message to user?
-        //             console.log(`could not delete post, response code: ${res.status}`)
-        //             return;
-        //         }
-        //     })
-        // // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
-    }
 
     const acceptApplicant =(applicantID) =>{
         // TODO connect to backend
         console.log('accept', applicantID)
+        // now need to call function in parent to update postings data for frontend to reflect changes
+        // updatePostings()
     }
 
     const denyApplicant = (applicantID) =>{
         // TODO connect to backend
         console.log('deny', applicantID)
+        // now need to call function in parent to update postings data for frontend to reflect changes
+        // updatePostings()
+    }
+
+    const showEditProfilePopup = () =>{
+        setShowEditProfile(true)
+        setPostingToEdit(posting)
     }
 
     return (
@@ -47,13 +44,13 @@ const ManagePostingCard = ({posting, updatePostings}) => {
             </div>
 
             {/*<button className="deleteButton" onClick={deletePosting}> Delete</button>*/}
-            <button className="editButton" onClick={() => {alert("pressed")}}> Edit</button>
+            <button className="editButton" onClick={() => showEditProfilePopup()}> Edit</button>
 
 
             <hr />
-            <h4 className="posting-text">Creator: {posting.creatorInfo.name}</h4>
+            <h4 className="posting-text posting-creator"> Creator: {posting.creatorInfo.name}</h4>
             <div className="posting-text posting-desc">
-                <p>{posting.desc}</p>
+                <p>{posting.description}</p>
             </div>
 
             <div className="posting-text"> End Date: {posting.endDate}</div>
@@ -85,6 +82,8 @@ const ManagePostingCard = ({posting, updatePostings}) => {
                         : null
                 }
             </div>
+
+
 
         </div>
     )

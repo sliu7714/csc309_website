@@ -76,7 +76,7 @@ export const postings = [
             name: "Jimmy"
         },
         title: "Study for Test 2",
-        desc: "We can meet up in the library or online to review practice problems and lab solutions to study for the test ",
+        description: "We can meet up in the library or online to review practice problems and lab solutions to study for the test ",
         // comments will be subdocument:
         comments: [
             {
@@ -87,7 +87,7 @@ export const postings = [
                 },
                 content: "The instructor just posted the rooms! We are taking the test in EX200",
                 // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
-                timestamp: Date('2020-11-12T012:00')
+                timestamp: Date('2020-11-12').toString()
             },
             {
                 id: 0,
@@ -97,7 +97,7 @@ export const postings = [
                 },
                 content: 'We can chat here <discord.invite.link>',
                 // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
-                timestamp: Date('2020-11-12T015:00')
+                timestamp: Date('2020-11-12T015:00').to
             }
         ],
 
