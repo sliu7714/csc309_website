@@ -76,7 +76,10 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => 
 
             {
                 isCreator || isMember ?
-                    <CommentSection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                    <div>
+                        <hr/>
+                        <CommentSection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                    </div>
                     :
                     null
             }

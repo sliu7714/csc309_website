@@ -25,7 +25,7 @@ const ApplicantSection = ({posting, updatePostings}) => {
 
     return(
         <div >
-            <b className="posting-text" >Applicants</b>
+            <span className="posting-text light-bold" >Applicants</span>
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
             { posting.applicantsInfo  && showApplicants ?
                 posting.applicantsInfo.map((applicant) =>
@@ -42,7 +42,6 @@ const ApplicantSection = ({posting, updatePostings}) => {
                 )
                 : null
             }
-            <hr/>
         </div>
     )
 }

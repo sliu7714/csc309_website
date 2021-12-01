@@ -18,7 +18,7 @@ const CommentSection = ({posting, userID, updatePostings}) => {
 
     return(
         <div className="comment-section" >
-            <b className="posting-text" >Comments</b>
+            <span className="posting-text light-bold" >Comments</span>
             <DropdownArrow show={showComments} setShow={setShowComments}/>
             {
                 posting.comments  && showComments ?

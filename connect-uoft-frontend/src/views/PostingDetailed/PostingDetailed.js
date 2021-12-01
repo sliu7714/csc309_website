@@ -89,8 +89,7 @@ const PostingDetailed = ({userID, isUserLoggedIn}) =>{
     }
 
     return(
-        <div>
-            temp - posting id : {id}
+        <div className="posting-detailed-page">
             <div className="posting-card-container">
                 <PostingCard
                     posting={posting}

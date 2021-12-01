@@ -1,11 +1,13 @@
 .posting.posting-card {
     position: relative;
-    border: solid;
+    border: solid dimgrey;
     border-radius: 16px;
     width: 350px;
     text-align: left;
     padding-bottom: 20px;
-    margin: 5px;
+    margin: 10px auto;
+    background-color: white;
+    box-shadow: 1px 2px 1px lightgray;
 }
 .posting button:hover{
     box-shadow: 2px 2px 1px darkgray;
@@ -16,10 +18,19 @@
 
 .posting-card h4{
     margin: 0px;
+    font-weight: 500;
 }
 .posting-card h2{
     margin-bottom: 0px;
+    font-weight: 500;
 }
+
+.light-bold{
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
 .posting-card .posting-card-title{
     max-width: 70%;
 }
@@ -33,10 +44,10 @@
 }
 
 .tag-section{
-    margin-left: 4px;
+    margin-left: 6px;
 }
 .posting-text {
-    margin-left: 10px;
+    margin-left: 12px;
 }
 
 .posting-desc {
@@ -53,9 +64,6 @@
     color: white;
 }
 
-.applicant.list-item{
-
-}
 .applicant .row1{
     display: flex;
     justify-content: space-between;
@@ -87,7 +95,7 @@
 }
 
 .comment{
-    margin-left: 10px;
+    margin-left: 12px;
 }
 .comment-input-section{
     margin-top: 8px;

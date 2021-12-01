@@ -53,7 +53,6 @@ const ApplySection = ({posting, userID, updatePostings}) =>{
                             {/*temporary*/}
                             Application status: {applicationStatus}
                         </div>
-                        <hr/>
                     </div>
 
 
