@@ -3,6 +3,8 @@
 // keeping in mind how data would actually get passed when we have a backenduse
 
 // for example: (user and posting objects will probably be more complicated later)
+import {ACCEPTED_APPLICATION, PENDING_APPLICATION, REJECTED_APPLICATION} from "./constants";
+
 export const users = [
     {
         id: 0,
@@ -53,11 +55,18 @@ export const postings = [
         membersInfo:[
             {
                 id: 1,
-                name: "Kimmy"
+                name: "Timmy"
             },
         ],
-        applicants: [], // ids if applicants to post
-        applicantsInfo: [],
+        applicants: [1], // ids if applicants to post
+        applicantsInfo: [
+            {
+                id: 1,
+                name: 'Timmy',
+                applicationMsg: "Hi I would like to join",
+                applicationStatus: ACCEPTED_APPLICATION,
+            }
+        ],
         comments: [
             {
                 id: 30,
@@ -91,8 +100,9 @@ export const postings = [
         applicantsInfo: [
             {
                 id: 1,
-                name: 'Kimmy',
-                applicationMsg: "Hi I would like to join"
+                name: 'Timmy',
+                applicationMsg: "Hi I would like to join",
+                applicationStatus: PENDING_APPLICATION,
             }
 
         ],
@@ -103,7 +113,7 @@ export const postings = [
         creator: 1, // PLACEHOLDER
         creatorInfo: {
             id: 1,
-            name: "Jimmy"
+            name: "Timmy"
         },
         title: "Study for Test 2",
         description: "We can meet up in the library or online to review practice problems and lab solutions to study for the test ",
@@ -123,7 +133,7 @@ export const postings = [
                 id: 1,
                 creator: {
                     id: 1,
-                    name: "Jimmy"
+                    name: "Timmy"
                 },
                 content: 'We can chat here <discord.invite.link>',
                 // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
@@ -138,9 +148,10 @@ export const postings = [
         membersInfo:[],
         applicantsInfo: [
             {
-                id: 1,
-                name: 'Kimmy',
-                applicationMsg: "Hi I'm in LEC0101 and would love to join the study sessions"
+                id: 3,
+                name: 'Jimmy',
+                applicationMsg: "Hi I'm in LEC0101 and would love to join the study sessions",
+                applicationStatus: REJECTED_APPLICATION,
             }
 
         ],

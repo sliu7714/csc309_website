@@ -1,6 +1,6 @@
 import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import Comment from "./Comment";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
 
 const CommentSection = ({posting, userID, updatePostings}) => {
@@ -9,7 +9,7 @@ const CommentSection = ({posting, userID, updatePostings}) => {
     const [newCommentText, setNewCommentText] = useState("")
 
     const createComment = () => {
-        // TODO: backend:
+        // TODO: backend connect
         console.log('comment', userID, newCommentText)
         // now need to call function in parent to update postings data for frontend to reflect changes
         // updatePostings()
@@ -17,15 +17,35 @@ const CommentSection = ({posting, userID, updatePostings}) => {
 
 
     return(
-        <div >
+        <div className="comment-section" >
             <b className="posting-text" >Comments</b>
             <DropdownArrow show={showComments} setShow={setShowComments}/>
             {
                 posting.comments  && showComments ?
-                    posting.comments.map(comment => <Comment key={comment.id} comment={comment}/>)
+                    posting.comments.length < 1 ?
+                        <div className="grey-text posting-text">
+                            no comments
+                        </div>
+                        :
+                        posting.comments.map(comment => <Comment key={comment.id} comment={comment}/>)
+                        :
+                        null
+            }
+            {
+                showComments ?
+                    <div className="comment-input-section">
+                        <hr className="hr-dotted"/>
+                        <input className="comment-box"
+                               type="text"
+                               value={newCommentText}
+                               placeholder={"Add comment..."}
+                               onChange={(e) => setNewCommentText(e.target.value)}
+                        />
+                        <button className="comment-button" onClick={createComment}>Post</button>
+                    </div>
                     : null
             }
-            {/*TODO : add a section to add new comment  */}
+
         </div>
     )
 }

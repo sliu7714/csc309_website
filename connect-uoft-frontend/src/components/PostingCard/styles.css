@@ -5,6 +5,7 @@
     width: 350px;
     text-align: left;
     padding-bottom: 20px;
+    margin: 5px;
 }
 .posting button:hover{
     box-shadow: 2px 2px 1px darkgray;
@@ -24,7 +25,7 @@
 }
 
 .posting-card hr{
-    width: 100%;
+    width: 99%;
 }
 
 .posting-creator{
@@ -81,7 +82,32 @@
     color: seagreen;
     margin: 0px;
 }
+.grey-text{
+    color: gray;
+}
+
 .comment{
     margin-left: 10px;
 }
+.comment-input-section{
+    margin-top: 8px;
+}
+.comment-box, .apply-msg-box{
+    width: 230px;
+    margin: 2px 10px 2px 20px;
+    font-size: 16px;
+    float: left;
+}
+.comment-button, .apply-msg-button{
+    margin: 0px;
+    color: white;
+}
+
+.apply-title{
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+
+
 

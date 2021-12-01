@@ -5,6 +5,8 @@ import CommentSection from "./CommentSection";
 import ApplicantSection from "./ApplicantsSection";
 import Popup from "../Popup/Popup";
 import {useState} from "react";
+import ApplicantsSection from "./ApplicantsSection";
+import ApplySection from "./ApplySection";
 
 
 // updatePostings is to call the function to rerender this post
@@ -63,20 +65,22 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => 
             <p className="posting-text "> Spaces Filled: {posting.members.length + 1} / {posting.capacity}</p>
             <hr />
 
+
+
             {
                 isCreator ?
                     <ApplicantSection posting={posting} userID={userID} updatePostings={updatePostings}/>
-                    : null
+                    :
+                    <ApplySection posting={posting} userID={userID} updatePostings={updatePostings}/>
             }
 
             {
                 isCreator || isMember ?
-                        <CommentSection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                    <CommentSection posting={posting} userID={userID} updatePostings={updatePostings}/>
                     :
-                    <div>
-                        Apply: placeholder - extract to component
-                    </div>
+                    null
             }
+
 
         </div>
     )

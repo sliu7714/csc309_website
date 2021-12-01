@@ -92,7 +92,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>
+        {/*<button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>*/}
     </div>
   );
 }
