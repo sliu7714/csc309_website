@@ -151,7 +151,7 @@ export const postings = [
                 id: 3,
                 name: 'Jimmy',
                 applicationMsg: "Hi I'm in LEC0101 and would love to join the study sessions",
-                applicationStatus: REJECTED_APPLICATION,
+                applicationStatus: PENDING_APPLICATION,
             }
 
         ],
