@@ -16,7 +16,7 @@ function App() {
     // user id of the user currently logged in, null if no one is logged in
     // be careful of userID = 0 since 0 is false in javascript
     // null is true as well so be careful of that
-    const [userID, setUserID] = useState(localStorage.getItem('userID'))
+    const [userID, setUserID] = useState(localStorage.getItem('userID_connectUofT'))
 
     const checkUserLoggedIn = () => {
         return userID >= 0
@@ -31,7 +31,7 @@ function App() {
     }, [userID, checkUserLoggedIn])
 
     const logout = () =>{
-        localStorage.setItem('userID', null)
+        localStorage.setItem('userID_connectUofT', null)
         setUserID(undefined)
     }
 
@@ -70,7 +70,7 @@ function App() {
                 </Route>
 
                 <Route path="/manage" >
-                    {isUserLoggedIn ? <Manage /> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Manage userID={userID}/> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/logout">
@@ -78,7 +78,7 @@ function App() {
                 </Route>
 
                 <Route path="/posting/:id">
-                    <PostingDetailed/>
+                    <PostingDetailed userID={userID} isUserLoggedIn={isUserLoggedIn}/>
                 </Route>
 
                 <Route path="/user/:id">
@@ -92,7 +92,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        {/*<button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>*/}
+        <button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>
     </div>
   );
 }

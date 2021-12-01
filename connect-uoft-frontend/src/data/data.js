@@ -43,13 +43,33 @@ export const postings = [
             id: 0,
             name: "Kimmy"
         },
-        title: "Posting 0",
-        desc: "this is about posting 0",
+        title: "Work on practice problems",
+        desc: "please change code to use posting.description instead of posting.desc",
+        description: "we can work together on the practice problems for unit 2 to get ready for the final",
         endDate: "2020-11-30",
         capacity: 3,
-        tags: ["csc309"],
+        tags: ["csc309", "study"],
         members: [1], // ids of the members of the post
+        membersInfo:[
+            {
+                id: 1,
+                name: "Kimmy"
+            },
+        ],
         applicants: [], // ids if applicants to post
+        applicantsInfo: [],
+        comments: [
+            {
+                id: 30,
+                creator: {
+                    id: 0,
+                    name: "Kimmy"
+                },
+                content: "Heads up, I think there is a typo in problem 4!",
+                // NOTE, datetime objects cannot be sent as a json string, must be converted to string representation
+                timestamp: Date('2020-11-12').toString()
+            },
+        ],
     },
     {
         id: 1,
@@ -59,13 +79,23 @@ export const postings = [
             id: 0,
             name: "Kimmy"
         },
-        title: "Posting 1",
-        desc: "this is about posting 1",
+        title: "Draw in the park",
+        desc: "please change code to use posting.description instead of posting.desc",
+        description: "Lets do some sketching in the park",
         endDate: "2020-11-30",
-        capacity: 2,
+        capacity: 3,
         tags: ["art"],
-        members: [0],
+        members: [],
+        membersInfo:[],
         applicants: [1],
+        applicantsInfo: [
+            {
+                id: 1,
+                name: 'Kimmy',
+                applicationMsg: "Hi I would like to join"
+            }
+
+        ],
     },
     {
         id: 2,
@@ -90,7 +120,7 @@ export const postings = [
                 timestamp: Date('2020-11-12').toString()
             },
             {
-                id: 0,
+                id: 1,
                 creator: {
                     id: 1,
                     name: "Jimmy"
@@ -104,7 +134,8 @@ export const postings = [
         endDate: "2020-11-30",
         capacity: 4,
         tags: ["csc369", "study"],
-        members: [0],
+        members: [],
+        membersInfo:[],
         applicantsInfo: [
             {
                 id: 1,

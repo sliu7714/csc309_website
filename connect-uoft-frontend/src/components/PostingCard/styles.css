@@ -1,4 +1,4 @@
-.posting.manage {
+.posting.posting-card {
     position: relative;
     border: solid;
     border-radius: 16px;
@@ -13,14 +13,17 @@
     background-color: #F0F0F0;
 }
 
-.manage h4{
+.posting-card h4{
     margin: 0px;
 }
-.manage h2{
+.posting-card h2{
     margin-bottom: 0px;
 }
+.posting-card .posting-card-title{
+    max-width: 70%;
+}
 
-.manage hr{
+.posting-card hr{
     width: 100%;
 }
 
@@ -39,7 +42,7 @@
     height: 200px;
 }
 
-.editButton{
+.top-right-btn{
     position: absolute;
     top: 0;
     right: 0;

@@ -18,7 +18,7 @@ const LoginBox = ({setUserID}) => {
         if (matchingUsername.length === 1 && matchingUsername[0].password === password){
             setPassword("") // clear password from state
             setUserID(matchingUsername[0].id) // this updates the state in App.js
-            localStorage.setItem('userID', matchingUsername[0].id) // this updates the local storage
+            localStorage.setItem('userID_connectUofT', matchingUsername[0].id) // this updates the local storage
             console.log(`user id: ${matchingUsername[0].id}`)
         }
         else{

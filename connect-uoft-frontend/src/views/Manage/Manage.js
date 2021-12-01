@@ -1,23 +1,11 @@
 import {postings} from "../../data/data" // TEMP
-import ManagePostingCard from "../../components/ManagePostingCard/ManagePostingCard";
+import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
-import Popup from "../../components/Popup/Popup";
 
-
-
-const Manage = () => {
+const Manage = ({userID}) => {
 
     const [userPostings, setUserPostings] = useState([])
-
-    const [showEditProfile, setShowEditProfile] = useState(false)
-    const [postingToEdit, setPostingToEdit] = useState({})
-
-
-    // fetch once initially
-    useEffect(() =>{
-        fetchPostings()
-    }, [])
 
     // call this function everytime a post needs to be updated
     const fetchPostings = () =>{
@@ -35,25 +23,24 @@ const Manage = () => {
         setUserPostings(postings.filter((postings) => postings.creatorInfo.id === 1))
     }
 
-
+    // fetch once initially
+    useEffect(() =>{
+        fetchPostings()
+    }, [])
 
 
     return(
         <div >
-            <div className="manage">
+            <div className="manage-section">
             {userPostings.map(posting =>
-                <ManagePostingCard
+                <PostingCard
                     posting={posting}
                     updatePostings={fetchPostings}
-                    setShowEditProfile={setShowEditProfile}
-                    setPostingToEdit={setPostingToEdit}
+                    userID={userID}
+                    isCreator={true}
                 />
                 )}
             </div>
-            <Popup trigger={showEditProfile}
-                   setTrigger={setShowEditProfile}
-                   isEditing={true}
-                   posting={postingToEdit}/>
         </div>
     )
 
