@@ -1,4 +1,5 @@
-/* Server environment setup */
+// NOTE, parts of this server setup code was adapted from the 'react-express-authentication' example we went through in class
+
 // To run in development mode, run normally: node server.js
 // To run in development with the test user logged in the backend, run: TEST_USER_ON=true node server.js
 // To run in production mode, run in terminal: NODE_ENV=production node server.js
@@ -8,26 +9,27 @@
 //const TEST_USER_ID = '5fb8b011b864666580b4efe3' // the id of our test user (you will have to replace it with a test user that you made). can also put this into a separate configutation file
 //const TEST_USER_EMAIL = 'test@user.com'
 
-//setup for path and console.log macro
-const log = console.log;
+//setup for path macro
 const path = require('path')
 
-const express = require("express");
+const express = require("express")
 // starting the express server
-const app = express();
+const app = express()
 
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
-//if (env !== 'production') { app.use(cors()) }
+// if (env !== 'production') { app.use(cors()) }
 
 // mongoose and mongo connection
-const { mongoose } = require("./db/mongoose");
-mongoose.set('useFindAndModify', false); // for some deprecation issues
+// const { mongoose } = require("./db/mongoose")
+// mongoose.set('useFindAndModify', false); // for some deprecation issues
 
 // import the mongoose models - Schemas
+const { User } = require("./models/users")
+const { Posting } = require("./models/postings")
 
 // to validate object IDs
-const { ObjectID } = require("mongodb");
+const { ObjectID } = require("mongodb")
 
 // body-parser: middleware for parsing parts of the request into a usable object (onto req.body)
 const bodyParser = require('body-parser') 
@@ -43,16 +45,16 @@ function isMongoError(error) { // checks for first error returned by promise rej
 }
 
 // middleware for mongo connection error for routes that need it
-const mongoChecker = (req, res, next) => {
-    // check mongoose connection established.
-    if (mongoose.connection.readyState != 1) {
-        log('Issue with mongoose connection')
-        res.status(500).send('Internal server error')
-        return;
-    } else {
-        next()  
-    }   
-}
+// const mongoChecker = (req, res, next) => {
+//     // check mongoose connection established.
+//     if (mongoose.connection.readyState != 1) {
+//         console.log('Issue with mongoose connection')
+//         res.status(500).send('Internal server error')
+//         return;
+//     } else {
+//         next()
+//     }
+// }
 
 // Middleware for authentication of resources
 /**
@@ -79,24 +81,23 @@ const mongoChecker = (req, res, next) => {
 
 /*** Webpage routes below **********************************/
 // Serve the build
-app.use(express.static(path.join(__dirname, "/connect-uoft-frontend/build")));cd 
+app.use(express.static(path.join(__dirname, "/connect-uoft-frontend/build")));
 
 // All routes other than above will go to index.html
 app.get("*", (req, res) => {
     // check for page routes that we expect in the frontend to provide correct status code.
-    const goodPageRoutes = ["/", "/login", "/home", "/manage", "/profile"];
+    const goodPageRoutes = ["/", "/login", "/home", "/manage", "/profile", "/posting/*"];
     if (!goodPageRoutes.includes(req.url)) {
         // if url not in expected page routes, set status to 404.
         res.status(404);
     }
 
     // send index.html
-    res.sendFile(path.join(__dirname, "/src/build/index.js"));
+    res.sendFile(path.join(__dirname, "/connect-uoft-frontend/build/index.html"));
 });
 
-/*************************************************/
 // Express server listening...
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    log(`Listening on port ${port}...`);
+    console.log(`Listening on port ${port}...`);
 });
