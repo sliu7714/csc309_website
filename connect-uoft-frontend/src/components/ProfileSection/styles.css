@@ -142,8 +142,8 @@
 
   min-height: 250px;
   height: auto;
-  max-height: 800px;
   width: 500px;
+  min-width: 500px;
 
   border-style: dashed;
   border-radius: 20px;
@@ -244,30 +244,34 @@
   margin-right: 20px;
 }
 
-.groupContent {
+.group-content {
   position: relative;
-  height: auto;
-  float: right;
+  height: 800px;
+  overflow: auto;
+  float: left;
   margin-top: 0px;
-  margin-left: 20px;
+  margin-right: 20px;
   text-align: left;
   padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
   width: 45%;
 }
-.groupsList {
+.groups-list {
   width: 80%;
-  height: auto;
-  list-style: none;
 }
 
 .group {
-  height: 150px;
+  /* min-height: 100px;
+  height: auto; */
+  height: auto;
   width: 100%;
   /* min-height: 100px; */
   padding-bottom: 5px;
   padding-top: 10px;
 
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid gray;
+  overflow: hidden;
 }
 .group-image-container {
   float: left;
@@ -277,6 +281,7 @@
   border-radius: 100%;
 }
 .group-content-container {
+  min-height: 100px;
   height: auto;
   float: left;
   margin-left: 20px;
@@ -292,7 +297,7 @@
 }
 .group-content-container__h4 {
   margin-top: 0px;
-  margin-left: 20px;
+  margin-bottom: 5px;
 }
 
 .group-content-container-meeting {
@@ -307,6 +312,25 @@
   display: inline;
   text-decoration: #2196f3;
 }
+.group-member-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px;
+}
+.group-member-list-member {
+  margin: 10px;
+  float: left;
+  height: 50px;
+  width: 50px;
+  border: 1px solid black;
+  border-radius: 100%;
+  background-color: seagreen;
+}
+.group-member-list-member:hover {
+  cursor: pointer;
+}
+
 .reported_users {
   position: relative;
   top: 50px;
