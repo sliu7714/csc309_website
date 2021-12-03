@@ -24,26 +24,34 @@ function App() {
     // check if user is logged in on every refresh
     useEffect(() =>{
         console.log('check session')
-        fetch(`${BASE_API_URL}/api/user/check-session`)
-            .then((res) => {
-                if(!res.ok){
-                    console.log("check session response code:", res.status)
-                    // leave isUserLoggedIn and isAdmin to false
-                    return;
-                }
-                return res.json()
-            })
-            .then((sessionInfo) =>{
-                // previous then only returns json if response code is 200
-                if (sessionInfo){
-                    // console.log('session info', sessionInfo)
-                    setIsUserLoggedIn(true)
-                    setIsAdmin(sessionInfo.isAdmin ? sessionInfo.isAdmin : false)
-                }
-            })
-            .catch((err) => {
-                console.log("could not check session:",err)
-            })
+        if(!ENV.useFrontendTestUser){
+            fetch(`${BASE_API_URL}/api/user/check-session`)
+                .then((res) => {
+                    if(!res.ok){
+                        console.log("check session response code:", res.status)
+                        // leave isUserLoggedIn and isAdmin to false
+                        return;
+                    }
+                    return res.json()
+                })
+                .then((sessionInfo) =>{
+                    // previous then only returns json if response code is 200
+                    if (sessionInfo){
+                        // console.log('session info', sessionInfo)
+                        setIsUserLoggedIn(true)
+                        setIsAdmin(sessionInfo.isAdmin ? sessionInfo.isAdmin : false)
+                    }
+                })
+                .catch((err) => {
+                    console.log("could not check session:",err)
+                })
+        }
+        else{
+            console.log('test user')
+            setIsUserLoggedIn(true)
+            setIsAdmin(ENV.frontendTestUserIsAdmin)
+        }
+
     }, [tempCheckSession])
 
 
@@ -81,6 +89,7 @@ function App() {
                 </Route>
 
                 <Route path="/login">
+                    {console.log("login: isuli", isUserLoggedIn)}
                     {isUserLoggedIn ? <Redirect to="/home" /> :<Login setIsUserLoggedIn={setIsUserLoggedIn} setIsAdmin={setIsAdmin} />}
                 </Route>
 
@@ -88,12 +97,13 @@ function App() {
                     <Signup/>
                 </Route>
 
-                <Route path="/home" component={Home} >
+                <Route path="/home"  >
                     {isUserLoggedIn ? <Home userID={1}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/profile" >
-                    {isUserLoggedIn ? <Profile userID={1} logout={logout}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
+                    {/*TODO this temp fix */}
+                    {isUserLoggedIn  || true ? <Profile userID={1} isAdmin={isAdmin}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/manage" >
@@ -120,7 +130,8 @@ function App() {
 
         {/*TEMPORARY*/}
         <button onClick={logout}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>
-        <button onClick={() => setTempCheckSession(!tempCheckSession)}>check session</button>
+        <button onClick={() => setTempCheckSession(!tempCheckSession)}>check session </button>
+        <button >isUserLoggedIn {isUserLoggedIn.toString()} </button>
     </div>
   );
 }
