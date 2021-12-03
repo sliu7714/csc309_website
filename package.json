@@ -7,7 +7,7 @@
     "setup": "npm install && cd connect-uoft-frontend && npm install && cd ..",
     "build-run": "cd connect-uoft-frontend && npm run build && cd .. && node server.js",
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
+    "heroku-postbuild": "cd connect-uoft-frontend && npm install && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
