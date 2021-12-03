@@ -1,0 +1,34 @@
+{
+  "name": "connect-uoft",
+  "version": "1.0.0",
+  "description": "To run a local version, navigate to the `sprint1/connect-uoft-frontend` folder \r in your terminal and run `npm install` then `npm start` (if you are using npm as a package manager)",
+  "main": "server.js",
+  "scripts": {
+    "setup": "npm install && cd connect-uoft-frontend && npm install && cd ..",
+    "build-run": "cd connect-uoft-frontend && npm run build && cd .. && node server.js",
+    "start": "node server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csc309-fall-2021/team59.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csc309-fall-2021/team59/issues"
+  },
+  "homepage": "https://github.com/csc309-fall-2021/team59#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-mongo": "^4.6.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongodb": "^4.2.1",
+    "mongoose": "^6.0.14",
+    "validator": "^13.7.0"
+  }
+}

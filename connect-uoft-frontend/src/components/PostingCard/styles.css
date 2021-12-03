@@ -1,0 +1,121 @@
+.posting.posting-card {
+    position: relative;
+    border: solid dimgrey;
+    border-radius: 16px;
+    width: 350px;
+    text-align: left;
+    padding-bottom: 20px;
+    margin: 10px auto;
+    background-color: white;
+    box-shadow: 1px 2px 1px lightgray;
+}
+.posting button:hover{
+    box-shadow: 2px 2px 1px darkgray;
+}
+.applicant-btn {
+    background-color: #F0F0F0;
+}
+
+.posting-card h4{
+    margin: 0px;
+    font-weight: 500;
+}
+.posting-card h2{
+    margin-bottom: 0px;
+    font-weight: 500;
+}
+
+.light-bold{
+    font-weight: 500;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.posting-card .posting-card-title{
+    max-width: 70%;
+}
+
+.posting-card hr{
+    width: 99%;
+}
+
+.posting-creator{
+    padding-left: 10px;
+}
+
+.tag-section{
+    margin-left: 6px;
+}
+.posting-text {
+    margin-left: 12px;
+}
+
+.posting-desc {
+    height: 200px;
+}
+
+.top-right-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 10px 0px 0px;
+    padding: 10px 14px;
+    background: darkseagreen;
+    color: white;
+}
+
+.applicant .row1{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.applicant-profile{
+    display: flex;
+    cursor: pointer;
+}
+.applicant-name{
+    margin-left: 5px;
+}
+.application-msg{
+    margin-left: 10px;
+}
+
+.hr-dotted{
+    border-top:1px dotted darkseagreen;
+    width: 320px;
+}
+
+.green-text{
+    color: seagreen;
+    margin: 0px;
+}
+.grey-text{
+    color: gray;
+}
+
+.comment{
+    margin-left: 12px;
+}
+.comment-input-section{
+    margin-top: 8px;
+}
+.comment-box, .apply-msg-box{
+    width: 230px;
+    margin: 2px 10px 2px 20px;
+    font-size: 16px;
+    float: left;
+}
+.comment-button, .apply-msg-button{
+    margin: 0px;
+    color: white;
+}
+
+.apply-title{
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+
+
+

@@ -1,0 +1,120 @@
+.createSection {
+    position: fixed;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+
+.innerCreate {
+    position: relative;
+    padding: 26px;
+    width: 100%;
+    max-width: 500px;
+    height: 450px;
+    background-color: white;
+}
+
+.innerCreate .closeButton{
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+
+.inputList {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 60px;
+    left: 150px;
+    right: 40px;
+    list-style-type: none;
+    margin: 0;
+}
+
+.innerCreate .input-label{
+    color: dimgrey;
+    font-size: 16px;
+    margin-bottom: -6px;
+    font-weight: normal;
+}
+
+.descriptionInput {
+    height: 100px;
+    width: 100%;
+    position: relative;
+    margin: 8px 0;
+    box-sizing: border-box;
+    resize: none;
+    font-size: 14px;
+}
+
+.standardInput {
+    width: 100%;
+    height: fit-content;
+    position: relative;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+.tagList {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 0px;
+    left: -30px;
+    max-width: 140px;
+    list-style-type: none;
+    margin: 0;
+}
+
+.tagForm {
+    position: absolute;
+    display: inline-block;
+    text-align: left;
+    top: 60px;
+    left: 10px;
+    max-width: 50px;
+}
+
+.smallInput {
+    width: 140px;
+    height: fit-content;
+    position: relative;
+    margin: 8px 0;
+    box-sizing: border-box;
+    font-size: 14px;
+
+}
+
+.createHeader {
+    position: absolute;
+    margin-top: 0;
+    padding: 0;
+    top: 16px;
+    left: 16px;
+}
+.createSection button{
+    background-color: darkseagreen;
+    color: white;
+}
+.createSection .submit-button{
+    margin: 4px 0px 10px 0px;
+}
+
+.createSection .delete-button{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: indianred;
+    color: white;
+
+}
+
