@@ -6,7 +6,7 @@
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
-const TEST_USER_ID = '61a9ba83c690a83c384c8531' // the id of our test user
+const TEST_USER_ID = '61aa60e1af5adf44801f1523' // the id of our test user
 
 //setup for path macro
 const path = require('path')
@@ -80,7 +80,7 @@ const mongoChecker = (req, res, next) => {
 }
 
 /***************************** HELPERS **********************************/
-// should move these to seperate files later
+// should move these to separate files later
 
 // check if the current user is a creator of a posting
 // assume user is authenticated - so req.session.user exists
@@ -106,7 +106,7 @@ const checkIsAdmin = async (req) =>{
     return User.findById(req.session.user)
         .then(user =>{
             if(!user){
-                console.log("checkIsAdmin: did not find user")
+                // console.log("checkIsAdmin: did not find user")
                 return false
             }
             return true
@@ -173,7 +173,6 @@ app.get("/api/user/logout", (req, res) =>{
 
 // check if user is logged in
 app.get("/api/user/check-session", async (req, res) => {
-
     if (env !== 'production' && USE_TEST_USER){
         req.session.user = TEST_USER_ID
         res.send({userID: TEST_USER_ID, isAdmin: false})
@@ -221,6 +220,27 @@ app.post("/api/user/create", mongoChecker, async (req, res)=>{
 
 })
 
+// get userInfo of the user logged in
+app.get("/api/user", mongoChecker, authenticate, (req, res)=>{
+
+    // check if there is user logged in
+    if (req.session.user){
+        User.findById(req.session.user)
+            .then(user =>{
+                if (!user){
+                    res.status(404).send("No user found")
+                }
+                res.send(user)
+            })
+            .catch((err) =>{
+                res.status(500).send('Internal server error')
+            })
+    }
+    else{
+        res.status(404).send("No user logged in")
+    }
+
+})
 
 /************************** WEBPAGE ROUTES **********************************/
 // Serve the build
