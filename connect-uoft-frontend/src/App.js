@@ -11,42 +11,67 @@ import Logout from "./views/Logout/Logout";
 import {postings} from "./data/data";
 import PostingDetailed from "./views/PostingDetailed/PostingDetailed";
 import User from "./views/User/User";
+import ENV from './config.js'
+const BASE_API_URL = ENV.apiBaseUrl
 
 function App() {
-    // user id of the user currently logged in, null if no one is logged in
-    // be careful of userID = 0 since 0 is false in javascript
-    // null is true as well so be careful of that
-    const [userID, setUserID] = useState(localStorage.getItem('userID_connectUofT'))
 
-    const checkUserLoggedIn = () => {
-        return userID >= 0
-    }
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
 
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(checkUserLoggedIn(userID))
 
-    // executes every time the dependencies change
+    // check if user is logged in on every refresh
     useEffect(() =>{
-        setIsUserLoggedIn(checkUserLoggedIn(userID))
-        // eslint-disable-next-line
-    }, [userID, checkUserLoggedIn])
+        console.log('check session')
+        fetch(`${BASE_API_URL}/api/user/check-session`)
+            .then((res) => {
+                if(!res.ok){
+                    console.log("check session response code:", res.status)
+                    // leave isUserLoggedIn and isAdmin to false
+                    return;
+                }
+                return res.json()
+            })
+            .then((sessionInfo) =>{
+                // previous then only returns json if response code is 200
+                if (sessionInfo){
+                    setIsUserLoggedIn(true)
+                    setIsAdmin(sessionInfo.isAdmin ? sessionInfo.isAdmin : false)
+                }
+            })
+            .catch((err) => {
+                console.log("could not check session:",err)
+            })
+    }, [])
+
 
     const logout = () =>{
-        localStorage.setItem('userID_connectUofT', null)
-        setUserID(undefined)
+        console.log('logout')
+        fetch(`${BASE_API_URL}/api/user/logout`)
+            .then((res) => {
+                if(!res.ok){
+                    console.log("could not log out:", res.status)
+                    return;
+                }
+                return res.json()
+            })
+            .then((responseInfo) =>{
+                // previous then only returns json if response code is 200
+                if (responseInfo){
+                    setIsUserLoggedIn(false)
+                    setIsAdmin(false)
+                }
+            })
+            .catch((err) => {
+                console.log("could not log out:",err)
+            })
     }
-
-    // TEMP
-    const [posts, setPosts] = useState(postings)
-
-    useEffect(() => {
-        setPosts(postings)
-    }, [postings])
 
 
   return (
     <div className="App">
         {/* routes to different pages based on url */}
-        <Header isUserLoggedIn={isUserLoggedIn} userID={userID}/>
+        <Header isUserLoggedIn={isUserLoggedIn} userID={1}/>  {/*TODO change to remove userID*/}
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
@@ -54,7 +79,7 @@ function App() {
                 </Route>
 
                 <Route path="/login">
-                    {isUserLoggedIn ? <Redirect to="/home" /> :<Login setUserID={setUserID} />}
+                    {isUserLoggedIn ? <Redirect to="/home" /> :<Login setIsUserLoggedIn={setIsUserLoggedIn} setIsAdmin={setIsAdmin} />}
                 </Route>
 
                 <Route path="/signup" >
@@ -62,15 +87,15 @@ function App() {
                 </Route>
 
                 <Route path="/home" component={Home} >
-                    {isUserLoggedIn ? <Home posts={posts} userID={userID}/> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Home userID={1}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/profile" >
-                    {isUserLoggedIn ? <Profile userID={userID} logout={logout}/> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Profile userID={1} logout={logout}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/manage" >
-                    {isUserLoggedIn ? <Manage userID={userID}/> : <Redirect to="/login" />}
+                    {isUserLoggedIn ? <Manage userID={1}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/logout">
@@ -78,7 +103,7 @@ function App() {
                 </Route>
 
                 <Route path="/posting/:id">
-                    <PostingDetailed userID={userID} isUserLoggedIn={isUserLoggedIn}/>
+                    <PostingDetailed userID={1} isUserLoggedIn={isUserLoggedIn}/> {/*TODO change to remove userID*/}
                 </Route>
 
                 <Route path="/user/:id">
@@ -92,7 +117,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        {/*<button onClick={logout}>logout (temporary - need additional refresh) userid: {userID}</button>*/}
+        {/*<button onClick={logout}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>*/}
     </div>
   );
 }
