@@ -11,7 +11,7 @@ const ReportedGroups = () =>{
         setViewing(!viewing)
     }
     return(
-        <div className="profile-container">
+        <div className="profile-container profile-card-background">
             <h1 className="section_title">Reported Groups</h1>
             <table className="groups">
                 <tbody>
