@@ -32,8 +32,22 @@ const UserHandle = (props) => {
             </button>
             <ProfilePopup trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
             <div className="profile-picture-container" title={(user1.name).concat("'s ","profile icon")}>
-        
+
                 <img src={user1.image} alt={(user1.name).concat("'s ","profile icon")} className="profile-picture-container__image"/>
+                
+                <div class="profile-picture-dropdown-content profile-photo-grid-container">
+                    <div class="grid-photo">1</div>
+                    <div class="grid-photo">2</div>
+                    <div class="grid-photo">3</div>
+                    <div class="grid-photo">4</div>
+                    <div class="grid-photo">5</div>
+                    <div class="grid-photo">6</div>
+                    <div class="grid-photo">7</div>
+                    <div class="grid-photo">8</div>
+                    <div class="grid-photo">9</div>
+                </div>
+             
+                
                 {/* <ProfilePopup trigger={editProfileImage} setTrigger={setEditProfileImage} user={user1} type="Image"/> */}
             </div>
             <h1 className="profile-user-handle-container__h1" title="Name">{user1.name}</h1>
