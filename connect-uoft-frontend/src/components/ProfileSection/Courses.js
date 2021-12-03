@@ -4,11 +4,6 @@ import { useState } from "react"
 import TagRemovable from "../SearchTag/TagRemovable";
 const courses = []
 
-class Course {
-    constructor(course){
-        this.course = course
-    }
-}
 const Courses = (props) => {
 
 
