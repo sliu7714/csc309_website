@@ -47,6 +47,11 @@ const PostingSchema = new mongoose.Schema({
         default: [],
     },
 
+    isReported: {
+        type: Boolean,
+        default: false
+    },
+
     // id of the creator of the post NOT the id of the posting
     creatorID:{
         type: mongoose.Types.ObjectId,
