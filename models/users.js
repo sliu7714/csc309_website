@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-        minlength: 5,
+        minlength: 4,
         trim: true
     },
     name: {
@@ -93,7 +93,7 @@ UserSchema.statics.findByUsernamePassword = function(username, password) {
             return Promise.reject()
         }
         // found user with matching email, now check password
-        return new Promise((res, reject) => {
+        return new Promise((resolve, reject) => {
             bcrypt.compare(password, user.password, (err, result) => {
                 if (result) {
                     resolve(user)
