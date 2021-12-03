@@ -1,6 +1,5 @@
 import './styles.css'
 import {useState} from 'react'
-// import {users} from '../../data/data'
 import ENV from '../../config'
 const BASE_API_URL = ENV.apiBaseUrl
 
@@ -14,8 +13,6 @@ const LoginBox = ({setIsUserLoggedIn, setIsAdmin}) => {
     const incorrectCredentialsMsg = <div className="msg">Incorrect login, please check your username and password</div>
 
     const login = () =>{
-
-        console.log({username, password}) // TODO: remove
 
         fetch(`${BASE_API_URL}/api/user/login`,{
             method: "post",
@@ -35,7 +32,7 @@ const LoginBox = ({setIsUserLoggedIn, setIsAdmin}) => {
             })
             .then((responseInfo) =>{
                 if (responseInfo){
-                    console.log(responseInfo)
+                    // console.log(responseInfo)
                     setIsUserLoggedIn(true)
                     setIsAdmin(responseInfo.isAdmin ? responseInfo.isAdmin : false)
                     setPassword("")
