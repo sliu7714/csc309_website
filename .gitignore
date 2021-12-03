@@ -24,6 +24,7 @@ connect-uoft-frontend/yarn-error.log*
 
 node_modules
 connect-uoft-frontend/build
+mongo-data/
 
 
 npm-debug.log*

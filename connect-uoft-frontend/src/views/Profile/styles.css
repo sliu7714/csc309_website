@@ -1,4 +1,5 @@
 #profile_page {
+  width: 100%;
   position: relative;
   margin-left: 50px;
   margin-right: 50px;
@@ -16,4 +17,11 @@
 #column3 {
   margin-left: 25px;
   float: left;
+}
+.noGroupContainer {
+  float: left;
+}
+
+.groupsContentContainer {
+  width: 100%;
 }
