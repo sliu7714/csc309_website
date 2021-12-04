@@ -39,7 +39,8 @@ app.use(bodyParser.urlencoded({ extended: true })) // parsing URL-encoded form d
 /***************************** EXPRESS SESSION  **********************************/
 // express-session for managing user sessions
 const session = require("express-session");
-const MongoStore = require('connect-mongo') // to store session information on the database in production
+const MongoStore = require('connect-mongo'); // to store session information on the database in production
+const { postings } = require('./connect-uoft-frontend/src/data/data');
 
 function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
@@ -58,8 +59,8 @@ const mongoChecker = (req, res, next) => {
 }
 
 /***************************** AUTHENTICATION MIDDLEWARE **********************************/
-
  const authenticate = (req, res, next) => {
+
     if (env !== 'production' && USE_TEST_USER)
         req.session.user = TEST_USER_ID // test user on development. (remember to run `TEST_USER_ON=true node server.js` if you want to use this user.)
 
@@ -78,6 +79,80 @@ const mongoChecker = (req, res, next) => {
         res.status(401).send("Unauthorized")
     }
 }
+
+app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // Create a new posting
+    const posting = new Posting({
+        name: req.body.title, // fill in the rest
+    })
+
+    // Save posting to the database
+    // async-await version:
+    try {
+        const result = await Posting.save() 
+        res.send(result)
+    } catch(error) {
+        log(error) // log server error to the console, not to the client.
+        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+        }
+    }
+})
+
+// a GET route to get all posts
+app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({}) // can filter here > {creator: req.user._id}
+        res.send(postings) 
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+// PATCH to update the applicants
+app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the posting
+    try {
+        const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: req.applicant }}) // can filter hyere > {creator: req.user._id}
+        //res.send(postings) 
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({isReported: True}) // can filter here > {creator: req.user._id}
+        res.send(postings) 
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the posting
+    try {
+        const postings = await Posting.updateOne({ _id: req.posting_id }, {isReported: True }) // can filter hyere > {creator: req.user._id}
+        //res.send(postings) 
+    } catch(error) {
+        log(error)
+        res.status(500).send("Internal Server Error")
+    }
+    }
+});
+
 
 /***************************** HELPERS **********************************/
 // should move these to separate files later

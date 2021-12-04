@@ -1,5 +1,3 @@
-
-
 const production = {
     env: 'production',
     apiBaseUrl: '', // relative path
@@ -13,3 +11,4 @@ const development = {
 }
 
 export default process.env.NODE_ENV === 'production' ? production : development
+
