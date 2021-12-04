@@ -1,5 +1,5 @@
 .createSection {
-    position: absolute;
+    position: fixed;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
@@ -8,16 +8,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto;
     z-index: 10;
 }
 
+
 .innerCreate {
     position: relative;
-    padding: 23px;
+    padding: 26px;
     width: 100%;
     max-width: 500px;
-    height: 400px;
+    height: 450px;
     background-color: white;
 }
 
@@ -38,15 +38,20 @@
     margin: 0;
 }
 
+.innerCreate .input-label{
+    color: dimgrey;
+    font-size: 16px;
+    margin-bottom: -6px;
+    font-weight: normal;
+}
+
 .descriptionInput {
-    height: 50px;
-    max-height: 150px;
-    min-height: 30px;
+    height: 100px;
     width: 100%;
     position: relative;
     margin: 8px 0;
     box-sizing: border-box;
-    resize: vertical;
+    resize: none;
     font-size: 14px;
 }
 
@@ -55,7 +60,6 @@
     height: fit-content;
     position: relative;
     margin: 8px 0;
-    font-family: monospace;
     box-sizing: border-box;
     font-size: 14px;
 }
@@ -86,7 +90,6 @@
     position: relative;
     margin: 8px 0;
     box-sizing: border-box;
-    font-family: monospace;
     font-size: 14px;
 
 }
@@ -98,14 +101,20 @@
     top: 16px;
     left: 16px;
 }
-
-.submitButton {
-    width: fit-content;
-    font-family: monospace;
-    box-sizing: border-box;
-    font-size: 14px;
+.createSection button{
+    background-color: darkseagreen;
+    color: white;
+}
+.createSection .submit-button{
+    margin: 4px 0px 10px 0px;
 }
 
-.create_post_tag{
-    color: red;
+.createSection .delete-button{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: indianred;
+    color: white;
+
 }
+

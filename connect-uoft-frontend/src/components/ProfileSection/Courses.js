@@ -4,11 +4,6 @@ import { useState } from "react"
 import TagRemovable from "../SearchTag/TagRemovable";
 const courses = []
 
-class Course {
-    constructor(course){
-        this.course = course
-    }
-}
 const Courses = (props) => {
 
 
@@ -53,7 +48,7 @@ const Courses = (props) => {
     // )
 
     return(
-        <div className="profile-container">
+        <div className="profile-container profile-card-background">
             <div className="courses contents-container">
                 <h1 className="contents-container__h1">My Courses</h1>
             
@@ -71,6 +66,8 @@ const Courses = (props) => {
                 <div id='tags_container'>
                     {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
                 </div>
+
+                {props.courses}
             </div>
         </div>
     )

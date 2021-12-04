@@ -1,90 +1,138 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
 import {postings} from "../../data/data";
 
 
-// function addTagFunction (e) {
-//
-//     console.log('Adding a tag')
-//
-//     const tagName = document.querySelector('smallInputTag')
-//     const tagList = document.getElementsByClassName("tagList");
-//
-//     const listElement = document.createElement('li')
-//     listElement.className = 'tagList'
-//     listElement.appendChild(document.createTextNode(tagName))
-//
-//     try {
-//         tagList.appendChild(listElement)
-//     } catch (e) {
-//         console.log('Failed to add tag')
-//     }
-//
-// }
+const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
+
+    // used for creating a new post: (if isEditing is false)
+    const initialPosting = {
+        id: postings.length, // TODO: later backend should create post id - so remove this later
+        creator: userID,
+        title: "",
+        description: "",
+        endDate: "",
+        capacity: 2,
+        tags: [],
+        members: [],
+        applicants: [],
+    }
 
 
-const Popup = ({trigger, setTrigger, userID}) => {
+    const [postingInfo, setPostingInfo] = useState(initialPosting)
 
+    useEffect(() =>{
+        if (isEditing){
+            // making a copy of the post so the background post is not changing as we edit this
+            // this is only relevant when using this popup to edit a post
+            const postingCopy = Object.assign({}, posting)
+            setPostingInfo(postingCopy)
+        }
+    }, [posting])
+
+    // the current text in the tag input box
     const [inputTagText, setInputTagText] = useState("")
-    // a list of the text in the currently displayed tags
-    const [currentTags, setCurrentTags] = useState([])
-
-    const [title, setTitle] = useState("")
-    const [endDate, setEndDate] = useState("")
-    const [description, setDescription] = useState("")
-    const [capacity, setCapacity] = useState()
 
     const addTag = () => {
-        if (currentTags.includes(inputTagText)){
+        if(!postingInfo.tags){
+            postingInfo.tags = []
+        }
+        if (postingInfo.tags.includes(inputTagText)){
+            console.log(postingInfo.tags)
             console.log(`already added tag: ${inputTagText}`)
         }else{
-            setCurrentTags([...currentTags, inputTagText])
+            setPostingInfo({...postingInfo, tags: [...postingInfo.tags, inputTagText]})
             setInputTagText("")
         }
     }
 
     const removeTag = (tagText) => {
-        setCurrentTags(currentTags.filter(tag => tag !== tagText))
+        const filteredTags = postingInfo.tags.filter(tag => tag !== tagText)
+        setPostingInfo({...postingInfo, tags: filteredTags})
     }
 
-    const clear_input = () => {
-        setTitle("")
-        setEndDate("")
-        setDescription("")
-        setCapacity(undefined)
-        setCurrentTags([])
+    const addCapacity = (event) =>{
+        const capacity = event.target.value
+        if ( capacity <= 1){
+            alert("please input a capacity greater than 1")
+            return;
+        }
+        setPostingInfo({...postingInfo, capacity })
     }
 
-    const closePopup = () =>{
-        // clear state for next create post
-        clear_input()
+    const addEndDate = (event) =>{
+        const endDate = event.target.value
+
+        if (!isEditing){
+            // NOTE: Date uses month *index* NOT month so January=0, February=1, etc...
+            const endDateObj = new Date(endDate.slice(0,4), parseInt(endDate.slice(5,7)) -1, endDate.slice(8,10))
+            const now = new Date()
+            now.setHours(0,0,0,0)
+
+            // new post should not have endDate later than current date
+            if (endDateObj < now){
+
+                alert("please input an endDate later than today")
+                return;
+            }
+        }
+
+        setPostingInfo({...postingInfo, endDate })
+    }
+
+
+
+    const closePopup = () => {
+        if (!isEditing){
+            // clear state for next create post
+            setPostingInfo(initialPosting)
+        }
+
         setTrigger(false)
     }
 
+    const deletePost = () =>{
+        console.log("deletePosting not fully implemented")
+        // fetch(`api/postings/delete/${posting.id}`)
+        //     .then(res =>{
+        //         if (!res.ok){
+        //             // TODO: handle this - show message to user?
+        //             console.log(`could not delete post, response code: ${res.status}`)
+        //             return;
+        //         }
+        //     })
+        // // now need to call function in parent to update postings data for frontend to reflect changes
+    }
+
     const createPost = () =>{
-        const newPost = {
-            id: postings.length, // later backend should create post id
-            creator: userID,
-            title,
-            endDate,
-            desc: description,
-            capacity,
-            tags: currentTags,
-            members: [],
-            applicants: [],
+        if(!postingInfo.title || !postingInfo.endDate){
+            alert("please make sure your post contains a title and end date")
+            return;
         }
-        console.log(newPost)
+
+        console.log(postingInfo)
         // TODO: add fetch call to store post in backend
-        postings.push(newPost) //TEMPORARY
+        if(isEditing){
+            //TODO:  fetch call to edit post (PUT?)
+        }
+        else{
+            //TODO: fetch call to create post (POST)
+        }
+
+        postings.push(postingInfo) //TEMPORARY
         closePopup()
     }
 
     return (trigger) ? (
         <div className="createSection">
             <div className="innerCreate">
-
-                <h3 className="createHeader"> Create Posting </h3>
+                {
+                    isEditing ?
+                        <h2 className="createHeader"> Edit Posting </h2>
+                        :
+                        <h2 className="createHeader"> Create Posting </h2>
+                }
 
                 <div className="tagForm" >
                     <ul className="tagList">
@@ -93,69 +141,73 @@ const Popup = ({trigger, setTrigger, userID}) => {
                                name="tag"
                                value={inputTagText}
                                onChange={(e) => setInputTagText(e.target.value)}
-                               placeholder="Tags"  />
+                               placeholder="Add Tag..."  />
                         <button className="smallInput" value="Add" onClick={() => addTag()} >Add</button>
-                        {currentTags.map(tagText => <TagRemovable className="create_post_tag" text={tagText} removeTag={removeTag}/>)}
+                        {postingInfo.tags ? postingInfo.tags.map(tagText => <TagRemovable key={tagText} className="create_post_tag" text={tagText} removeTag={removeTag}/>) : null}
                     </ul>
                 </div>
 
                 <ul className="inputList">
                     <li>
                         <label>
+                            <div className="input-label">Title</div>
                         <input className="standardInput"
                                type="text"
                                name="postingTitle"
-                               value={title}
-                               onChange={(e) => setTitle(e.target.value)}
-                               placeholder="Title" />
+                               value={postingInfo.title}
+                               onChange={(e) => setPostingInfo({...postingInfo, title: e.target.value})}
+                               placeholder="Add Title..." />
                         </label>
                     </li>
                     <li>
                         <label>
+                            <div className="input-label">End date</div>
                             <input className="standardInput"
                                    name="endDate"
                                    type="date"
-                                   value={endDate}
-                                   onChange={(e) => setEndDate(e.target.value)}
+                                   value={postingInfo.endDate}
+                                   onChange={(e) => addEndDate(e)}
                             />
                         </label>
                     </li>
                     <li>
                         <label>
+                            <div className="input-label">Description</div>
                         <textarea
                             className="descriptionInput"
                             type="text"
                             name="postingDescription"
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder="Description"/>
+                            value={postingInfo.description}
+                            onChange={(e) => setPostingInfo({...postingInfo, description: e.target.value})}
+                            placeholder="Add Description..."/>
                         </label>
                     </li>
                     <li>
                         <label>
+                        <div className="input-label">Capacity</div>
                         <input className="standardInput"
                             name="numberOfGuests"
                             type="number"
-                            value={capacity}
-                            onChange={(e) => setCapacity(e.target.value)}
+                            value={postingInfo.capacity}
+                            onChange={(e) => addCapacity(e)}
                             placeholder="Group Capacity"
                             />
                         </label>
                     </li>
 
-                    <input className="submitButton" type="submit" value="Submit" onClick={() => createPost()}/>
+                    <button className="submit-button" onClick={() => createPost()}>Submit</button>
                 </ul>
 
-                <button className="closeButton" onClick={() => setTrigger(false)}>close</button>
+                { isEditing ?
+                    <button className="delete-button" onClick={deletePost}>Delete Post</button>
+                    : null
+                }
+
+                <button className="closeButton" onClick={() => closePopup()}>Cancel</button>
             </div>
         </div>
     ) : null;
 }
-
-
-//document.getElementsByClassName("tagForm")[0].addEventListener("submit", addTagFunction)
-
-
 
 
 export default Popup
