@@ -253,6 +253,7 @@ const LeadGroups = (props) => {
                {(getCreatedGroups().length === 0)? <div>You Have Not Created Any Groups</div>:  addAllCreatedGroups()}
             </div>
         </div>
+        </div>
     )
 }
 export {Groups, LeadGroups}
