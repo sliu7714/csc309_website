@@ -145,13 +145,13 @@ const getProfileSummary = async (id) =>{
 const addUserInfoToPosts = async (postingList) =>{
     return Promise.all(postingList.map(async (posting) => {
         // get creator info
-        creatorInfo = await getProfileSummary(posting.creatorID)
+        const creatorInfo = await getProfileSummary(posting.creatorID)
         // get member info
-        memberInfo = await Promise.all(posting.members.map(async (member) =>{
+        const memberInfo = await Promise.all(posting.members.map(async (member) =>{
                 await getProfileSummary(member)
             }));
         // get applicant info
-        applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+        const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
             const applicantInfo = await getProfileSummary(application.applicantID)
             return({...application, applicantInfo})
         }));
@@ -260,16 +260,6 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
         // Save posting to the database
         const postResult = await posting.save()
-
-        // TODO: add post to user's postings list - idk if we still need
-        // const newPostID = postResult._id
-        // User.findOneAndUpdate({id_: req.session.user}, {$push: {createdPostings: newPostID}})
-        //     .then(user =>{
-        //         if (!user){
-        //             // shouldn't really happen since we authenticated unless there is a weird race condition
-        //             res.status(404).send('Could not find user')
-        //         }
-        //     })
         res.send(postResult)
     } catch(error) {
         console.log(error) // log server error to the console, not to the client.
