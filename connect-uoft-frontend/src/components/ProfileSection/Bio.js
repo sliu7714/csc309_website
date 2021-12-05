@@ -12,8 +12,9 @@ const Bio = (props) =>{
     const user = props.user
 
     return (
+
         <div className="profile-container profile-card-background">
-            <div className="contents-container">
+            <div className="profile-contents-container">
                 <h1 className="contents-container__h1">About Me</h1>
                 {/* Initializes the Bio with a stored bio and then saving will require a server call*/}
                 <p className="contents-container__p">{user.bio ? user.bio: "no bio"}</p>

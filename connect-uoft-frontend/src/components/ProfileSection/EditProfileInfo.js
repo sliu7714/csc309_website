@@ -8,6 +8,7 @@ const EditProfile = (props)=>{
         <div className="profile-container">
             <h1 className="section_title">My Details</h1>
             <form id="profile_details">
+
                 <label>Name: </label>
                 <input className="detail_input" placeholder={user1.name}></input><br/>
                 <label>Email: </label>

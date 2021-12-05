@@ -8,11 +8,14 @@ import ReportedGroups from "../../components/ProfileSection/ReportedGroups";
 import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
+
+// import profilePic1 from "/images/Timmy_Turner1.png";
+// import profilePic2 from "/images/profile-pictures/chef.svg";
+// import profilePic3 from "/images/profile-pictures/fish.svg";
+const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profile-pictures/chef.svg", "/images/profile-pictures/fish.svg"]
 import './styles.css'
 import ENV from '../../config'
 const BASE_API_URL = ENV.apiBaseUrl
-
-
 
 const Profile = ({userID, isAdmin}) => {
     // const user = users[userID]
@@ -56,95 +59,100 @@ const Profile = ({userID, isAdmin}) => {
         )
     }
 
-    const regUser = <div id="profile_page">
-                        <UserHandle user={userID}/>
-                        <div className="noGroupContainer">
-                            <div id='column1'>
-                                <Bio bio={user.bio}/>
-                                {/* <Courses courses={_courses}/> */}
-                            </div>
-                            <div id='column2'>
-                                <Courses courses={user.courses}/>
-                            </div>
-                            <div id='column3'>
-                                <Stats user={userID}/>
-                            </div>
+    // const regUser = <div id="profile_page">
+    //                     <UserHandle profilePictures={_profilePictures} user={userID}/>
+    //                     <div className="noGroupContainer">
+    //                         <div id='column1'>
+    //                             <Bio bio={_bio}/>
+    //                             {/* <Courses courses={_courses}/> */}
+    //                         </div>
+    //                         <div id='column2'>
+    //                             <Courses courses={_courses}/>
+    //                         </div>
+    //                         <div id='column3'>
+    //                             <Stats user={userID}/>
+    //                         </div>
+                            
+    //                     </div>
+    //                     <div className="groupsContentContainer">
+    //                             <Groups groups={_groups} user={userID}/>
+    //                             <LeadGroups groups={_groups}/>
+    //                     </div>
+    //                 </div>
 
-                        </div>
-                        <div className="groupsContentContainer">
-                                <Groups groups={user.groups} user={userID}/>
-                                <LeadGroups groups={user.groups}/>
-                        </div>
-                    </div>
+    // const adminUser = <div id="profile_page">
+    //                     <UserHandle  profilePictures={_profilePictures} user={userID}/>
+    //                     <div className="noGroupContainer">
+    //                         <div id='column1'>
+    //                             <Bio bio={_bio}/>
+    //                             {/* <Courses courses={_courses}/> */}
+    //                         </div>
+    //                         <div id='column2'>
+    //                             <Courses courses={_courses}/>
+    //                         </div>
+    //                         <div id='column3'>
+    //                             <Stats user={userID}/>
+    //                         </div>
+                            
+    //                     </div>
+    //                     <div className="groupsContentContainer">
+    //                             <Groups groups={_groups} user={userID}/>
+    //                             <LeadGroups groups={_groups}/>
+    //                     </div>
+    //                     <div className="reportedContentContainer">
+    //                             <ReportedUsers resportedUsers={_groups}/>
+    //                             <ReportedGroups reportedGroups={_groups}/>
+    //                     </div>
+    //                     {/* <div id='column1'>
+    //                         <EditProfile user={userID}/>
+    //                         <Stats user={userID}/>
+    //                         <ReportedUsers groups={_groups}/>
+    //                     </div>
+    //                     <div id='column2'>
+    //                         <Bio bio={_bio}/>
+    //                         <Groups groups={_groups} user={userID}/>
+                            
+    //                     </div>
+    //                     <div id='column3'>
+    //                         <Courses courses={_courses} user={userID}/>
+    //                         <LeadGroups groups={_groups} user={userID}/>
+    //                         <ReportedGroups groups={_groups}/>
+    //                     </div> */}
 
-    const adminUser = <div id="profile_page">
-                        <UserHandle user={userID}/>
-                        {/* <EditProfile user={userID}/> */}
-                        <div id='column1'>
-                            <EditProfile user={userID}/>
-                            <Stats user={userID}/>
-                            <ReportedUsers groups={user.groups}/>
-                        </div>
-                        <div id='column2'>
-                            <Bio bio={user.bio}/>
-                            <Groups groups={user.groups} user={userID}/>
-
-                        </div>
-                        <div id='column3'>
-                            <Courses courses={user.courses} user={userID}/>
-                            <LeadGroups groups={user.groups} user={userID}/>
-                            <ReportedGroups groups={user.groups}/>
-                        </div>
-
-                    </div>
-
-
+    //                 </div>
     return(
-        <div id='user-profile-page'>
-            {/* Displays appropriate page depending on if the user is an admin or not */}
+        // <div>
+        //     {/* Displays appropriate page depending on if the user is an admin or not */}
+        //     {_isAdmin ? adminUser : regUser}
+   
+        // </div>
+        <div id="profile_page">
+                <div className="user-container">
+                    <UserHandle profilePictures={_profilePictures} user={userID}/>
 
-            {/*{isAdmin ? adminUser : regUser}*/}
-            <UserHandle user={user}/>
-            <div className="noGroupContainer">
-                <div id='column1'>
-                    <Bio user={user}/>
-                    {/* <Courses courses={_courses}/> */}
                 </div>
-                <div id='column2'>
-                    <Courses courses={user.courses}/>
+                <div className="no-group-container">
+                    <div id='column1'>
+                        <Bio bio={_bio}/>
+                        {/* <Courses courses={_courses}/> */}
+                    </div>
+                    <div id='column2'>
+                        <Courses courses={_courses}/>
+                    </div>
+                    <div id='column3'>
+                        <Stats user={userID}/>
+                    </div>
+                    
                 </div>
-                <div id='column3'>
-                    <Stats user={userID}/>
+                <div className="groups-content-container">
+                        <Groups groups={_groups} user={userID}/>
+                        <LeadGroups groups={_groups}/>
                 </div>
-
-            </div>
-            <div className="groupsContentContainer">
-                <Groups groups={user.groups} user={userID}/>
-                <LeadGroups groups={user.groups}/>
-            </div>
-
-            {/*<div id="profile_page">*/}
-            {/*    <UserHandle user={user} />*/}
-            {/*    /!* <EditProfile user={userID}/> *!/*/}
-            {/*    <div id='column1'>*/}
-            {/*        <EditProfile user={userID}/>*/}
-            {/*        <Stats user={userID}/>*/}
-            {/*        {isAdmin &&  <ReportedUsers groups={user.groups}/>}*/}
-
-            {/*    </div>*/}
-            {/*    <div id='column2'>*/}
-            {/*        <Bio bio={user.bio}/>*/}
-            {/*        <Groups groups={user.groups} user={userID}/>*/}
-
-            {/*    </div>*/}
-            {/*    <div id='column3'>*/}
-            {/*        <Courses courses={user.courses} user={userID}/>*/}
-            {/*        <LeadGroups groups={user.groups} user={userID}/>*/}
-            {/*        {isAdmin && <ReportedGroups groups={user.groups}/>}*/}
-            {/*    </div>*/}
-
-            {/*</div>*/}
-             
+                {_isAdmin ? <div className="reported-content-container">
+                                <ReportedUsers resportedUsers={_groups}/>
+                                <ReportedGroups reportedGroups={_groups}/>
+                            </div>           
+                : null}
         </div>
     )
 
