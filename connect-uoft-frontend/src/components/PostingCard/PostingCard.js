@@ -3,7 +3,7 @@ import "./styles.css"
 import Tag from "../SearchTag/Tag";
 import CommentSection from "./CommentSection";
 import ApplicantSection from "./ApplicantsSection";
-import Popup from "../Popup/Popup";
+import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplicantsSection from "./ApplicantsSection";
 import ApplySection from "./ApplySection";

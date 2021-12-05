@@ -1,5 +1,5 @@
 import "./styles.css"
-import Popup from "../Popup/Popup";
+import Popup from "../EditCreatePostPopup/Popup";
 import { useState } from "react";
 
 

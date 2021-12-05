@@ -5,7 +5,7 @@ import PostingCard from "../../components/PostingCard/PostingCard";
 import "./styles.css"
 
 import {postings} from "../../data/data";
-import Popup from "../../components/Popup/Popup"; // TEMP
+import Popup from "../../components/EditCreatePostPopup/Popup"; // TEMP
 
 const PostingDetailed = ({userID, isUserLoggedIn}) =>{
 
