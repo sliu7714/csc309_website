@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 const CommentSchema = new mongoose.Schema({
     // user id of the creator of the comment NOT the id of the comment
-    creatorID: {
+    applicantID: {
         type: mongoose.Types.ObjectId,
         required: true,
     },
@@ -14,6 +14,27 @@ const CommentSchema = new mongoose.Schema({
         required: true,
         minlength: 1,
     },
+
+    // can access creation time from createdAt attributes automatically created (from timestamps option below
+}, {timestamps: true})
+
+const ApplicationSchema = new mongoose.Schema({
+    // user id of the creator of the comment NOT the id of the comment
+    creatorID: {
+        type: mongoose.Types.ObjectId,
+        required: true,
+    },
+    // message to include for application
+    applyMsg:{
+        type: String,
+        default: ""
+    },
+    applicationStatus:{
+        type: String,
+        enum: ['ACCEPTED', 'PENDING', 'REJECTED', 'CANCELLED'],
+        required: true,
+        default: 'PENDING'
+    }
 
     // can access creation time from createdAt attributes automatically created (from timestamps option below
 }, {timestamps: true})
@@ -66,7 +87,7 @@ const PostingSchema = new mongoose.Schema({
 
     // the ids of users that are applying to this post
     applicants: {
-        type: [mongoose.Types.ObjectId],
+        type: [ApplicationSchema],
         default :[]
     },
 

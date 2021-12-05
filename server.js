@@ -41,7 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true })) // parsing URL-encoded form d
 const session = require("express-session");
 const MongoStore = require('connect-mongo'); // to store session information on the database in production
 
-function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
+function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddenly disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
 
@@ -196,7 +196,7 @@ const checkIsAdmin = async (req) =>{
 // create session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "connect uoft secret", // make a SESSION_SECRET environment variable when deploying (for example, on heroku)
+        secret: process.env.SESSION_SECRET || "connect uoft secret", // added secret to heroku config vars
         resave: false,
         saveUninitialized: false,
         cookie: {
