@@ -1,7 +1,8 @@
 import './styles.css' // use same styles as LoginBox
 import {useState} from 'react'
-import {users} from '../../data/data'
 import {useHistory} from "react-router-dom"
+import ENV from '../../config'
+const BASE_API_URL = ENV.apiBaseUrl
 
 
 const LoginBox = () => {
@@ -9,7 +10,26 @@ const LoginBox = () => {
     const[username, setUsername] = useState("")
     const[password, setPassword] = useState("")
     const[email, setEmail] = useState("")
-    const[isUniqueUsername, updateIsUniqueUsername] = useState(true)
+
+    const redirectLoginMessage =
+        <div className="msg">
+            Already have an account?
+            <u><i><a href='/login' >Login</a></i></u>
+        </div>
+
+    const [message, setMessage] = useState(redirectLoginMessage)
+
+
+
+    const passwordLengthMessage =
+        <div className="msg">
+            Please input a password 4 characters or longer
+        </div>
+
+    const invalidEmailMessage =
+        <div className="msg">
+            Please input a valid email
+        </div>
 
     const nonUniqueUsernameMsg =
         <div className="msg">
@@ -17,38 +37,66 @@ const LoginBox = () => {
             Please pick another one
         </div>
 
+    const signupErrorMsg =
+        <div className="msg">
+            Sorry, there was a problem signing up for an account
+        </div>
+
+    const successSignupMessage = (name) =>{
+        return(
+            <div className="msg">
+                Successfully registered for an account. <br/>
+                Welcome {name}!
+                <u><a href='/login' >Login?</a></u>
+            </div>
+        )
+    }
+
+    const validateEmail = () =>{
+        // RFC 5322 standard email regex from http://emailregex.com/
+        return email.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])')
+    }
+
+
     const signup = () =>{
-        // TODO (after phase 1) send user info to backend to create new user
-        // - first check for unique username then send info to create new user
-        //      dont forget to clear password from state
+        setMessage(null)
 
-        console.log(`username:${username} password:${password}`) // make sure to delete later - security flaw
-        const matchingUsername = users.filter((user) => user.username === username )
-        if (matchingUsername.length === 0){
-            // no other user with same username
-            // code to create new user here
-            const new_user = {
-                id: users.length,
-                username: username,
-                password: password,
-                name: username,
-                email: email,
-                bio: "",
-                isAdmin: false,
-                postings: [],
-                groups: [],
-                applying: [],
+        if (password.length < 4){
+            setMessage(passwordLengthMessage)
+            return;
+        }
+        if (!validateEmail()){
+            setMessage(invalidEmailMessage)
+            return;
+        }
+
+        fetch(`${BASE_API_URL}/api/user/create`,{
+            method: "post",
+            body: JSON.stringify({username, password, email}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
             }
-            users.push(new_user) // new user only persists until next refresh (since this isn't writing to a file or data base or anything) 
-            setPassword("") // clear password from state
-
-            // redirect to login page:
-            history.push("/")
-        }
-        else{
-            // incorrect username
-            updateIsUniqueUsername(false)
-        }
+        })
+            .then((res) =>{
+                if(!res.ok){
+                    console.log("invalid signup, response code: ", res.status)
+                    setMessage(nonUniqueUsernameMsg)
+                    return;
+                }
+                return res.json()
+            })
+            .then((responseInfo) =>{
+                if (responseInfo){
+                    console.log(responseInfo)
+                    setMessage(successSignupMessage(username))
+                    setPassword("")
+                }
+            })
+            .catch((err) =>{
+                console.log("error with signing up in: ", err)
+                setMessage(signupErrorMsg)
+            })
     }
 
     return(
@@ -84,9 +132,7 @@ const LoginBox = () => {
                 className="login_btn"
                 onClick={() => signup()}>Create Account</button>
 
-            {/* render msg only if user has entered non unique username */}
-            {isUniqueUsername ? null : nonUniqueUsernameMsg}
-
+            {message}
 
         </div>
 

@@ -1,9 +1,10 @@
 import './styles.css'
 import {useState} from 'react'
-import {users} from '../../data/data'
+import ENV from '../../config'
+const BASE_API_URL = ENV.apiBaseUrl
 
 
-const LoginBox = ({setUserID}) => {
+const LoginBox = ({setIsUserLoggedIn, setIsAdmin}) => {
 
     const[username, setUsername] = useState("")
     const[password, setPassword] = useState("")
@@ -12,18 +13,34 @@ const LoginBox = ({setUserID}) => {
     const incorrectCredentialsMsg = <div className="msg">Incorrect login, please check your username and password</div>
 
     const login = () =>{
-        // TODO (after phase 1) authenticate using backend
-        console.log(`username: ${username} \n password: ${password}`) // make sure to delete later - security flaw
-        const matchingUsername = users.filter((user) => user.username === username )
-        if (matchingUsername.length === 1 && matchingUsername[0].password === password){
-            setPassword("") // clear password from state
-            setUserID(matchingUsername[0].id) // this updates the state in App.js
-            localStorage.setItem('userID_connectUofT', matchingUsername[0].id) // this updates the local storage
-            console.log(`user id: ${matchingUsername[0].id}`)
-        }
-        else{
-            setIsIncorrectCredentials(true)
-        }
+
+        fetch(`${BASE_API_URL}/api/user/login`,{
+            method: "post",
+            body: JSON.stringify({username, password}),
+            headers: {
+                Accept: "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        })
+            .then((res) =>{
+                if(!res.ok){
+                    console.log("invalid login: response code ", res.status)
+                    setIsIncorrectCredentials(true)
+                    return;
+                }
+                return res.json()
+            })
+            .then((responseInfo) =>{
+                if (responseInfo){
+                    // console.log(responseInfo)
+                    setIsUserLoggedIn(true)
+                    setIsAdmin(responseInfo.isAdmin ? responseInfo.isAdmin : false)
+                    setPassword("")
+                }
+            })
+            .catch((err) =>{
+                console.log("error with logging in: ", err)
+            })
     }
 
     return(

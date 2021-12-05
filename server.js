@@ -6,7 +6,7 @@
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
-const TEST_USER_ID = '61a9ba83c690a83c384c8531' // the id of our test user
+const TEST_USER_ID = '61aa60e1af5adf44801f1523' // the id of our test user
 
 //setup for path macro
 const path = require('path')
@@ -39,9 +39,9 @@ app.use(bodyParser.urlencoded({ extended: true })) // parsing URL-encoded form d
 /***************************** EXPRESS SESSION  **********************************/
 // express-session for managing user sessions
 const session = require("express-session");
-const MongoStore = require('connect-mongo') // to store session information on the database in production
+const MongoStore = require('connect-mongo'); // to store session information on the database in production
 
-function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddently disconnects
+function isMongoError(error) { // checks for first error returned by promise rejection if Mongo database suddenly disconnects
     return typeof error === 'object' && error !== null && error.name === "MongoNetworkError"
 }
 
@@ -58,8 +58,8 @@ const mongoChecker = (req, res, next) => {
 }
 
 /***************************** AUTHENTICATION MIDDLEWARE **********************************/
-
  const authenticate = (req, res, next) => {
+
     if (env !== 'production' && USE_TEST_USER)
         req.session.user = TEST_USER_ID // test user on development. (remember to run `TEST_USER_ON=true node server.js` if you want to use this user.)
 
@@ -80,7 +80,7 @@ const mongoChecker = (req, res, next) => {
 }
 
 /***************************** HELPERS **********************************/
-// should move these to seperate files later
+// should move these to separate files later
 
 // check if the current user is a creator of a posting
 // assume user is authenticated - so req.session.user exists
@@ -106,7 +106,7 @@ const checkIsAdmin = async (req) =>{
     return User.findById(req.session.user)
         .then(user =>{
             if(!user){
-                console.log("checkIsAdmin: did not find user")
+                // console.log("checkIsAdmin: did not find user")
                 return false
             }
             return true
@@ -117,12 +117,56 @@ const checkIsAdmin = async (req) =>{
         })
 }
 
+// return some info about a user, given the id
+// specifically the userID, name, and profile pic index
+const getProfileSummary = async (id) =>{
+    // TODO:
+    // start a new object representing profile summary
+    const profileInfo = {id}
+
+    await User.findById(id)
+        .then(user => {
+            if(!user){
+                // return a object representing an deleted user
+                return({
+                    id: id,
+                    name: 'deleted user',
+                    profileImageIndex: 0, // can change to special index later as well
+                })
+            }
+            profileInfo.name = user.name
+            profileInfo.profileImageIndex = user.profileImageIndex
+        })
+
+    return profileInfo
+}
+
+// add profile info the the creator, applicant, and member sections of the posts
+const addUserInfoToPosts = async (postingList) =>{
+    return Promise.all(postingList.map(async (posting) => {
+        // get creator info
+        creatorInfo = await getProfileSummary(posting.creatorID)
+        // get member info
+        memberInfo = await Promise.all(posting.members.map(async (member) =>{
+                await getProfileSummary(member)
+            }));
+        // get applicant info
+        applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+            const applicantInfo = await getProfileSummary(application.applicantID)
+            return({...application, applicantInfo})
+        }));
+        // note : posting has some extra info from mongo so the actual posting is posting._doc
+        return {...posting._doc, creatorInfo, memberInfo, applicantInfo}
+    }));
+}
+
+
 /***************************** SESSION HANDLING  **********************************/
 
 // create session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || "connect uoft secret", // make a SESSION_SECRET environment variable when deploying (for example, on heroku)
+        secret: process.env.SESSION_SECRET || "connect uoft secret", // added secret to heroku config vars
         resave: false,
         saveUninitialized: false,
         cookie: {
@@ -130,9 +174,9 @@ app.use(
             httpOnly: true
         },
         // store the sessions on the database in production
-        store: env === 'production' ? MongoStore.create({
+        store: MongoStore.create({
             mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/ConnectUofTAPI'
-        }) : null
+        })
     })
 );
 
@@ -173,7 +217,6 @@ app.get("/api/user/logout", (req, res) =>{
 
 // check if user is logged in
 app.get("/api/user/check-session", async (req, res) => {
-
     if (env !== 'production' && USE_TEST_USER){
         req.session.user = TEST_USER_ID
         res.send({userID: TEST_USER_ID, isAdmin: false})
@@ -194,8 +237,126 @@ app.get("/api/user/check-session", async (req, res) => {
 
 // simple hello world for testing
 app.get("/api/hello-world", mongoChecker, (req, res)=>{
-   res.send("hello world")
+    res.send("hello world")
 })
+
+/************** POSTINGS API *********************/
+// note: if using the "authenticate" middleware,  get req.session.user is the userID of the current logged in user
+
+// create a new post with the currently logged in user as the creator
+app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    try {
+        // Create a new posting
+        const posting = new Posting({
+            creatorID: req.session.user,
+            title: req.body.title,
+            description: req.body.description,
+            capacity: req.body.capacity,
+            endDate: new Date(req.body.endDateStr), // NOTE: make sure this is a string in the format "YYYY-mm-dd"
+            tags: req.body.tags,
+            // rest is default (see postings.js)
+        })
+
+        // Save posting to the database
+        const postResult = await posting.save()
+
+        // TODO: add post to user's postings list - idk if we still need
+        // const newPostID = postResult._id
+        // User.findOneAndUpdate({id_: req.session.user}, {$push: {createdPostings: newPostID}})
+        //     .then(user =>{
+        //         if (!user){
+        //             // shouldn't really happen since we authenticated unless there is a weird race condition
+        //             res.status(404).send('Could not find user')
+        //         }
+        //     })
+        res.send(postResult)
+    } catch(error) {
+        console.log(error) // log server error to the console, not to the client.
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+        }
+    }
+})
+
+// a GET route to get all posts a user has created
+app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({creatorID: req.session.user})
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+
+// a GET route to get all posts
+app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({}) // can filter here > {creatorID: req.session.user}
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+// PATCH to update the applicants
+app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the posting
+    try {
+        const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: req.applicant }}) // can filter hyere > {creator: req.user._id}
+        //res.send(postings) 
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({isReported: true}) // can filter here > {creator: req.user._id}
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the posting
+    try {
+        const postings = await Posting.updateOne({ _id: req.body.postingID }, {isReported: true }) // can filter hyere > {creator: req.user._id}
+        if (!postings){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`reported posting id: ${req.body.postingID}`)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+});
+
+
+/************** USERS API *********************/
 
 
 // create new user
@@ -221,6 +382,27 @@ app.post("/api/user/create", mongoChecker, async (req, res)=>{
 
 })
 
+// get userInfo of the user logged in
+app.get("/api/user", mongoChecker, authenticate, (req, res)=>{
+
+    // check if there is user logged in
+    if (req.session.user){
+        User.findById(req.session.user)
+            .then(user =>{
+                if (!user){
+                    res.status(404).send("No user found")
+                }
+                res.send(user)
+            })
+            .catch((err) =>{
+                res.status(500).send('Internal server error')
+            })
+    }
+    else{
+        res.status(404).send("No user logged in")
+    }
+
+})
 
 /************************** WEBPAGE ROUTES **********************************/
 // Serve the build

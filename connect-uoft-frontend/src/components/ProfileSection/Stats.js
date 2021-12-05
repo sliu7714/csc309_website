@@ -15,13 +15,13 @@ const Stats = (props) => {
         return user.groups.length;
     }
     return (
-        <div className="profile-container">
-            <div className="contents-container">
-                <h1 className="contents-container__h1">Statistics</h1>
-                <ul className="contents-container__ul">
-                    <li className="contents-container__li">Number of Courses: {getNumCourses()}</li>
-                    <li className="contents-container__li">Number of Groups Made: {getNumGroupsMade()}</li>
-                    <li className="contents-container__li">Number of Groups A Member Of: {getMembershipGroups()}</li>
+        <div className="profile-container profile-card-background">
+            <div className="profile-contents-container">
+                <h1 className="profile-contents-container__h1">Statistics</h1>
+                <ul className="profile-contents-container__ul">
+                    <li className="profile-contents-container__li">Number of Courses: {getNumCourses()}</li>
+                    <li className="profile-contents-container__li">Number of Groups Made: {getNumGroupsMade()}</li>
+                    <li className="profile-contents-container__li">Number of Groups A Member Of: {getMembershipGroups()}</li>
                 </ul>
             </div>
 
