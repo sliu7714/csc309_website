@@ -119,11 +119,46 @@ const checkIsAdmin = async (req) =>{
 
 // return some info about a user, given the id
 // specifically the userID, name, and profile pic index
-const getProfileSummary = (id) =>{
+const getProfileSummary = async (id) =>{
     // TODO:
+    // start a new object representing profile summary
+    const profileInfo = {id}
+
+    await User.findById(id)
+        .then(user => {
+            if(!user){
+                // return a object representing an deleted user
+                return({
+                    id: id,
+                    name: 'deleted user',
+                    profileImageIndex: 0, // can change to special index later as well
+                })
+            }
+            profileInfo.name = user.name
+            profileInfo.profileImageIndex = user.profileImageIndex
+        })
+
+    return profileInfo
 }
 
-// add profile info the the creator, applicant, and memeber sections of the posts
+// add profile info the the creator, applicant, and member sections of the posts
+const addUserInfoToPosts = async (postingList) =>{
+    return Promise.all(postingList.map(async (posting) => {
+        // get creator info
+        creatorInfo = await getProfileSummary(posting.creatorID)
+        // get member info
+        memberInfo = await Promise.all(posting.members.map(async (member) =>{
+                await getProfileSummary(member)
+            }));
+        // get applicant info
+        applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+            const applicantInfo = await getProfileSummary(application.applicantID)
+            return({...application, applicantInfo})
+        }));
+        // note : posting has some extra info from mongo so the actual posting is posting._doc
+        return {...posting._doc, creatorInfo, memberInfo, applicantInfo}
+    }));
+}
 
 
 /***************************** SESSION HANDLING  **********************************/
@@ -224,12 +259,18 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
         })
 
         // Save posting to the database
-        const result = await posting.save()
+        const postResult = await posting.save()
 
-        // TODO: add post to user's postings list
-
-
-        res.send(result)
+        // TODO: add post to user's postings list - idk if we still need
+        // const newPostID = postResult._id
+        // User.findOneAndUpdate({id_: req.session.user}, {$push: {createdPostings: newPostID}})
+        //     .then(user =>{
+        //         if (!user){
+        //             // shouldn't really happen since we authenticated unless there is a weird race condition
+        //             res.status(404).send('Could not find user')
+        //         }
+        //     })
+        res.send(postResult)
     } catch(error) {
         console.log(error) // log server error to the console, not to the client.
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
@@ -246,9 +287,9 @@ app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) =>
     // Get the postings
     try {
         const postings = await Posting.find({creatorID: req.session.user})
-        // TODO: parse posting applicants and members to include name
-        // const parsedPostings = addUserInfoToPosts(postings)
-        res.send(postings)
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -261,8 +302,10 @@ app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
     try {
-        const postings = await Posting.find({}) // can filter here > {creator: req.user._id}
-        res.send(postings) 
+        const postings = await Posting.find({}) // can filter here > {creatorID: req.session.user}
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -286,8 +329,10 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
 
     // Get the postings
     try {
-        const postings = await Posting.find({isReported: True}) // can filter here > {creator: req.user._id}
-        res.send(postings) 
+        const postings = await Posting.find({isReported: true}) // can filter here > {creator: req.user._id}
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -298,8 +343,11 @@ app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) =
 
     // Update the posting
     try {
-        const postings = await Posting.updateOne({ _id: req.posting_id }, {isReported: True }) // can filter hyere > {creator: req.user._id}
-        //res.send(postings) 
+        const postings = await Posting.updateOne({ _id: req.body.postingID }, {isReported: true }) // can filter hyere > {creator: req.user._id}
+        if (!postings){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`reported posting id: ${req.body.postingID}`)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")

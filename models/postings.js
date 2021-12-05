@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 
 const CommentSchema = new mongoose.Schema({
     // user id of the creator of the comment NOT the id of the comment
-    applicantID: {
+    creatorID: {
         type: mongoose.Types.ObjectId,
         required: true,
     },
@@ -20,7 +20,7 @@ const CommentSchema = new mongoose.Schema({
 
 const ApplicationSchema = new mongoose.Schema({
     // user id of the creator of the comment NOT the id of the comment
-    creatorID: {
+    applicantID: {
         type: mongoose.Types.ObjectId,
         required: true,
     },
@@ -79,14 +79,14 @@ const PostingSchema = new mongoose.Schema({
         required: true,
     },
 
-    // the ids of users that are memebers of this post
+    // the ids of users that are members of this post
     members: {
         type: [mongoose.Types.ObjectId],
         default :[]
     },
 
-    // the ids of users that are applying to this post
-    applicants: {
+    // applications to this post
+    applications: {
         type: [ApplicationSchema],
         default :[]
     },

@@ -49,21 +49,28 @@ const UserSchema = new mongoose.Schema({
         default: false
     },
 
-    // the ids of posts that this user has made
-    createdPostings: {
-        type: [mongoose.Types.ObjectId],
-        default :[]
-    },
-    // the ids of postings that this user is a member of NOT including postings that this user has created
-    groups: {
-        type: [mongoose.Types.ObjectId],
-        default :[]
-    },
-    // the ids of posting that this user is currently applying for (and has not gotten in)
-    applying: {
-        type: [mongoose.Types.ObjectId],
-        default :[]
-    },
+    profileImageIndex: {
+        type: Number,
+        default: 0,
+    }
+
+    // dont need to double reference, can just query all posts for matching info in post
+
+    // // the ids of posts that this user has made
+    // createdPostings: {
+    //     type: [mongoose.Types.ObjectId],
+    //     default :[]
+    // },
+    // // the ids of postings that this user is a member of NOT including postings that this user has created
+    // groups: {
+    //     type: [mongoose.Types.ObjectId],
+    //     default :[]
+    // },
+    // // the ids of posting that this user is currently applying for (and has not gotten in)
+    // applying: {
+    //     type: [mongoose.Types.ObjectId],
+    //     default :[]
+    // },
 
 })
 
