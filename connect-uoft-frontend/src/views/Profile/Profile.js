@@ -1,4 +1,6 @@
 import { useState, useEffect} from "react";
+import './styles.css'
+import ENV from '../../config'
 import { users } from "../../data/data";
 import Bio from "../../components/ProfileSection/Bio";
 import UserHandle from "../../components/ProfileSection/UserHandle";
@@ -13,9 +15,8 @@ import Stats from "../../components/ProfileSection/Stats";
 // import profilePic2 from "/images/profile-pictures/chef.svg";
 // import profilePic3 from "/images/profile-pictures/fish.svg";
 const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profile-pictures/chef.svg", "/images/profile-pictures/fish.svg"]
-import './styles.css'
-import ENV from '../../config'
 const BASE_API_URL = ENV.apiBaseUrl
+
 
 const Profile = ({userID, isAdmin}) => {
     // const user = users[userID]
@@ -133,11 +134,11 @@ const Profile = ({userID, isAdmin}) => {
                 </div>
                 <div className="no-group-container">
                     <div id='column1'>
-                        <Bio bio={_bio}/>
+                        <Bio bio={user.bio}/>
                         {/* <Courses courses={_courses}/> */}
                     </div>
                     <div id='column2'>
-                        <Courses courses={_courses}/>
+                        <Courses courses={user.courses}/>
                     </div>
                     <div id='column3'>
                         <Stats user={userID}/>
@@ -145,12 +146,12 @@ const Profile = ({userID, isAdmin}) => {
                     
                 </div>
                 <div className="groups-content-container">
-                        <Groups groups={_groups} user={userID}/>
-                        <LeadGroups groups={_groups}/>
+                        <Groups groups={user.postings} user={userID}/>
+                        <LeadGroups groups={user.postings}/>
                 </div>
-                {_isAdmin ? <div className="reported-content-container">
-                                <ReportedUsers resportedUsers={_groups}/>
-                                <ReportedGroups reportedGroups={_groups}/>
+                {user.isAdmin ? <div className="reported-content-container">
+                                <ReportedUsers resportedUsers={user.groups}/>
+                                <ReportedGroups reportedGroups={user.groups}/>
                             </div>           
                 : null}
         </div>
