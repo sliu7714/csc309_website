@@ -4,8 +4,13 @@ import {users} from '../../data/data';
 import { useState } from "react";
 import ProfilePopup from "./ProfilePopup";
 
+
+
 const UserHandle = (props) => {
     const user1 = users[props.user];
+    const profilePictures = props.profilePictures
+    const _profilePicture = profilePictures[user1.imageIndex]
+
     const [editProfilePopup, showEditProfilePopup] = useState(false);
     const [editProfileImage, setEditProfileImage] = useState(false);
 
@@ -27,32 +32,20 @@ const UserHandle = (props) => {
     return (
         
         <div className="profile-user-handle-container">
-            <button className="profile-user-handle-container__button" title="Edit Profile Information" onClick={() => showEditProfilePopup(true)} >
-                <img className="profile-user-handle-container__button__img" src="/images/edit_icon.svg" alt="Edit Profile Information"></img>
-            </button>
-            <ProfilePopup trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
             <div className="profile-picture-container" title={(user1.name).concat("'s ","profile icon")}>
-
-                <img src={user1.image} alt={(user1.name).concat("'s ","profile icon")} className="profile-picture-container__image"/>
-                
-                <div class="profile-picture-dropdown-content profile-photo-grid-container">
-                    <div class="grid-photo">1</div>
-                    <div class="grid-photo">2</div>
-                    <div class="grid-photo">3</div>
-                    <div class="grid-photo">4</div>
-                    <div class="grid-photo">5</div>
-                    <div class="grid-photo">6</div>
-                    <div class="grid-photo">7</div>
-                    <div class="grid-photo">8</div>
-                    <div class="grid-photo">9</div>
-                </div>
-             
-                
-                {/* <ProfilePopup trigger={editProfileImage} setTrigger={setEditProfileImage} user={user1} type="Image"/> */}
+                <img src={_profilePicture} alt={(user1.name).concat("'s ","profile icon")} className="profile-picture-container__image"/>                         
             </div>
-            <h1 className="profile-user-handle-container__h1" title="Name">{user1.name}</h1>
-            <h2 className="profile-user-handle-container__h2" title="Username">{user1.username}</h2>
-            <h3 className="profile-user-handle-container__h3" title="Email">{user1.email}</h3>
+            <div className="profile-user-handle-infotmation-container">
+                <h1 className="profile-user-handle-container__h1" title="Name">{user1.name}</h1>
+                <h2 className="profile-user-handle-container__h2" title="Username">{user1.username}</h2>
+                <h3 className="profile-user-handle-container__h3" title="Email">{user1.email}</h3>
+            </div>
+            <div className="profile-user-handle-button-container">
+                <button className="profile-user-handle-container__button" title="Edit Profile Information" onClick={() => showEditProfilePopup(true)} >
+                    <img className="profile-user-handle-container__button__img" src={"/images/edit_icon.svg"} alt="Edit Profile Information"></img>
+                </button>
+            </div>
+            <ProfilePopup profilePictures={profilePictures} trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
         </div>
     )
 }

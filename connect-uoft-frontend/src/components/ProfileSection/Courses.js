@@ -49,8 +49,8 @@ const Courses = (props) => {
 
     return(
         <div className="profile-container">
-            <div className="courses contents-container">
-                <h1 className="contents-container__h1">My Courses</h1>
+            <div className="courses profile-contents-container">
+                <h1 className="profile-contents-container__h1">My Courses</h1>
             
                 <br/>
                 <br/>
@@ -60,7 +60,7 @@ const Courses = (props) => {
                     value={currentSearchText}
                     onChange={e => setCurrentSearchText(e.target.value)}
                 />
-                <button className="contents-container__button" id="add_tag_btn" onClick={() => addTag()}>
+                <button className="profile-contents-container__button" id="add_tag_btn" onClick={() => addTag()}>
                     Add tag
                 </button>
                 <div id='tags_container'>
