@@ -115,6 +115,7 @@ const LeadGroups = (props) => {
                </div>
             </div>
         </div>
+        </div>
     )
 }
 export {Groups, LeadGroups}
