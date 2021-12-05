@@ -1,11 +1,11 @@
 import LoginBox from "../../components/LoginBox/LoginBox";
 import './styles.css';
 
-const Login = ({setUserID}) => {
+const Login = ({setIsUserLoggedIn, setIsAdmin}) => {
 
     return(
         <div className="login">
-            <LoginBox setUserID={setUserID}/>
+            <LoginBox setIsUserLoggedIn={setIsUserLoggedIn} setIsAdmin={setIsAdmin}/>
         </div>
     )
 

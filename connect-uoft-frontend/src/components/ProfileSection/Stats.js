@@ -15,7 +15,7 @@ const Stats = (props) => {
         return user.groups.length;
     }
     return (
-        <div className="profile-container">
+        <div className="profile-container profile-card-background">
             <div className="profile-contents-container">
                 <h1 className="profile-contents-container__h1">Statistics</h1>
                 <ul className="profile-contents-container__ul">

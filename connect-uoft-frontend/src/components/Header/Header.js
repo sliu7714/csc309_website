@@ -26,7 +26,6 @@ const Header = ({isUserLoggedIn, userID}) => {
             }
 
 
-
         </div>
 
     

@@ -102,7 +102,8 @@ const addReportedUserToDOM = (title, creator, description, link, members) =>{
 
 const ReportedUsers = (props) => {
     return (
-        <div className='reported-content profile-container'>
+        <div className='reported-content profile-card-background profile-container'>
+
             <h1 className="section_title">Reported Users</h1>
             <div id="reported-groups" className="groups-list">
                 {/* <div className="group">

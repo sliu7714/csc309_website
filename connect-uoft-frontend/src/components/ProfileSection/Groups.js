@@ -79,12 +79,12 @@ const addJoinedGroupToDOM = (title, creator, description, link, members) =>{
 
 const Groups = (props) => {
     return (
-        <div className='group-content profile-container'>
+        <div className='groupContent profile-container profile-card-background'>
             <h1 className="section_title">My Groups</h1>
             <div id="joined-groups" className="groups-list">
                 <div className="group">
                     <div className="group-content-container">
-                        <h2 className="group-content-container__h2">Work on practice problems</h2>
+                        <h2 className="group-content-container__h2">Work on practice</h2>
                         <h3 className="group-content-container__h3">Creator: 0</h3>
                         <h4 className="group-content-container__h4">Description: We must work on practice problems for 309</h4>
                         <div className="group-content-container-meeting">
@@ -227,6 +227,7 @@ const addCreatedGroupToDOM = (title, creator, description, link, members) =>{
 
 const LeadGroups = (props) => {
     return(
+        <div className='groupContent profile-container profile-card-background'>
         <div className='group-content profile-container'>
             <h1 className="section_title">Lead Groups</h1>
             <div id="created-groups" className="groups-list">

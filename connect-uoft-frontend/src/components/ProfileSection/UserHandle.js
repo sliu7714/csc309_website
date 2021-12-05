@@ -14,6 +14,9 @@ const UserHandle = (props) => {
     const [editProfilePopup, showEditProfilePopup] = useState(false);
     const [editProfileImage, setEditProfileImage] = useState(false);
 
+    const user = props.user
+
+
     
     // const handleEdit = () => {
     //     // createSection
@@ -46,6 +49,7 @@ const UserHandle = (props) => {
                 </button>
             </div>
             <ProfilePopup profilePictures={profilePictures} trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
+
         </div>
     )
 }

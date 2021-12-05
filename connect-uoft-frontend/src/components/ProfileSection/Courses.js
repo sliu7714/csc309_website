@@ -48,7 +48,7 @@ const Courses = (props) => {
     // )
 
     return(
-        <div className="profile-container">
+        <div className="profile-container profile-card-background">
             <div className="courses profile-contents-container">
                 <h1 className="profile-contents-container__h1">My Courses</h1>
             
@@ -66,6 +66,8 @@ const Courses = (props) => {
                 <div id='tags_container'>
                     {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
                 </div>
+
+                {props.courses}
             </div>
         </div>
     )

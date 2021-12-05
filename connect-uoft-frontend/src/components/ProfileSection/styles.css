@@ -12,6 +12,14 @@
   cursor: pointer;
 }
 
+/* card background color*/
+.profile-card-background{
+  background-color: white;
+}
+.profile-card-background:hover{
+  box-shadow: 2px 2px 2px lightgray;
+}
+
 /* MAIN USER HANDLE */
 .profile-user-handle-container {
   position: relative;
@@ -59,6 +67,7 @@
   float: left;
   width: 11%;
   height: 100%;
+
 }
 .profile-user-handle-container__button {
   position: relative;
