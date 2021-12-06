@@ -183,8 +183,8 @@ const addUserInfoToPosts = async (postingList, req) =>{
             return({...application, applicantInfo})
         }));
         // check if the current user is a
-        const isCreator = await checkIsPostingCreator(req.session.username, posting._id)
-        const isMember = await checkIsPostingMember(req.session.username, posting._id)
+        const isCreator = await checkIsPostingCreator(req.session.user, posting._id)
+        const isMember = await checkIsPostingMember(req.session.user, posting._id)
         // note : posting has some extra info from mongo so the actual posting is posting._doc
         return {...posting._doc, creatorInfo, memberInfo, applicantInfo, isCreator, isMember}
     }));
@@ -352,24 +352,30 @@ app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
 // a GET route to get a specific posting by id
 // note the id is part of the url
-app.get('api/postings/:pid', mongoChecker, authenticate, async (req, res) => {
+// add the /get-by-id/ to prevent the other paths (ex - /api/postings/create) from being directed to this route
+app.get('/api/postings/get-by-id/:pid', mongoChecker, authenticate, async (req, res) => {
+
+    if(!ObjectID.isValid(req.params.pid)){
+        console.log('cant find post with id: ', req.params.pid)
+        res.status(404).send("Cannot find resource, Invalid id.")
+    }
 
     try {
-        const posting = await Posting.findById(req.req.params.pid)
+        const posting = await Posting.findById(req.params.pid)
         if(!posting){
             res.status(404).send("post not found")
         }
-        const parsedPosting = await addUserInfoToPosts([posting])
+        const parsedPosting = await addUserInfoToPosts([posting], req)
         res.send(parsedPosting[0])
     } catch(error) {
-        console.lof(error)
+        console.log(error)
         res.status(500).send("Internal Server Error")
     }
 });
 
 // a GET route to get all posts a user has created
 app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) => {
-
+    console.log('created posts')
     // Get the postings
     try {
         const postings = await Posting.find({creatorID: req.session.user})
