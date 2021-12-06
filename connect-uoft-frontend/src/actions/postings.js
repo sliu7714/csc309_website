@@ -213,7 +213,7 @@ export const getReportedPost = (setPosting) => { //DONE
         });
 };
 
-export const updateApplicantPost = (requestBody, setPosting) => {
+export const updateApplicantPost = (datum) => {
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/applicant`;
 
@@ -221,7 +221,7 @@ export const updateApplicantPost = (requestBody, setPosting) => {
 
     const request = new Request(url, {
         method: "patch",
-        body: JSON.stringify(requestBody),
+        body: JSON.stringify(datum),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -242,7 +242,7 @@ export const updateApplicantPost = (requestBody, setPosting) => {
         });
 };
 
-export const getUserPosts = () => { //Creator DONE
+export const getUserPosts = (setPosting) => { //Creator DONE
 
     const url = `${BASE_API_URL}/api/postings/user`;
 
