@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
-import {addPosting} from "../../actions/postings";
+import {addPosting, updatePost} from "../../actions/postings";
+import Posting from '../Posting/Posting';
 
 
 const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
@@ -105,9 +106,10 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
         }
 
         console.log(postingInfo)
-        // TODO: add fetch call to store post in backend
+
         if(isEditing){
-            //TODO:  fetch call to edit post (PUT?)
+            updatePost(postingInfo, posting.id)
+
         }
         else{
             console.log(postingInfo)

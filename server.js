@@ -307,11 +307,39 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
+// update post with new information
+app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    try {
+
+        // Find the posting and overwrite all information
+        Posting.findOneAndUpdate({ _id : req.body.postingID }, { $set: {
+            title: req.body.posting.title,
+            description: req.body.posting.description,
+            capacity: req.body.posting.capacity,
+            endDate: req.body.posting.endDate,
+            tags: req.body.posting.tags,
+          }});
+
+    } catch(error) {
+        console.log(error) // log server error to the console, not to the client.
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+        }
+    }
+});
+
 // a DELETE route to delete specific posting
 app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     try {
-        await Posting.deleteOne({ _id: req.body.posting_id })
+        const posting = await Posting.deleteOne({ _id: req.body.postingID })
+        if (!posting){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`reported posting id: ${req.body.posting_id}`)
     } catch(error) {
         console.lof(error) // console.lof server error to the console, not to the client.
         if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -394,7 +422,7 @@ app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
     try {
-        const postings = await Posting.find({}) // can filter here > {creatorID: req.session.user}
+        const postings = await Posting.find({}) 
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
@@ -412,6 +440,7 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
         applyMsg: req.body.message,
         applicationStatus: 'PENDING'
     }
+
     // Update the posting
     try {
         const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: applicant }})
@@ -426,7 +455,7 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 app.get('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
     // update the applicant status to ACCEPTED
-    // update the membvers by poushing the userID
+    // update the members by poushing the userID
     try {
         await Posting.updateOne({applicants: { applicantID: req.body.userID}}, {applicants: { applicationStatus: 'ACCEPTED'}})
         await Posting.updateOne({applicants: { applicantID: req.body.userID}}, { $push: { members: req.body.userID}})
@@ -470,8 +499,8 @@ app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) =
 
     // Update the posting
     try {
-        const postings = await Posting.updateOne({ _id: req.body.postingID }, {isReported: true }) // can filter hyere > {creator: req.user._id}
-        if (!postings){
+        const posting = await Posting.updateOne({ _id: req.body.postingID }, {isReported: true }) // can filter hyere > {creator: req.user._id}
+        if (!posting){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
         res.send(`reported posting id: ${req.body.postingID}`)

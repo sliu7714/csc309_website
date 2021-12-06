@@ -137,14 +137,48 @@ export const addPosting = (postingInfo) => {
             console.log("error creating post:", error);
         });
 };
+
+
+export const updatePost = (postingInfo, postID) => {
+    const url = `${BASE_API_URL}/api/postings`;
+
+    const postInfo = {
+        posting: postingInfo,
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "put",
+        body: JSON.stringify(postingInfo),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            if(!res.ok){
+                console.log("Could not create posting, status code:", res.status)
+                alert("Sorry there was a problem creating this post")
+                return;
+            }
+            // created post
+            console.log('created post')
+        })
+        .catch(error => {
+            console.log("error creating post:", error);
+        });
+};
               
-export const deletePosting = (postID) => { //DONE
+// deletes the post given by postID
+export const deletePost = (postID) => {
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings`;
 
     // The data we are going to send in our request
     const requestBody = {
-        posting_id : postID
+        postingID : postID
     }
 
     // Create our request constructor with all the parameters we need
@@ -175,13 +209,13 @@ export const deletePosting = (postID) => { //DONE
         });
 };           
 
-export const applyPost = (postID, applicantInfo) => { //DONE
+export const applyPost = (postID, message) => { //DONE
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings`;
 
     const requestBody = {
         posting_id : postID,
-        applicant : applicantInfo
+        message : message
     }
 
     // Create our request constructor with all the parameters we need
@@ -217,7 +251,7 @@ export const reportPost = (postID) => { // DONE
     const url = `${BASE_API_URL}/api/postings/report`;
 
     const requestBody = {
-        posting_id : postID
+        postingID : postID
     }
 
     // Create our request constructor with all the parameters we need
@@ -303,7 +337,7 @@ export const updateApplicantPost = (datum) => {
 };
 
 
-export const getPostByID = (postID, setPosting) => { //DONE
+export const getPostByID = (postID, setPosting) => {
 
     const url = `${BASE_API_URL}/api/postings/post`;
 
