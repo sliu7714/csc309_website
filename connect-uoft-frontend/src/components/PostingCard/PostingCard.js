@@ -33,6 +33,11 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
         updatePostings()
     }
 
+    // convert date string to more readable format
+    const parseDateStr = (dateStr) =>{
+        return new Date(dateStr).toDateString()
+    }
+
     return (
         <div className="posting posting-card">
             <h2 className="posting-text posting-card-title" href={`/posting/${posting.id}`}>{posting.title}</h2>
@@ -51,7 +56,8 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                         <Popup trigger={showEditProfile}
                                setTrigger={setShowEditProfile}
                                isEditing={true}
-                               posting={posting}/>
+                               posting={posting}
+                               updatePostings={updatePostings}/>
                     </div>
                     :
                 isAdmin ?
@@ -67,7 +73,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                 <p>{posting.description}</p>
             </div>
 
-            <div className="posting-text"> End Date: {posting.endDate}</div>
+            <div className="posting-text"> End Date: <i>{posting.endDate ? parseDateStr(posting.endDate) : 'n/a'} </i></div>
 
 
             <hr />

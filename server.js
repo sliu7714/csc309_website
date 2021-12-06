@@ -254,8 +254,8 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
             title: req.body.title,
             description: req.body.description,
             capacity: req.body.capacity,
-            endDate: new Date(req.body.endDateStr), // NOTE: make sure this is a string in the format "YYYY-mm-dd"
-            tags: req.body.tags,
+            endDate: new Date(req.body.endDate), // NOTE: make sure this is a string in the format "YYYY-mm-dd"
+            tags: req.body.tags ? req.body.tags : [],
             // rest is default (see postings.js)
         })
 

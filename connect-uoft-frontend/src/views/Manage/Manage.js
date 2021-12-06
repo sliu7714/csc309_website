@@ -1,7 +1,7 @@
-import {postings} from "../../data/data" // TEMP
 import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
+import {getUserCreatedPostings} from "../../actions/postings";
 
 const Manage = ({}) => {
 
@@ -9,18 +9,10 @@ const Manage = ({}) => {
 
     // call this function everytime a post needs to be updated
     const fetchPostings = () =>{
-        // TODO: add backend request here:
-        // fetch('/user/postings')
-        //     .then(res => res.json())
-        //     .then(data => setUserPostings(postings))
-        //     .catch(err =>{
-        //         // deal with error here
-        //         console.log(err)
-        //         return;
-        //     })
+        getUserCreatedPostings(setUserPostings)
 
         // TEMPORARY
-        setUserPostings(postings.filter((postings) => postings.creatorInfo.id === 1))
+        // setUserPostings(postings.filter((postings) => postings.creatorInfo.id === 1))
     }
 
     // fetch once initially

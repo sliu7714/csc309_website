@@ -1,24 +1,19 @@
 import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
-import {postings} from "../../data/data";
+import {addPosting} from "../../actions/postings";
 
 
-const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
+const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
 
     // used for creating a new post: (if isEditing is false)
     const initialPosting = {
-        id: postings.length, // TODO: later backend should create post id - so remove this later
-        creator: userID,
         title: "",
         description: "",
         endDate: "",
         capacity: 2,
         tags: [],
-        members: [],
-        applicants: [],
     }
-
 
     const [postingInfo, setPostingInfo] = useState(initialPosting)
 
@@ -81,8 +76,6 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
         setPostingInfo({...postingInfo, endDate })
     }
 
-
-
     const closePopup = () => {
         if (!isEditing){
             // clear state for next create post
@@ -117,11 +110,11 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
             //TODO:  fetch call to edit post (PUT?)
         }
         else{
-            //TODO: fetch call to create post (POST)
+            console.log(postingInfo)
+            addPosting(postingInfo)
         }
-
-        postings.push(postingInfo) //TEMPORARY
-        closePopup()
+        // updatePostings() // function to re-fetch posts in page if needed
+        // closePopup()
     }
 
     return (trigger) ? (
