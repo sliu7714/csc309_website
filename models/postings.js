@@ -18,6 +18,27 @@ const CommentSchema = new mongoose.Schema({
     // can access creation time from createdAt attributes automatically created (from timestamps option below
 }, {timestamps: true})
 
+const ApplicationSchema = new mongoose.Schema({
+    // user id of the creator of the comment NOT the id of the comment
+    applicantID: {
+        type: mongoose.Types.ObjectId,
+        required: true,
+    },
+    // message to include for application
+    applyMsg:{
+        type: String,
+        default: ""
+    },
+    applicationStatus:{
+        type: String,
+        enum: ['ACCEPTED', 'PENDING', 'REJECTED', 'CANCELLED'],
+        required: true,
+        default: 'PENDING'
+    }
+
+    // can access creation time from createdAt attributes automatically created (from timestamps option below
+}, {timestamps: true})
+
 const PostingSchema = new mongoose.Schema({
 
     title:{
@@ -58,15 +79,15 @@ const PostingSchema = new mongoose.Schema({
         required: true,
     },
 
-    // the ids of users that are memebers of this post
+    // the ids of users that are members of this post
     members: {
         type: [mongoose.Types.ObjectId],
         default :[]
     },
 
-    // the ids of users that are applying to this post
-    applicants: {
-        type: [mongoose.Types.ObjectId],
+    // applications to this post
+    applications: {
+        type: [ApplicationSchema],
         default :[]
     },
 

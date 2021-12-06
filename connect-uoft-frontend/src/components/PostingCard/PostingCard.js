@@ -3,7 +3,7 @@ import "./styles.css"
 import Tag from "../SearchTag/Tag";
 import CommentSection from "./CommentSection";
 import ApplicantSection from "./ApplicantsSection";
-import Popup from "../Popup/Popup";
+import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplicantsSection from "./ApplicantsSection";
 import ApplySection from "./ApplySection";
@@ -11,8 +11,7 @@ import ApplySection from "./ApplySection";
 
 // updatePostings is to call the function to rerender this post
 // isCreator is a boolean that is true only if this post will be shown to the creator and same for isMember
-// userID is the user id of the currently logged in user
-const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => {
+const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) => {
 
     const [showEditProfile, setShowEditProfile] = useState(false)
 
@@ -24,12 +23,19 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => 
         // TODO connect to backend
         console.log('report posting', posting.id)
         // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
+        updatePostings()
+    }
+
+    const deletePosting = () =>{
+        // TODO connect to backend
+        console.log('delete posting', posting.id)
+        // now need to call function in parent to update postings data for frontend to reflect changes
+        updatePostings()
     }
 
     return (
         <div className="posting posting-card">
-            <h2 className="posting-text posting-card-title">{posting.title}</h2>
+            <h2 className="posting-text posting-card-title" href={`/posting/${posting.id}`}>{posting.title}</h2>
             <div className="tag-section">
                 {
                     posting.tags ?
@@ -47,6 +53,9 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => 
                                isEditing={true}
                                posting={posting}/>
                     </div>
+                    :
+                isAdmin ?
+                    <button className="delete-button top-right-btn" onClick={() => deletePosting()}> Delete</button>
                     :
                     <button className="report-button top-right-btn" onClick={() => reportPosting()}>Report </button>
             }
@@ -69,16 +78,16 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, userID}) => 
 
             {
                 isCreator ?
-                    <ApplicantSection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                    <ApplicantSection posting={posting} updatePostings={updatePostings}/>
                     :
-                    <ApplySection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                    <ApplySection posting={posting} updatePostings={updatePostings}/>
             }
 
             {
-                isCreator || isMember ?
+                isCreator || isMember || isAdmin ?
                     <div>
                         <hr/>
-                        <CommentSection posting={posting} userID={userID} updatePostings={updatePostings}/>
+                        <CommentSection posting={posting} updatePostings={updatePostings}/>
                     </div>
                     :
                     null

@@ -17,7 +17,9 @@ export const users = [
         isAdmin: true,
         postings: [0,1], // the posts that this user has made
         groups: [2], // postings that this user is a member of (not sure if want to overlap or not
-        applying: [] // posting that this user is currently applying for (and has not gotten in)
+        applying: [], // posting that this user is currently applying for (and has not gotten in)
+        imageIndex: 0
+
     },
     {
         id: 1,
@@ -31,7 +33,7 @@ export const users = [
         postings: [2],
         groups: [0],
         applying: [1],
-        image: '/images/Timmy_Turner1.png'
+        imageIndex: 1
     },
 ]
 

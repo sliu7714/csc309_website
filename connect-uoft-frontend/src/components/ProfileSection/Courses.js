@@ -11,7 +11,7 @@ const Courses = (props) => {
 
     const [currentSearchText, setCurrentSearchText] = useState("")
     // a list of the text in the currently displayed tags
-    const [currentTags, setCurrentTags] = useState(props.courses)
+    const [currentTags, setCurrentTags] = useState(props.user.courses)
 
     // add text from the search bar and clear the search bar
     const addTag = () => {
@@ -49,8 +49,8 @@ const Courses = (props) => {
 
     return(
         <div className="profile-container profile-card-background">
-            <div className="courses contents-container">
-                <h1 className="contents-container__h1">My Courses</h1>
+            <div className="courses profile-contents-container">
+                <h1 className="profile-contents-container__h1">My Courses</h1>
             
                 <br/>
                 <br/>
@@ -60,14 +60,14 @@ const Courses = (props) => {
                     value={currentSearchText}
                     onChange={e => setCurrentSearchText(e.target.value)}
                 />
-                <button className="contents-container__button" id="add_tag_btn" onClick={() => addTag()}>
+                <button className="profile-contents-container__button" id="add_tag_btn" onClick={() => addTag()}>
                     Add tag
                 </button>
                 <div id='tags_container'>
                     {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
                 </div>
 
-                {props.courses}
+                {props.user.courses}
             </div>
         </div>
     )

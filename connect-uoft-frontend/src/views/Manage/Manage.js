@@ -3,7 +3,7 @@ import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
 
-const Manage = ({userID}) => {
+const Manage = ({}) => {
 
     const [userPostings, setUserPostings] = useState([])
 
@@ -36,7 +36,6 @@ const Manage = ({userID}) => {
                 <PostingCard
                     posting={posting}
                     updatePostings={fetchPostings}
-                    userID={userID}
                     isCreator={true}
                 />
                 )}

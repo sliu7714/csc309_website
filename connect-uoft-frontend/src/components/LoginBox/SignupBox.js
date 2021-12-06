@@ -1,12 +1,9 @@
 import './styles.css' // use same styles as LoginBox
 import {useState} from 'react'
-import {useHistory} from "react-router-dom"
-import ENV from '../../config'
-const BASE_API_URL = ENV.apiBaseUrl
+import {signup} from "../../actions/user";
 
 
 const LoginBox = () => {
-    const history = useHistory()
     const[username, setUsername] = useState("")
     const[password, setPassword] = useState("")
     const[email, setEmail] = useState("")
@@ -52,53 +49,6 @@ const LoginBox = () => {
         )
     }
 
-    const validateEmail = () =>{
-        // RFC 5322 standard email regex from http://emailregex.com/
-        return email.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])')
-    }
-
-
-    const signup = () =>{
-        setMessage(null)
-
-        if (password.length < 4){
-            setMessage(passwordLengthMessage)
-            return;
-        }
-        if (!validateEmail()){
-            setMessage(invalidEmailMessage)
-            return;
-        }
-
-        fetch(`${BASE_API_URL}/api/user/create`,{
-            method: "post",
-            body: JSON.stringify({username, password, email}),
-            headers: {
-                Accept: "application/json, text/plain, */*",
-                "Content-Type": "application/json"
-            }
-        })
-            .then((res) =>{
-                if(!res.ok){
-                    console.log("invalid signup, response code: ", res.status)
-                    setMessage(nonUniqueUsernameMsg)
-                    return;
-                }
-                return res.json()
-            })
-            .then((responseInfo) =>{
-                if (responseInfo){
-                    console.log(responseInfo)
-                    setMessage(successSignupMessage(username))
-                    setPassword("")
-                }
-            })
-            .catch((err) =>{
-                console.log("error with signing up in: ", err)
-                setMessage(signupErrorMsg)
-            })
-    }
-
     return(
         <div className="login_box">
             Sign Up
@@ -130,7 +80,10 @@ const LoginBox = () => {
 
             <button
                 className="login_btn"
-                onClick={() => signup()}>Create Account</button>
+                onClick={() => signup(username, password, email, setMessage, setPassword, passwordLengthMessage,
+                    invalidEmailMessage, nonUniqueUsernameMsg, successSignupMessage, signupErrorMsg)}>
+                Create Account
+            </button>
 
             {message}
 
