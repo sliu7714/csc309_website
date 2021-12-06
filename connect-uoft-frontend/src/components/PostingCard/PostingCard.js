@@ -8,6 +8,7 @@ import {useState} from "react";
 import ApplicantsSection from "./ApplicantsSection";
 import ApplySection from "./ApplySection";
 import MemberListSection from "./MemberListSection";
+import { deletePost, reportPost } from "../../actions/postings";
 
 
 // updatePostings is to call the function to rerender this post
@@ -21,16 +22,16 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
     }
 
     const reportPosting = () =>{
-        // TODO connect to backend
         console.log('report posting', posting._id)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        
+        reportPost(posting._id)
         updatePostings()
     }
 
     const deletePosting = () =>{
-        // TODO connect to backend
         console.log('delete posting', posting._id)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+   
+        deletePost(posting._id)
         updatePostings()
     }
 
