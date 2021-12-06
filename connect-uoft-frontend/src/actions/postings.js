@@ -346,7 +346,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
 // a patch to reject an applicant
 export const rejectApplicantPost = (applicantID, postID) =>{
     // the URL for the request
-    const url = `${BASE_API_URL}/api/postings/accept`;
+    const url = `${BASE_API_URL}/api/postings/reject`;
 
     const requestBody = {
         applicantID: applicantID,

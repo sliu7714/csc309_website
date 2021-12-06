@@ -310,10 +310,15 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 // update post with new information
 app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
-    try {
+    // only creator can update post
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    if (! canEditPost ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
 
+    try {
         // Find the posting and overwrite all information
-        Posting.findOneAndUpdate({ _id : req.body.postingID }, { $set: {
+        await Posting.findOneAndUpdate({ _id : req.body.postingID }, { $set: {
             title: req.body.posting.title,
             description: req.body.posting.description,
             capacity: req.body.posting.capacity,
@@ -322,11 +327,11 @@ app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
           }});
 
     } catch(error) {
-        console.log(error) // log server error to the console, not to the client.
+        console.log(error)
         if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
         } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+            res.status(400).send('Bad Request')
         }
     }
 });
@@ -334,23 +339,42 @@ app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 // a DELETE route to delete specific posting
 app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
+    // only creator or admin can delete post
+    const isCreator = checkIsPostingCreator(req.session.user, req.postingID)
+    const isAdmin = checkIsAdmin(req.session.user)
+    const canDeletePost = isCreator || isAdmin
+    if (! canDeletePost ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
+
     try {
         const posting = await Posting.deleteOne({ _id: req.body.postingID })
         if (!posting){
-            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+            res.status(404).send(`delete: could not find posting, id: ${req.body.postingID}`)
         }
-        res.send(`reported posting id: ${req.body.postingID}`)
+        res.send(`deleted post, id: ${req.body.postingID}`)
     } catch(error) {
-        console.lof(error) // console.lof server error to the console, not to the client.
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        console.log(error)
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
         } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+            res.status(400).send('Bad Request')
         }
     }
 });
 
+// PATCH route to add a comment to a specific post
 app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
+
+    // only creator or admin or member can delete post
+    const isCreator = checkIsPostingCreator(req.session.user, req.postingID)
+    const isMember = checkIsPostingCreator(req.session.user, req.postingID)
+    const isAdmin = checkIsAdmin(req.session.user)
+    const canComment = isCreator || isAdmin || isMember
+    if (! canComment ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
+
 
     const comment = {
         creatorID: req.session.user,
@@ -361,15 +385,15 @@ app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) 
     try {
         const posting = await Posting.updateOne({ _id: req.body.postingID }, { $push: {comments : comment }})
         if (!posting){
-            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+            res.status(404).send(`comment: could not find posting, id: ${req.body.postingID}`)
         }
-        res.send(`commented on posting id: ${req.body.postingID}`)
+        res.send(`commented on posting, id: ${req.body.postingID}`)
     } catch(error) {
-        console.lof(error) // console.lof server error to the console, not to the client.
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+        console.log(error)
+        if (isMongoError(error)) { // check for if mongo server suddenly disconnected before this request.
             res.status(500).send('Internal server error')
         } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+            res.status(400).send('Bad Request')
         }
     }
 });
@@ -399,7 +423,6 @@ app.get('/api/postings/get-by-id/:pid', mongoChecker, authenticate, async (req, 
 
 // a GET route to get all posts a user has created
 app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) => {
-    console.log('created posts')
     // Get the postings
     try {
         const postings = await Posting.find({creatorID: req.session.user})
@@ -429,10 +452,14 @@ app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => 
 
 // a POST route to get all posts matching a list of tags
 // POST since we are generating search results
+// do not return any posts that the currently logged in user is a creator of
 app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) => {
 
-    // if tags is empty, don't filter
-    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$in: req.body.tags}} : {}
+    const filter =  {creatorID: {$ne: req.session.user}}
+    // if tags is empty, don't filter by tags
+    if(req.body.tags && req.body.tags.length > 0){
+        filter.tags = {$in: req.body.tags}
+    }
 
     // Get the postings
     try {
@@ -449,6 +476,12 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
 
 // PATCH to update the applicants
 app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    // only creator can update applicant status
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    if (! canEditPost ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
 
     const applicant = {
         applicantID: req.session.user,
@@ -469,9 +502,15 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 // a PATCH to accept a applicant
 app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
+    // only creator can update applicant status
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    if (! canEditPost ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
+
     // fix to use postingID to find the post
     // update the applicant status to ACCEPTED
-    // update the members by poushing the userID
+    // update the members by pushing the userID
     try {
         await Posting.updateOne({ _id : req.body.postingID, "application.applicantID" : req.body.applicantID }, { $set: {"application.$.applicationStatus": 'ACCEPTED'}})
         await Posting.updateOne({ _id : req.body.postingID }, { $push: { members: req.body.userID}})
@@ -483,6 +522,12 @@ app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) =
 
 // a PATCH to decline a applicant
 app.patch('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
+
+    // only creator can update applicant status
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    if (! canEditPost ){
+        res.status(403).send("Cannot edit a post that a user has not created")
+    }
 
     // update the applicant status to REJECTED
     try {
