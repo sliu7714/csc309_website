@@ -338,15 +338,50 @@ export const getReportedPost = (setPosting) => { //DONE
         });
 };
 
-export const updateApplicantPost = (datum) => {
+export const acceptApplicantPost = (applicantID, postID) => {
     // the URL for the request
-    const url = `${BASE_API_URL}/api/postings/applicant`;
+    const url = `${BASE_API_URL}/api/postings/accept`;
 
-    if (datum.newStatus == true) {}
+    const requestBody = {
+        applicantID = applicantID,
+        postingID = postID
+    }
 
     const request = new Request(url, {
         method: "patch",
-        body: JSON.stringify(datum),
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                alert("Updated applicant")
+            } else {
+                alert("Failed");
+            }   
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+export const rejectApplicantPost = (applicantID, postID) => {
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/accept`;
+
+    const requestBody = {
+        applicantID = applicantID,
+        postingID = postID
+    }
+
+    const request = new Request(url, {
+        method: "patch",
+        body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"

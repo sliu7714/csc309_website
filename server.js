@@ -363,7 +363,7 @@ app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) 
         if (!posting){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
-        res.send(`reported posting id: ${req.body.postingID}`)
+        res.send(`commented on posting id: ${req.body.postingID}`)
     } catch(error) {
         console.lof(error) // console.lof server error to the console, not to the client.
         if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -476,13 +476,14 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 });
 
 // a PATCH to accept a applicant
-app.get('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
+app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
+    // fix to use postingID to find the post
     // update the applicant status to ACCEPTED
     // update the members by poushing the userID
     try {
-        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, {applicants: { applicationStatus: 'ACCEPTED'}})
-        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, { $push: { members: req.body.userID}})
+        await Posting.updateOne({ _id : req.body.postingID, "application.applicantID" : req.body.applicantID }, { $set: {"application.$.applicationStatus": 'ACCEPTED'}})
+        await Posting.updateOne({ _id : req.body.postingID }, { $push: { members: req.body.userID}})
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -490,12 +491,11 @@ app.get('/api/postings/accept', mongoChecker, authenticate, async (req, res) => 
 });
 
 // a PATCH to decline a applicant
-app.get('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
+app.patch('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
 
     // update the applicant status to REJECTED
     try {
-        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, {applicants: { applicationStatus: 'REJECTED'}})
-        res.send(parsedPostings)
+        await Posting.updateOne({ _id : req.body.postingID, "application.applicantID" : req.body.applicantID }, { $set: {"application.$.applicationStatus": 'REJECTED'}})
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
