@@ -3,16 +3,16 @@ import Comment from "./Comment";
 import {useState, useEffect} from "react";
 
 
-const CommentSection = ({posting, userID, updatePostings}) => {
+const CommentSection = ({posting, updatePostings}) => {
 
     const [showComments, setShowComments] = useState(false)
     const [newCommentText, setNewCommentText] = useState("")
 
     const createComment = () => {
         // TODO: backend connect
-        console.log('comment', userID, newCommentText)
+        console.log('comment', newCommentText)
         // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
+        updatePostings()
     }
 
 
