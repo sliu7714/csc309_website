@@ -29,7 +29,7 @@ const ApplySection = ({posting, updatePostings}) =>{
 
     const apply = () =>{
         // TODO add to backend
-        console.log("apply",posting.id )
+        console.log("apply",posting._id )
         // now need to call function in parent to update postings data for frontend to reflect changes
         updatePostings()
     }

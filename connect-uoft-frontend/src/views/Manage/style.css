@@ -1,8 +1,13 @@
-.manage-section {
+.manage-posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(Min(23em, 100%), .2fr));
     grid-template-rows: masonry;
     margin-left: 0px;
     grid-gap: 3px;
     padding: 10px;
+}
+
+.manage-page-title{
+    text-align: left;
+    margin-left: 20px;
 }
