@@ -5,7 +5,7 @@
 // To run in production mode, run in terminal: NODE_ENV=production node server.js
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
-// const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
+const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
 // const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
 const TEST_USER_ID = '61ad3f5f4cfb5b410c2ecd0a' // the id of our test user - username: test2 password: pass
 
