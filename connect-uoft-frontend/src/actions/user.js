@@ -148,3 +148,52 @@ export const getProfileInfo = (setUser) =>{
             console.log("error with getting profile info: ", err)
         })
 }
+
+
+export const setProfileInfo = (name, email, username, password, bio, profileImage) =>{
+   
+    const url = `${BASE_API_URL}/api/user/modify`;
+
+    if (!validateEmail(email)){
+        alert("Enter a valid email")
+        return;
+    } 
+    if (password.length < 4){
+        alert("Enter a valid password")
+        return;
+    }
+
+    let updatedData = {
+        name: name,
+        email: email,
+        username: username,
+        password: password,
+        bio: bio,
+        profileImageIndex: profileImage
+    }
+    
+    const request = new Request(url,{
+        method: "put",
+        body: JSON.stringify(updatedData),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        },
+    });
+    fetch(request)
+       .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If profile was updated successfully, tell the user.
+                alert("Updated profile successfully")
+                console.log("updated");
+            } else {
+                // If server couldn't update the profile, tell the user.
+                alert("Could not update profile")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}

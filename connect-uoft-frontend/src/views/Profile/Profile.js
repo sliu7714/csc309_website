@@ -8,7 +8,6 @@ import Courses  from "../../components/ProfileSection/Courses";
 import {Groups, LeadGroups} from "../../components/ProfileSection/Groups";
 import ReportedGroups from "../../components/ProfileSection/ReportedGroups";
 import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
-import EditProfile from "../../components/ProfileSection/EditProfileInfo";
 import Stats from "../../components/ProfileSection/Stats";
 
 
