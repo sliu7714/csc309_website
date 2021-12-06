@@ -339,7 +339,31 @@ app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
         if (!posting){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
-        res.send(`reported posting id: ${req.body.posting_id}`)
+        res.send(`reported posting id: ${req.body.postingID}`)
+    } catch(error) {
+        console.lof(error) // console.lof server error to the console, not to the client.
+        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+        }
+    }
+});
+
+app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
+
+    const comment = {
+        creatorID: req.session.user,
+        content: req.body.content,
+    }
+
+    // Update the posting
+    try {
+        const posting = await Posting.updateOne({ _id: req.body.postingID }, { $push: {comments : comment }})
+        if (!posting){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`reported posting id: ${req.body.postingID}`)
     } catch(error) {
         console.lof(error) // console.lof server error to the console, not to the client.
         if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
@@ -443,7 +467,7 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting
     try {
-        const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: applicant }})
+        const postings = await Posting.updateOne({ _id: req.body.postingID }, { $push: {applicants: applicant }})
         //res.send(postings) 
     } catch(error) {
         console.log(error)

@@ -138,6 +138,37 @@ export const addPosting = (postingInfo) => {
         });
 };
 
+export const commentPost = (content, postID) => {
+    const url = `${BASE_API_URL}/api/postings/comment`;
+
+    const commentInfo = {
+        content: content,
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "patch",
+        body: JSON.stringify(commentInfo),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            if(!res.ok){
+                console.log("Could not create comment, status code:", res.status)
+                alert("Sorry there was a commenting on this post")
+                return;
+            }
+            // created post
+            console.log('comment created')
+        })
+        .catch(error => {
+            console.log("error commenting on post:", error);
+        });
+};
 
 export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
@@ -214,7 +245,7 @@ export const applyPost = (postID, message) => { //DONE
     const url = `${BASE_API_URL}/api/postings`;
 
     const requestBody = {
-        posting_id : postID,
+        postingID : postID,
         message : message
     }
 
