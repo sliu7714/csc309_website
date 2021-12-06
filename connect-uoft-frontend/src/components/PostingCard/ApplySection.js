@@ -36,7 +36,7 @@ const ApplySection = ({posting, updatePostings}) =>{
 
     return(
         <div>
-
+            <hr />
             {
                 applicationStatus == NOT_APPLIED ?
                     <div>
