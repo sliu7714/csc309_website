@@ -186,7 +186,7 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
                 </ul>
 
                 { isEditing ?
-                    <button className="delete-button" onClick={deletePost}>Delete Post</button>
+                    <button className="delete-button" onClick={() => deletePosting()}>Delete Post</button>
                     : null
                 }
 

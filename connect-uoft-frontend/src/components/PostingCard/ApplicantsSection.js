@@ -2,7 +2,7 @@ import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import {useState} from "react";
 import ApplicantListItem from "./ApplicantListItem";
 import {PENDING_APPLICATION} from "../../data/constants";
-import { acceptApplicantPost, rejectApplicantPost } from "../../actions/postings";
+import { rejectApplicantPost, acceptApplicantPost } from "../../actions/postings";
 
 
 const ApplicantSection = ({posting, updatePostings}) => {

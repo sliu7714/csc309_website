@@ -379,7 +379,7 @@ app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) 
 app.get('api/postings/:pid', mongoChecker, authenticate, async (req, res) => {
 
     try {
-        const posting = await Posting.findById(req.req.params.pid)
+        const posting = await Posting.findById(req.params.pid)
         if(!posting){
             res.status(404).send("post not found")
         }
@@ -440,21 +440,6 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
     }
 });
 
-
-// a GET route to get all posts
-app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    // Get the postings
-    try {
-        const postings = await Posting.find({}) 
-        //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings, req)
-        res.send(parsedPostings)
-    } catch(error) {
-        console.log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
 
 // PATCH to update the applicants
 app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {

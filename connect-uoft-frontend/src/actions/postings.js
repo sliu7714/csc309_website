@@ -1,30 +1,6 @@
 // environment configutations
 import ENV from './../config.js'
-import {postings} from "../data/data";
 const BASE_API_URL = ENV.apiBaseUrl
-
-// gets all the postings
-export const getPostings = (setPosting) => {
-    const url = `${BASE_API_URL}/api/postings`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Could not get postings");
-            }   
-        })
-        .then(json => {
-            if(json){
-                setPosting(postings);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
 
 // search posts by tags
 export const SearchPostings = (tags, setPostings) =>{
@@ -131,12 +107,12 @@ export const addPosting = (postingInfo) => {
                 return;
             }
             // created post
-            console.log('created post')
+            console.log('Created post')
         })
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
 
 export const commentPost = (content, postID) => {
     const url = `${BASE_API_URL}/api/postings/comment`;
@@ -168,7 +144,7 @@ export const commentPost = (content, postID) => {
         .catch(error => {
             console.log("error commenting on post:", error);
         });
-};
+}
 
 export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
@@ -200,7 +176,7 @@ export const updatePost = (postingInfo, postID) => {
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
               
 // deletes the post given by postID
 export const deletePost = (postID) => {
@@ -238,7 +214,7 @@ export const deletePost = (postID) => {
         .catch(error => {
             console.log(error);
         });
-};           
+}        
 
 export const applyPost = (postID, message) => { //DONE
     // the URL for the request
@@ -275,7 +251,7 @@ export const applyPost = (postID, message) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 export const reportPost = (postID) => { // DONE
     // the URL for the request
@@ -312,7 +288,7 @@ export const reportPost = (postID) => { // DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 
 export const getReportedPost = (setPosting) => { //DONE
@@ -336,15 +312,16 @@ export const getReportedPost = (setPosting) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
-export const acceptApplicantPost = (applicantID, postID) => {
+// a patch to accept an applicant
+export const acceptApplicantPost = (applicantID, postID) =>{
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/accept`;
 
     const requestBody = {
-        applicantID = applicantID,
-        postingID = postID
+        applicantID: applicantID,
+        postingID: postID
     }
 
     const request = new Request(url, {
@@ -368,15 +345,16 @@ export const acceptApplicantPost = (applicantID, postID) => {
         .catch(error => {
             console.log(error);
         });
-};
+}
 
-export const rejectApplicantPost = (applicantID, postID) => {
+// a patch to reject an applicant
+export const rejectApplicantPost = (applicantID, postID) =>{
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/accept`;
 
     const requestBody = {
-        applicantID = applicantID,
-        postingID = postID
+        applicantID: applicantID,
+        postingID: postID
     }
 
     const request = new Request(url, {
@@ -400,7 +378,7 @@ export const rejectApplicantPost = (applicantID, postID) => {
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 
 export const getPostByID = (postID, setPosting) => {
@@ -408,7 +386,7 @@ export const getPostByID = (postID, setPosting) => {
     const url = `${BASE_API_URL}/api/postings/post`;
 
     const requestBody = {
-        posting_id: postID
+        postingID: postID
     }
 
     const request = new Request(url, {
@@ -429,17 +407,17 @@ export const getPostByID = (postID, setPosting) => {
                 alert("Failed");
             }   
         })
-        .then(json => {
+        .then(posting => {
             // the resolved promise with the JSON body
-            if(json){
-                setPosting(json.postings);
+            if(posting){
+                setPosting(posting);
             }
 
         })
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 export const getMemberPosts = (setPosting) => { //DONE
 
@@ -461,4 +439,4 @@ export const getMemberPosts = (setPosting) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
