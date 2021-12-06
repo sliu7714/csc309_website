@@ -27,20 +27,24 @@ const ApplicantSection = ({posting, updatePostings}) => {
         <div >
             <span className="posting-text light-bold" >Applicants</span>
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
-            { posting.applicantsInfo  && showApplicants ?
-                posting.applicantsInfo.map((applicant) =>
-                    applicant.applicationStatus == PENDING_APPLICATION ?
-                    <ApplicantListItem applicant={applicant}
-                                       acceptApplicant={acceptApplicant}
-                                       denyApplicant={denyApplicant}
-                                       key={applicant.id}
-                    />
+            { showApplicants ?
+                posting.applicantsInfo  ?
+                    posting.applicantsInfo.map((applicant) =>
+                        applicant.applicationStatus == PENDING_APPLICATION ?
+                        <ApplicantListItem applicant={applicant}
+                                           acceptApplicant={acceptApplicant}
+                                           denyApplicant={denyApplicant}
+                                           key={applicant.id}
+                        />
+                        :
+                        null
+                    )
                     :
                     <div className="grey-text posting-text">
                         no pending applicants
                     </div>
-                )
-                : null
+                :
+                null
             }
         </div>
     )

@@ -4,8 +4,7 @@ import {useState, useEffect} from 'react';
 import PostingCard from "../../components/PostingCard/PostingCard";
 import "./styles.css"
 
-import {postings} from "../../data/data";
-import Popup from "../../components/EditCreatePostPopup/Popup"; // TEMP
+import {postings} from "../../data/data"; // TEMP
 
 const PostingDetailed = ({userID, isUserLoggedIn}) =>{
 

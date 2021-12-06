@@ -1,26 +1,19 @@
-import {postings} from "../../data/data" // TEMP
 import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
+import {getUserCreatedPostings} from "../../actions/postings";
 
 const Manage = ({}) => {
 
-    const [userPostings, setUserPostings] = useState([])
+    const [userCreatedPostings, setUserCreatedPostings] = useState([])
+
+    const [userMemberPostings, setUserMemberPostings] = useState([])
 
     // call this function everytime a post needs to be updated
     const fetchPostings = () =>{
-        // TODO: add backend request here:
-        // fetch('/user/postings')
-        //     .then(res => res.json())
-        //     .then(data => setUserPostings(postings))
-        //     .catch(err =>{
-        //         // deal with error here
-        //         console.log(err)
-        //         return;
-        //     })
+        getUserCreatedPostings(setUserCreatedPostings)
 
-        // TEMPORARY
-        setUserPostings(postings.filter((postings) => postings.creatorInfo.id === 1))
+        // TODO: set userMember posts from backend
     }
 
     // fetch once initially
@@ -31,14 +24,37 @@ const Manage = ({}) => {
 
     return(
         <div >
-            <div className="manage-section">
-            {userPostings.map(posting =>
-                <PostingCard
-                    posting={posting}
-                    updatePostings={fetchPostings}
-                    isCreator={true}
-                />
-                )}
+            <div>
+                <h1 className="manage-page-title">Groups you created</h1>
+                <div className="manage-posts-grid">
+                    {userCreatedPostings && userCreatedPostings.length > 0?
+                        userCreatedPostings.map(posting =>
+                            <PostingCard
+                                posting={posting}
+                                updatePostings={fetchPostings}
+                                isCreator={true}
+                            />)
+                        :
+                            <h2 className="grey-text"><i>no groups</i></h2>
+                    }
+                </div>
+            </div>
+
+
+            <div>
+                <h1 className="manage-page-title">Groups you are a member of</h1>
+                <div className="manage-posts-grid">
+                    {userMemberPostings &&  userMemberPostings.length > 0?
+                        userMemberPostings.map(posting =>
+                            <PostingCard
+                                posting={posting}
+                                updatePostings={fetchPostings}
+                                isCreator={true}
+                            />)
+                        :
+                        <h2 className="grey-text"><i>no groups</i></h2>
+                    }
+                </div>
             </div>
         </div>
     )

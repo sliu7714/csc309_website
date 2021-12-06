@@ -26,7 +26,7 @@ function App() {
   return (
     <div className="App">
         {/* routes to different pages based on url */}
-        <Header isUserLoggedIn={isUserLoggedIn} userID={1}/>  {/*TODO change to remove userID*/}
+        <Header isUserLoggedIn={isUserLoggedIn} />
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
@@ -42,7 +42,7 @@ function App() {
                 </Route>
 
                 <Route path="/home"  >
-                    {isUserLoggedIn ? <Home isAdmin={isAdmin}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
+                    {isUserLoggedIn ? <Home isAdmin={isAdmin}/> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/profile" >
