@@ -305,7 +305,39 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
             res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
         }
     }
-})
+});
+
+// a DELETE route to delete specific posting
+app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
+
+    try {
+        await Posting.deleteOne({ _id: req.body.posting_id })
+    } catch(error) {
+        console.lof(error) // console.lof server error to the console, not to the client.
+        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+            res.status(500).send('Internal server error')
+        } else {
+            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
+        }
+    }
+});
+
+// a GET route to get a specific posting by id
+// note the id is part of the url
+app.get('api/postings/:pid', mongoChecker, authenticate, async (req, res) => {
+
+    try {
+        const posting = await Posting.findById(req.req.params.pid)
+        if(!posting){
+            res.status(404).send("post not found")
+        }
+        const parsedPosting = await addUserInfoToPosts([posting])
+        res.send(parsedPosting[0])
+    } catch(error) {
+        console.lof(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
 
 // a GET route to get all posts a user has created
 app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) => {
@@ -528,131 +560,6 @@ app.put("/api/user/modify", mongoChecker, authenticate, async(req, res)=>{
 		}
     }
 })
-/****************************** API Routes - Postings ***************************************/
-
-// a POST route to create new posting
-app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    // Create a new posting
-    const posting = new Posting({
-        name: req.body.title,
-    })
-
-
-    try {
-        const result = await posting.save() 
-        res.send(result)
-    } catch(error) {
-        log(error) // log server error to the console, not to the client.
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
-            res.status(500).send('Internal server error')
-        } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-        }
-    }
-});
-
-// a DELETE route to delete specific posting
-app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    try {
-        await Posting.deleteOne({ _id: req.body.posting_id }) 
-    } catch(error) {
-        log(error) // log server error to the console, not to the client.
-        if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
-            res.status(500).send('Internal server error')
-        } else {
-            res.status(400).send('Bad Request') // 400 for bad request gets sent to client.
-        }
-    }
-});
-
-// a GET route to get all posts
-app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    // Get the postings
-    try {
-        const postings = await Posting.find({})
-        res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// PATCH to update the applicants - fix needed for body.applicants
-app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    // Update the posting
-    try {
-        const postings = await Posting.updateOne({ _id: req.body.posting_id }, { $push: {applicants: req.body.applicant }})
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// a GET route to get all the reported postings
-app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
-
-    // Get the postings
-    try {
-        const postings = await Posting.find({isReported: True})
-        res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// a PATCH route to update the current posting to reported
-app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
-
-    // Update the posting
-    try {
-        const postings = await Posting.updateOne({ _id: req.posting_id }, { isReported: True })
-        //res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// a GET route to get the current users' postings
-app.get('api/postings/user', mongoChecker, authenticate, async (req, res) => {
-
-    try {
-        const postings = await Posting.find({ creatorID : req.session.user }) //get current user
-        res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// a GET route to get a specific posting by id
-app.get('api/postings/post', mongoChecker, authenticate, async (req, res) => {
-
-    try {
-        const postings = await Posting.findById(req.body.posting_id)
-        res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
-
-// a GET route to get postings current user is a member of
-app.get('api/postings/member', mongoChecker, authenticate, async (req, res) => {
-
-    try {
-        const postings = await Posting.find({ members : { $contains : req.session.user }}) //get current user
-        res.send(postings) 
-    } catch(error) {
-        log(error)
-        res.status(500).send("Internal Server Error")
-    }
-});
 
 /************************** WEBPAGE ROUTES **********************************/
 // Serve the build
