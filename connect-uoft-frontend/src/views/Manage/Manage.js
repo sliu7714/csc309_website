@@ -1,7 +1,7 @@
 import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
-import {getUserCreatedPostings} from "../../actions/postings";
+import {getUserCreatedPostings, getUserMemberPostings} from "../../actions/postings";
 
 const Manage = ({}) => {
 
@@ -14,6 +14,7 @@ const Manage = ({}) => {
         getUserCreatedPostings(setUserCreatedPostings)
 
         // TODO: set userMember posts from backend
+        getUserMemberPostings(setUserMemberPostings)
     }
 
     // fetch once initially
@@ -49,7 +50,7 @@ const Manage = ({}) => {
                             <PostingCard
                                 posting={posting}
                                 updatePostings={fetchPostings}
-                                isCreator={true}
+                                isMember={true}
                             />)
                         :
                         <h2 className="grey-text"><i>no groups</i></h2>

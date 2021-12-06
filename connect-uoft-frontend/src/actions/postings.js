@@ -87,6 +87,30 @@ export const getUserCreatedPostings = (setPostings) =>{
         });
 }
 
+// return the posts that the current logged in user is a member of (not created)
+// assumes there is a current user logged in
+export const getUserMemberPostings = (setPostings) =>{
+    const url = `${BASE_API_URL}/api/postings/member`;
+
+    fetch(url)
+        .then(res => {
+            if(!res.ok){
+                console.log("Could not get postings, status code:", res.status)
+                alert("Sorry there was a problem getting the groups that you are a member of")
+                return;
+            }
+            return res.json();
+        })
+        .then(postingList => {
+            if(postingList){
+                setPostings(postingList);
+            }
+        })
+        .catch(error => {
+            console.log("error with getting user member posts:", error);
+        });
+}
+
 export const addPosting = (postingInfo) => {
     const url = `${BASE_API_URL}/api/postings`;
 

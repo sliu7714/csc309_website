@@ -25,6 +25,7 @@ const ApplicantSection = ({posting, updatePostings}) => {
 
     return(
         <div >
+            <hr />
             <span className="posting-text light-bold" >Applicants</span>
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
             { showApplicants ?

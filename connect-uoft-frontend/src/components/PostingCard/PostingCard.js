@@ -81,7 +81,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
 
             <hr />
             <p className="posting-text "> Spaces Filled: {posting.members.length + 1} / {posting.capacity}</p>
-            <hr />
+
 
 
 
@@ -89,7 +89,10 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                 isCreator ?
                     <ApplicantSection posting={posting} updatePostings={updatePostings}/>
                     :
+                !isMember ?
                     <ApplySection posting={posting} updatePostings={updatePostings}/>
+                    :
+                    null
             }
 
             {

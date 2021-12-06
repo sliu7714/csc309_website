@@ -264,6 +264,12 @@ app.get("/api/hello-world", mongoChecker, (req, res)=>{
 /************** POSTINGS API *********************/
 // note: if using the "authenticate" middleware,  get req.session.user is the userID of the current logged in user
 
+// // code snippet to check if a user is a member for editing posts (sometimes don't need to be creator for example to comment)
+// const canEditPost = await checkIsPostingCreator(req.postingID)
+// if (! canEditPost ){
+//     res.status(403).send("Cannot edit a post that a user has not created")
+// }
+
 // create a new post with the currently logged in user as the creator
 app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
@@ -298,6 +304,21 @@ app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) =>
     // Get the postings
     try {
         const postings = await Posting.find({creatorID: req.session.user})
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+// a GET route to get all posts a user is a member of
+app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => {
+
+    // Get the postings
+    try {
+        const postings = await Posting.find({members: ObjectID(req.session.user)})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings)
         res.send(parsedPostings)
