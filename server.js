@@ -6,7 +6,8 @@
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
-const TEST_USER_ID = '61aa60e1af5adf44801f1523' // the id of our test user
+// const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
+const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -109,7 +110,7 @@ const checkIsAdmin = async (req) =>{
                 // console.log("checkIsAdmin: did not find user")
                 return false
             }
-            return true
+            return user.isAdmin ? user.isAdmin : false
         })
         .catch(err =>{
             console.log(err)
