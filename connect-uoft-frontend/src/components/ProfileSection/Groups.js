@@ -79,7 +79,7 @@ const addJoinedGroupToDOM = (title, creator, description, link, members) =>{
 
 const Groups = (props) => {
     return (
-        <div className='groupContent profile-container profile-card-background'>
+        <div className='group-content profile-container profile-card-background'>
             <h1 className="section_title">My Groups</h1>
             <div id="joined-groups" className="groups-list">
                 <div className="group">
@@ -227,8 +227,7 @@ const addCreatedGroupToDOM = (title, creator, description, link, members) =>{
 
 const LeadGroups = (props) => {
     return(
-        <div className='groupContent profile-container profile-card-background'>
-        <div className='group-content profile-container'>
+        <div className='group-content profile-card-background profile-container'>
             <h1 className="section_title">Lead Groups</h1>
             <div id="created-groups" className="groups-list">
                 {/* <div className="group">
@@ -252,7 +251,6 @@ const LeadGroups = (props) => {
                </div> */}
                {(getCreatedGroups().length === 0)? <div>You Have Not Created Any Groups</div>:  addAllCreatedGroups()}
             </div>
-        </div>
         </div>
     )
 }

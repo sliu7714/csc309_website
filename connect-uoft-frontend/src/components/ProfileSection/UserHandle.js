@@ -7,30 +7,14 @@ import ProfilePopup from "./ProfilePopup";
 
 
 const UserHandle = (props) => {
-    const user1 = users[props.user];
-    const profilePictures = props.profilePictures
-    const _profilePicture = profilePictures[user1.imageIndex]
+    const user1 = props.user;
+    const profilePictures = props.profilePictures;
+    const _profilePicture = profilePictures[user1.profileImageIndex];
 
     const [editProfilePopup, showEditProfilePopup] = useState(false);
     const [editProfileImage, setEditProfileImage] = useState(false);
 
     const user = props.user
-
-
-    
-    // const handleEdit = () => {
-    //     // createSection
-
-    //     setEditProfilePopup(false);
-    //     return (editProfilePopup) ? (
-    //    <div className="edit-profile-container">
-    //         <div className="edit-profile-content-container">
-    //             <button className="edit-profile-content-container__button" onClick={() => setEditProfilePopup(false)}>close</button>
-    //         </div>
-    //     </div>
-    //     ): null;
-    // }
-
 
     return (
         
