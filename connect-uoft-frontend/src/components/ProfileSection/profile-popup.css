@@ -15,12 +15,10 @@
 
 .edit-profile-content-container {
   position: relative;
-  /* top: 25%; */
   padding: 23px;
   width: 33%;
   min-width: 600px;
-  height: 50%;
-  min-height: 500px;
+  height: 70%;
 
   background-color: white;
 }
@@ -66,6 +64,21 @@
   padding: 0px;
   margin-left: 0px;
   margin-bottom: 10px;
+}
+.edit-profile-content-container-courses-container {
+  height: 50px;
+  padding: 0px;
+  width: 400px;
+  margin-left: 0px;
+  float: right;
+}
+#tags_container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 600px;
+  float: right;
+  margin-left: 0px;
 }
 .edit-profile-content-container__form__textarea {
   resize: none;

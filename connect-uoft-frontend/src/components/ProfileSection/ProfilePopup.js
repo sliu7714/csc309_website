@@ -1,8 +1,11 @@
 import React, {useState} from 'react';
 import './profile-popup.css'
+import TagRemovable from "../SearchTag/TagRemovable";
+
 import { setProfileInfo } from '../../actions/user';
 
 const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
+
     const [updateProfilePictureIndex, setProfilePictureIndex] = useState(user.profileImageIndex)
     const [updatedName, setName] = useState(user.name);
     const [updatedEmail, setEmail] = useState(user.email);
@@ -10,7 +13,26 @@ const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
     const [updatedPassword, setPassword] = useState(user.password);
     const [updatedBio, setBio] = useState(user.bio);
 
-   
+    const [currentSearchText, setCurrentSearchText] = useState("")
+    // a list of the text in the currently displayed tags
+    const [currentCourses, setCurrentTags] = useState(user.courses)
+
+    // add text from the search bar and clear the search bar
+    const addCourse = () => {
+        if (currentCourses.length !== 6){
+            if (currentCourses.includes(currentSearchText)){
+                console.log(`already added tag: ${currentSearchText}`)
+            }else{
+                setCurrentTags([...currentCourses, currentSearchText])
+                setCurrentSearchText("")
+            }
+        }
+    }
+
+    const removeTag = (tagText) => {
+        setCurrentTags(currentCourses.filter(tag => tag !== tagText))
+    }
+
     return (trigger) ? (
         <div className="edit-profile-container">
             <div className="edit-profile-content-container">
@@ -44,7 +66,15 @@ const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
                         <label className="edit-profile-content-container__form__label">Bio:
                             <textarea id="edit-profile-bio" type="text" className="edit-profile-content-container__form__textarea"  placeholder="Tell Us About Yourself" rows="9" onChange={e => setBio(e.target.value)}>{user.bio}</textarea>
                         </label>
-                        <input className="edit-profile-content-container__form__submit" type="submit" onClick={()=>{setProfileInfo(updatedName,updatedEmail,updatedUsername,updatedPassword,updatedBio, updateProfilePictureIndex)}}/>
+                        <div className="edit-profile-content-container-courses-container">
+                            <input id="search_bar" type="text" value={currentSearchText} onChange={e => setCurrentSearchText(e.target.value)}/>
+                            <button className="profile-contents-container__button" id="add_tag_btn" type="button" onClick={() => {addCourse()}}>Add Course</button>
+                        </div>
+                        
+                        <div id='tags_container'>
+                            {currentCourses.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
+                        </div>
+                        <input className="edit-profile-content-container__form__submit" type="submit" onClick={()=>{setProfileInfo(updatedName,updatedEmail,updatedUsername,updatedPassword,updatedBio, updateProfilePictureIndex, currentCourses)}}/>
                     </div>                                                                                                                                     
                     
                 </form>

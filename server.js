@@ -402,7 +402,8 @@ app.put("/api/user/modify", mongoChecker, authenticate, async(req, res)=>{
 		username: req.body.username,
         password: req.body.password,
         bio: req.body.bio,
-        profileImageIndex: req.body.profileImageIndex
+        profileImageIndex: req.body.profileImageIndex,
+        courses: req.body.courses
 	}
     
     try {

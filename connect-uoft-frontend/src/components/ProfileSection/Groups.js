@@ -82,7 +82,7 @@ const Groups = (props) => {
         <div className='group-content profile-container profile-card-background'>
             <h1 className="section_title">My Groups</h1>
             <div id="joined-groups" className="groups-list">
-                <div className="group">
+                {/* <div className="group">
                     <div className="group-content-container">
                         <h2 className="group-content-container__h2">Work on practice</h2>
                         <h3 className="group-content-container__h3">Creator: 0</h3>
@@ -138,11 +138,11 @@ const Groups = (props) => {
                             </div>
                         </div>
                     </div>           
-               </div>
+               </div> */}
                
                
                
-               {(getJoinedGroups().length === 1) ? <div>You Have Not Joined Any Groups</div>: addAllJoinedGroups()}
+               {(getJoinedGroups().length === 0) ? <div>You Have Not Joined Any Groups</div>: addAllJoinedGroups()}
             </div>
         </div>
     )
