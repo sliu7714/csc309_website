@@ -141,10 +141,8 @@ const checkIsAdmin = async (userID) =>{
 // return some info about a user, given the id
 // specifically the userID, name, and profile pic index
 const getProfileSummary = async (id) =>{
-    // TODO:
     // start a new object representing profile summary
     const profileInfo = {id}
-
     await User.findById(id)
         .then(user => {
             if(!user){
@@ -158,26 +156,37 @@ const getProfileSummary = async (id) =>{
             profileInfo.name = user.name
             profileInfo.profileImageIndex = user.profileImageIndex
         })
+        .catch(err =>{
+            console.log("error in getProfileSummary for id", id," :", err)
+            return
+        })
 
     return profileInfo
 }
 
 // add profile info the the creator, applicant, and member sections of the posts
-const addUserInfoToPosts = async (postingList) =>{
+const addUserInfoToPosts = async (postingList, req) =>{
     return Promise.all(postingList.map(async (posting) => {
         // get creator info
         const creatorInfo = await getProfileSummary(posting.creatorID)
         // get member info
-        const memberInfo = await Promise.all(posting.members.map(async (member) =>{
-                await getProfileSummary(member)
-            }));
+        // note not sure why indexing into members works to get id but using map or for...in... the member returns value of 0?
+        // NOTE: might run into the same problem with applicants id below TODO: make sure to fix if this is the case
+        const memberInfo = []
+        for (let i=0 ; i< posting.members.length; i++){
+            const info = await getProfileSummary(posting.members[i])
+            memberInfo.push(info)
+        }
         // get applicant info
         const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
             const applicantInfo = await getProfileSummary(application.applicantID)
             return({...application, applicantInfo})
         }));
+        // check if the current user is a
+        const isCreator = await checkIsPostingCreator(req.session.username, posting._id)
+        const isMember = await checkIsPostingMember(req.session.username, posting._id)
         // note : posting has some extra info from mongo so the actual posting is posting._doc
-        return {...posting._doc, creatorInfo, memberInfo, applicantInfo}
+        return {...posting._doc, creatorInfo, memberInfo, applicantInfo, isCreator, isMember}
     }));
 }
 
@@ -305,7 +314,7 @@ app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) =>
     try {
         const postings = await Posting.find({creatorID: req.session.user})
         //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings)
+        const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
     } catch(error) {
         console.log(error)
@@ -320,7 +329,7 @@ app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => 
     try {
         const postings = await Posting.find({members: ObjectID(req.session.user)})
         //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings)
+        const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
     } catch(error) {
         console.log(error)
@@ -339,7 +348,7 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
     try {
         const postings = await Posting.find(filter)
         //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings)
+        const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
     } catch(error) {
         console.log(error)
@@ -355,7 +364,7 @@ app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
     try {
         const postings = await Posting.find({}) // can filter here > {creatorID: req.session.user}
         //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings)
+        const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
     } catch(error) {
         console.log(error)
@@ -383,7 +392,7 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
     try {
         const postings = await Posting.find({isReported: true}) // can filter here > {creator: req.user._id}
         //  parse posting applicants and members to include other profile info
-        const parsedPostings = await addUserInfoToPosts(postings)
+        const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
     } catch(error) {
         console.log(error)

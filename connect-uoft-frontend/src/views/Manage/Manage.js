@@ -31,6 +31,7 @@ const Manage = ({}) => {
                     {userCreatedPostings && userCreatedPostings.length > 0?
                         userCreatedPostings.map(posting =>
                             <PostingCard
+                                key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
                                 isCreator={true}
@@ -48,6 +49,7 @@ const Manage = ({}) => {
                     {userMemberPostings &&  userMemberPostings.length > 0?
                         userMemberPostings.map(posting =>
                             <PostingCard
+                                key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
                                 isMember={true}

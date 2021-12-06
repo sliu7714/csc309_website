@@ -7,6 +7,7 @@ import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplicantsSection from "./ApplicantsSection";
 import ApplySection from "./ApplySection";
+import MemberListSection from "./MemberListSection";
 
 
 // updatePostings is to call the function to rerender this post
@@ -40,7 +41,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
 
     return (
         <div className="posting posting-card">
-            <a  id="title-link" href={`/posting/${posting._id}`} target="_blank">
+            <a  className="title-link" href={`/posting/${posting._id}`} target="_blank">
                 <h2 className="posting-text posting-card-title" >{posting.title}</h2>
             </a>
 
@@ -79,8 +80,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
             <div className="posting-text"> End Date: <i>{posting.endDate ? parseDateStr(posting.endDate) : 'n/a'} </i></div>
 
 
-            <hr />
-            <p className="posting-text "> Spaces Filled: {posting.members.length + 1} / {posting.capacity}</p>
+            <MemberListSection showMemberSection={isCreator || isMember || isCreator} posting={posting}/>
 
 
 

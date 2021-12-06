@@ -12,14 +12,14 @@ const ApplicantSection = ({posting, updatePostings}) => {
         // TODO connect to backend
         console.log('accept', applicantID)
         // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
+        updatePostings()
     }
 
     const denyApplicant = (applicantID) =>{
         // TODO connect to backend
         console.log('deny', applicantID)
         // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
+        updatePostings()
     }
 
 
@@ -31,7 +31,7 @@ const ApplicantSection = ({posting, updatePostings}) => {
             { showApplicants ?
                 posting.applicantsInfo  ?
                     posting.applicantsInfo.map((applicant) =>
-                        applicant.applicationStatus == PENDING_APPLICATION ?
+                        applicant.applicationStatus === PENDING_APPLICATION ?
                         <ApplicantListItem applicant={applicant}
                                            acceptApplicant={acceptApplicant}
                                            denyApplicant={denyApplicant}
