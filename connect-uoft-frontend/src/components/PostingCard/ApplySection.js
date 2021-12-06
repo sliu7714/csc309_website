@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import "./styles.css"
 import {NOT_APPLIED, ACCEPTED_APPLICATION, CANCELED_APPLICATION, PENDING_APPLICATION, REJECTED_APPLICATION} from "../../data/constants";
+import { applyPost } from "../../actions/postings";
 
 const ApplySection = ({posting, updatePostings}) =>{
 
@@ -28,15 +29,15 @@ const ApplySection = ({posting, updatePostings}) =>{
     const [hasApplied, setHasApplied] = useState(false)
 
     const apply = () =>{
-        // TODO add to backend
-        console.log("apply",posting.id )
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        console.log("apply",posting._id )
+        setHasApplied(true) // not needed?
+        applyPost(posting._id, applyMsg)
         updatePostings()
     }
 
     return(
         <div>
-
+            <hr />
             {
                 applicationStatus == NOT_APPLIED ?
                     <div>

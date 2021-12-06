@@ -1,24 +1,20 @@
 import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
-import {postings} from "../../data/data";
+import {addPosting, updatePost, deletePosting, deletePost} from "../../actions/postings";
 
 
-const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
+
+const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
 
     // used for creating a new post: (if isEditing is false)
     const initialPosting = {
-        id: postings.length, // TODO: later backend should create post id - so remove this later
-        creator: userID,
         title: "",
         description: "",
         endDate: "",
         capacity: 2,
         tags: [],
-        members: [],
-        applicants: [],
     }
-
 
     const [postingInfo, setPostingInfo] = useState(initialPosting)
 
@@ -81,8 +77,6 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
         setPostingInfo({...postingInfo, endDate })
     }
 
-
-
     const closePopup = () => {
         if (!isEditing){
             // clear state for next create post
@@ -92,17 +86,9 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
         setTrigger(false)
     }
 
-    const deletePost = () =>{
+    const deletePosting = () =>{
         console.log("deletePosting not fully implemented")
-        // fetch(`api/postings/delete/${posting.id}`)
-        //     .then(res =>{
-        //         if (!res.ok){
-        //             // TODO: handle this - show message to user?
-        //             console.log(`could not delete post, response code: ${res.status}`)
-        //             return;
-        //         }
-        //     })
-        // // now need to call function in parent to update postings data for frontend to reflect changes
+        deletePost(posting._id)
     }
 
     const createPost = () =>{
@@ -112,15 +98,16 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
         }
 
         console.log(postingInfo)
-        // TODO: add fetch call to store post in backend
+
         if(isEditing){
-            //TODO:  fetch call to edit post (PUT?)
+            updatePost(postingInfo, posting._id)
+
         }
         else{
-            //TODO: fetch call to create post (POST)
+            console.log(postingInfo)
+            addPosting(postingInfo)
         }
-
-        postings.push(postingInfo) //TEMPORARY
+        updatePostings() // function to re-fetch posts in page if needed
         closePopup()
     }
 
@@ -199,7 +186,7 @@ const Popup = ({trigger, setTrigger, userID, isEditing, posting}) => {
                 </ul>
 
                 { isEditing ?
-                    <button className="delete-button" onClick={deletePost}>Delete Post</button>
+                    <button className="delete-button" onClick={() => deletePosting()}>Delete Post</button>
                     : null
                 }
 

@@ -118,7 +118,25 @@
     margin-left: 20px;
     font-weight: bold;
 }
-
+.title-link{
+    text-decoration: none;
+    padding: 0px;
+}
+.member-item{
+    padding-left: 14px;
+}
+.member .profile-icon-container{
+    background-color: darkseagreen;
+    border-radius: 40px;
+    height: 35px;
+    width: 35px;
+    margin: 8px 4px;
+}
+.member .profile-icon{
+    margin-top: 6px;
+    margin-left: 7px;
+    height: 20px;
+}
 
 
 

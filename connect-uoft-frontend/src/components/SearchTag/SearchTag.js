@@ -2,7 +2,7 @@ import "./styles.css";
 import TagRemovable from "./TagRemovable";
 import {useState} from "react";
 
-const SearchTag = (search) =>{
+const SearchTag = ({search}) =>{
     const [currentSearchText, setCurrentSearchText] = useState("")
     // a list of the text in the currently displayed tags
     const [currentTags, setCurrentTags] = useState([])
@@ -41,7 +41,7 @@ const SearchTag = (search) =>{
 
             <br/>
 
-            <button id="search_btn" onClick={() => search()}>
+            <button id="search_btn" onClick={() => search(currentTags)}>
                 Search
             </button>
 

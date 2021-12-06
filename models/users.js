@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
         default: ""
     },
     courses: {
-        type: [mongoose.Types.ObjectId],
+        type: [String],
         default :[]
     },
     isAdmin: {

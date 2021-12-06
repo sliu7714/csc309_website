@@ -76,7 +76,7 @@
   width: 100%;
   padding: 0px;
 
-  background-color: white;
+  background-color: transparent;
 }
 
 .profile-user-handle-container__button__img {
@@ -98,6 +98,7 @@
   /* min-width: 300px; */
   width: 100%;
   border-style: dashed;
+  border-width: 2px;
   border-radius: 20px;
 }
 .profile-contents-container {
@@ -137,6 +138,12 @@
 .courses {
   max-height: 250px;
 }
+.courses__p {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 18px;
+}
 #add_course_container {
   height: 50px;
   position: relative;
@@ -165,10 +172,6 @@
 }
 #course_name {
   margin-right: 20px;
-}
-
-#tags_container {
-  margin-left: 0px;
 }
 
 /* GROUP AND REPORTED CONTENT */

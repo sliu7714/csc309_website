@@ -1,6 +1,7 @@
 import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import Comment from "./Comment";
 import {useState, useEffect} from "react";
+import { commentPost } from "../../actions/postings";
 
 
 const CommentSection = ({posting, updatePostings}) => {
@@ -12,6 +13,7 @@ const CommentSection = ({posting, updatePostings}) => {
         // TODO: backend connect
         console.log('comment', newCommentText)
         // now need to call function in parent to update postings data for frontend to reflect changes
+        commentPost(newCommentText, posting._id)
         updatePostings()
     }
 

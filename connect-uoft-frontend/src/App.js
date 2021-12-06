@@ -23,10 +23,16 @@ function App() {
     }, [])
 
 
+    // function to call the logout function
+    const callLogout = ()=>{
+        logout(setIsUserLoggedIn, setIsAdmin)
+    }
+
+
   return (
     <div className="App">
         {/* routes to different pages based on url */}
-        <Header isUserLoggedIn={isUserLoggedIn} userID={1}/>  {/*TODO change to remove userID*/}
+        <Header isUserLoggedIn={isUserLoggedIn} />
         <BrowserRouter>
             <Switch>
                 <Route exact path="/" >
@@ -42,11 +48,11 @@ function App() {
                 </Route>
 
                 <Route path="/home"  >
-                    {isUserLoggedIn ? <Home isAdmin={isAdmin}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
+                    {isUserLoggedIn ? <Home isAdmin={isAdmin}/> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/profile" >
-                    {isUserLoggedIn ? <Profile userID={1} isAdmin={isAdmin}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
+                    {isUserLoggedIn ? <Profile callLogout={callLogout} isAdmin={isAdmin}/> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/manage" >
@@ -54,7 +60,7 @@ function App() {
                 </Route>
 
                 <Route path="/logout">
-                    <Logout logout={() => logout(setIsUserLoggedIn, setIsAdmin)} isUserLoggedIn={isUserLoggedIn}/>
+                    <Logout logout={callLogout} isUserLoggedIn={isUserLoggedIn}/>
                 </Route>
 
                 <Route path="/posting/:id">
