@@ -84,27 +84,47 @@ const mongoChecker = (req, res, next) => {
 // should move these to separate files later
 
 // check if the current user is a creator of a posting
-// assume user is authenticated - so req.session.user exists
-const checkIsPostingCreator = (postingID) =>{
-    // userID = req.session.user;
-    // TODO
+// make sure to await for the return value of this
+const checkIsPostingCreator = (userID, postingID) =>{
+    return Posting.findById(postingID)
+        .then(posting =>{
+            if(!posting){
+                // console.log("checkIsAdmin: did not find user")
+                return false
+            }
+            return posting.creatorID == userID
+        })
+        .catch(err =>{
+            console.log(err)
+            return false
+        })
 }
 
 // check if the current user is a creator of a posting
 // posting members does NOT include the creator of the post.
-// assume user is authenticated - so req.session.user exists
-const checkIsPostingMember = (postingID) =>{
-    // userID = req.session.user;
-    // TODO
+// make sure to await for the return value of this
+const checkIsPostingMember = (userID, postingID) =>{
+
+    return Posting.findById(postingID)
+        .then(posting =>{
+            if(!posting){
+                // console.log("checkIsAdmin: did not find user")
+                return false
+            }
+            return posting.members ? posting.members.includes(userID) : false
+        })
+        .catch(err =>{
+            console.log(err)
+            return false
+        })
 
 }
 
 // check if the current user is an admin user
-// assume user is authenticated - so req.session.user exists
 // make sure to await for the return value of this
-const checkIsAdmin = async (req) =>{
+const checkIsAdmin = async (userID) =>{
 
-    return User.findById(req.session.user)
+    return User.findById(userID)
         .then(user =>{
             if(!user){
                 // console.log("checkIsAdmin: did not find user")
@@ -226,7 +246,7 @@ app.get("/api/user/check-session", async (req, res) => {
 
     // user session exists if session.user (userid) exists -- this is set in login
     if (req.session.user){
-        isAdmin = await checkIsAdmin(req)
+        isAdmin = await checkIsAdmin(req.session.user)
         res.send({ userID: req.session.user, isAdmin: isAdmin })
     }
     else{
@@ -287,6 +307,25 @@ app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) =>
     }
 });
 
+// a POST route to get all posts matching a list of tags
+// POST since we are generating search results
+app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) => {
+
+    // if tags is empty, don't filter
+    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$in: req.body.tags}} : {}
+
+    // Get the postings
+    try {
+        const postings = await Posting.find(filter)
+        //  parse posting applicants and members to include other profile info
+        const parsedPostings = await addUserInfoToPosts(postings)
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
 
 // a GET route to get all posts
 app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
@@ -316,6 +355,7 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
+// get all reported posts
 app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
@@ -330,6 +370,7 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
     }
 });
 
+// report a specific post
 app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting

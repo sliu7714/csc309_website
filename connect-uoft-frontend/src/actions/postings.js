@@ -3,7 +3,7 @@ import ENV from './../config.js'
 import {postings} from "../data/data";
 const BASE_API_URL = ENV.apiBaseUrl
 
-
+// gets all the postings
 export const getPostings = (setPosting) => {
     const url = `${BASE_API_URL}/api/postings`;
 
@@ -25,6 +25,42 @@ export const getPostings = (setPosting) => {
             console.log(error);
         });
 };
+
+// search posts by tags
+export const SearchPostings = (tags, setPostings) =>{
+    const url = `${BASE_API_URL}/api/postings/search`;
+
+    const requestBody = {
+        tags: tags,
+    }
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if(!res.ok){
+                console.log("Could not search postings, status code:", res.status)
+                return;
+            }
+            return res.json();
+        })
+        .then(postingList => {
+            console.log("here",postingList)
+            if(postingList){
+                setPostings(postingList);
+            }
+        })
+        .catch(error => {
+            console.log("error with getting search results :",error);
+        });
+}
 
 
 // return the posts that the current logged in user has created
@@ -242,29 +278,8 @@ export const updateApplicantPost = (datum) => {
         });
 };
 
-export const getUserPosts = (setPosting) => { //Creator DONE
 
-    const url = `${BASE_API_URL}/api/postings/user`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Failed");
-            }   
-        })
-        .then(json => {
-            // the resolved promise with the JSON body
-            setPosting({ postings: json.postings });
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
-
-export const getPostID = (postID, setPosting) => { //DONE
+export const getPostByID = (postID, setPosting) => { //DONE
 
     const url = `${BASE_API_URL}/api/postings/post`;
 
@@ -292,7 +307,10 @@ export const getPostID = (postID, setPosting) => { //DONE
         })
         .then(json => {
             // the resolved promise with the JSON body
-            setPosting({ postings: json.postings });
+            if(json){
+                setPosting(json.postings);
+            }
+
         })
         .catch(error => {
             console.log(error);
