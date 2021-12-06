@@ -5,9 +5,9 @@
 // To run in production mode, run in terminal: NODE_ENV=production node server.js
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
-const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
+// const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
 // const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
-const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
+const TEST_USER_ID = '61ad3f5f4cfb5b410c2ecd0a' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -393,6 +393,36 @@ app.get("/api/user", mongoChecker, authenticate, (req, res)=>{
         res.status(404).send("No user logged in")
     }
 
+})
+
+app.put("/api/user/modify", mongoChecker, authenticate, async(req, res)=>{
+    const updatedInfo = {
+		name:req.body.name,
+        email: req.body.email,
+		username: req.body.username,
+        password: req.body.password,
+        bio: req.body.bio,
+        profileImageIndex: req.body.profileImageIndex
+	}
+    
+    try {
+        const user = await User.findById(req.session.user)
+        console.log(user)
+        user.set(updatedInfo)
+        const result = await user.save()
+        if (!user) {
+			res.status(404).send('Resource not found')
+		} else {  
+			res.send(user)
+		}
+    } catch (error) {
+		console.log(error)
+		if (isMongoError(error)) { // check for if mongo server suddenly dissconnected before this request.
+			res.status(500).send('Internal server error')
+		} else {
+			res.status(400).send('Bad Request') 
+		}
+    }
 })
 
 /************************** WEBPAGE ROUTES **********************************/
