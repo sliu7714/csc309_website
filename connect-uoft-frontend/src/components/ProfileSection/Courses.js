@@ -11,7 +11,7 @@ const Courses = (props) => {
 
     const [currentSearchText, setCurrentSearchText] = useState("")
     // a list of the text in the currently displayed tags
-    const [currentTags, setCurrentTags] = useState(props.courses)
+    const [currentTags, setCurrentTags] = useState(props.user.courses)
 
     // add text from the search bar and clear the search bar
     const addTag = () => {
@@ -67,7 +67,7 @@ const Courses = (props) => {
                     {currentTags.map(tagText => <TagRemovable  text={tagText} removeTag={removeTag}/>)}
                 </div>
 
-                {props.courses}
+                {props.user.courses}
             </div>
         </div>
     )
