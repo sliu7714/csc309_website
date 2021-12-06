@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
-import {addPosting, updatePost} from "../../actions/postings";
-import Posting from '../Posting/Posting';
+import {addPosting, updatePost, deletePosting, deletePost} from "../../actions/postings";
+
 
 
 const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
@@ -86,17 +86,9 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
         setTrigger(false)
     }
 
-    const deletePost = () =>{
+    const deletePosting = () =>{
         console.log("deletePosting not fully implemented")
-        // fetch(`api/postings/delete/${posting.id}`)
-        //     .then(res =>{
-        //         if (!res.ok){
-        //             // TODO: handle this - show message to user?
-        //             console.log(`could not delete post, response code: ${res.status}`)
-        //             return;
-        //         }
-        //     })
-        // // now need to call function in parent to update postings data for frontend to reflect changes
+        deletePost(posting._id)
     }
 
     const createPost = () =>{
@@ -108,7 +100,7 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
         console.log(postingInfo)
 
         if(isEditing){
-            updatePost(postingInfo, posting.id)
+            updatePost(postingInfo, posting._id)
 
         }
         else{
