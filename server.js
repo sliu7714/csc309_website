@@ -345,15 +345,48 @@ app.get('/api/postings', mongoChecker, authenticate, async (req, res) => {
 // PATCH to update the applicants
 app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
+    const applicant = {
+        applicantID: req.session.user,
+        applyMsg: req.body.message,
+        applicationStatus: 'PENDING'
+    }
     // Update the posting
     try {
-        const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: req.applicant }}) // can filter hyere > {creator: req.user._id}
+        const postings = await Posting.updateOne({ _id: req.posting_id }, { $push: {applicants: applicant }})
         //res.send(postings) 
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
     }
 });
+
+// a PATCH to accept a applicant
+app.get('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
+
+    // update the applicant status to ACCEPTED
+    // update the membvers by poushing the userID
+    try {
+        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, {applicants: { applicationStatus: 'ACCEPTED'}})
+        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, { $push: { members: req.body.userID}})
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
+// a PATCH to decline a applicant
+app.get('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
+
+    // update the applicant status to REJECTED
+    try {
+        await Posting.updateOne({applicants: { applicantID: req.body.userID}}, {applicants: { applicationStatus: 'REJECTED'}})
+        res.send(parsedPostings)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
 
 // get all reported posts
 app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
