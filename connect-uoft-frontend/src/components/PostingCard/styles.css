@@ -1,6 +1,6 @@
 .posting.posting-card {
     position: relative;
-    border: solid dimgrey;
+    border: 1px solid dimgrey;
     border-radius: 16px;
     width: 350px;
     text-align: left;
