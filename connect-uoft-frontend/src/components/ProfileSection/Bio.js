@@ -1,11 +1,9 @@
-
-import {useState} from 'react'
 import "./styles.css"
-
 
 const Bio = (props) =>{
     const user = props.user
-     function getBio(){
+    
+    function getBio(){
         return user.bio
         // Pulls the users bio from the Profile Page
     }
@@ -13,11 +11,8 @@ const Bio = (props) =>{
 
         <div className="profile-container profile-card-background">
             <div className="profile-contents-container">
-                <h1 className="contents-container__h1">About Me</h1>
-                {/* Initializes the Bio with a stored bio and then saving will require a server call*/}
-                <p className="contents-container__p">{getBio() ?getBio(): "Tell Us About Yourself"}</p>
-                {/* <textarea border={!isEdit} id="bio" placeholder="Tell us about yourself!" rows="8" cols="60" disabled={!isEdit} onChange={(b) => setBio(b)}>{bioDescription}</textarea>  */}
-                {/* <button id="edit_button" className="_button" onClick={handleClick}>{isEdit ? 'Submit' : 'Edit'}</button> */}
+                <h1 className="profile-contents-container__h1">About Me</h1>
+                <p className="profile-contents-container__p">{getBio() ? getBio(): "Tell Us About Yourself"}</p>
             </div>        
         </div>
     );

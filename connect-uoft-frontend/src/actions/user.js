@@ -150,7 +150,7 @@ export const getProfileInfo = (setUser) =>{
 }
 
 
-export const setProfileInfo = (name, email, username, password, bio, profileImage) =>{
+export const setProfileInfo = (name, email, username, password, bio, profileImage, courses) =>{
    
     const url = `${BASE_API_URL}/api/user/modify`;
 
@@ -169,7 +169,8 @@ export const setProfileInfo = (name, email, username, password, bio, profileImag
         username: username,
         password: password,
         bio: bio,
-        profileImageIndex: profileImage
+        profileImageIndex: profileImage,
+        courses: courses
     }
     
     const request = new Request(url,{
