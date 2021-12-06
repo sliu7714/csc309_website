@@ -2,6 +2,7 @@ import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import {useState} from "react";
 import ApplicantListItem from "./ApplicantListItem";
 import {PENDING_APPLICATION} from "../../data/constants";
+import { rejectApplicantPost, acceptApplicantPost } from "../../actions/postings";
 
 
 const ApplicantSection = ({posting, updatePostings}) => {
@@ -11,14 +12,14 @@ const ApplicantSection = ({posting, updatePostings}) => {
     const acceptApplicant =(applicantID) =>{
         // TODO connect to backend
         console.log('accept', applicantID)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        acceptApplicantPost(applicantID, posting._id)
         updatePostings()
     }
 
     const denyApplicant = (applicantID) =>{
         // TODO connect to backend
         console.log('deny', applicantID)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        rejectApplicantPost(applicantID, posting._id)
         updatePostings()
     }
 

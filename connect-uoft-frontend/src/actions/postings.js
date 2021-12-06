@@ -1,30 +1,6 @@
 // environment configurations
 import ENV from './../config.js'
-import {postings} from "../data/data";
 const BASE_API_URL = ENV.apiBaseUrl
-
-// gets all the postings
-export const getPostings = (setPosting) => {
-    const url = `${BASE_API_URL}/api/postings`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Could not get postings");
-            }   
-        })
-        .then(json => {
-            if(json){
-                setPosting(postings);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
 
 // search posts by tags
 export const SearchPostings = (tags, setPostings) =>{
@@ -131,12 +107,12 @@ export const addPosting = (postingInfo) => {
                 return;
             }
             // created post
-            console.log('created post')
+            console.log('Created post')
         })
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
 
 export const commentPost = (content, postID) => {
     const url = `${BASE_API_URL}/api/postings/comment`;
@@ -168,7 +144,7 @@ export const commentPost = (content, postID) => {
         .catch(error => {
             console.log("error commenting on post:", error);
         });
-};
+}
 
 export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
@@ -200,7 +176,7 @@ export const updatePost = (postingInfo, postID) => {
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
               
 // deletes the post given by postID
 export const deletePost = (postID) => {
@@ -238,7 +214,7 @@ export const deletePost = (postID) => {
         .catch(error => {
             console.log(error);
         });
-};           
+}        
 
 export const applyPost = (postID, message) => { //DONE
     const url = `${BASE_API_URL}/api/postings`;
@@ -274,7 +250,7 @@ export const applyPost = (postID, message) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 export const reportPost = (postID) => { // DONE
     const url = `${BASE_API_URL}/api/postings/report`;
@@ -310,7 +286,7 @@ export const reportPost = (postID) => { // DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 export const getReportedPost = (setPosting) => { //DONE
     const url = `${BASE_API_URL}/api/postings/report`;
@@ -332,17 +308,21 @@ export const getReportedPost = (setPosting) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
-export const updateApplicantPost = (datum) => {
+// a patch to accept an applicant
+export const acceptApplicantPost = (applicantID, postID) =>{
     // the URL for the request
-    const url = `${BASE_API_URL}/api/postings/applicant`;
+    const url = `${BASE_API_URL}/api/postings/accept`;
 
-    if (datum.newStatus == true) {}
+    const requestBody = {
+        applicantID: applicantID,
+        postingID: postID
+    }
 
     const request = new Request(url, {
         method: "patch",
-        body: JSON.stringify(datum),
+        body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -361,7 +341,40 @@ export const updateApplicantPost = (datum) => {
         .catch(error => {
             console.log(error);
         });
-};
+}
+
+// a patch to reject an applicant
+export const rejectApplicantPost = (applicantID, postID) =>{
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/accept`;
+
+    const requestBody = {
+        applicantID: applicantID,
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "patch",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                alert("Updated applicant")
+            } else {
+                alert("Failed");
+            }   
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
 
 export const getPostByID = (postID, setPosting, setFoundPost) => {
     const url = `${BASE_API_URL}/api/postings/get-by-id/${postID}`;
@@ -376,10 +389,10 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
                 return;
             }   
         })
-        .then(json => {
+        .then(posting => {
             // the resolved promise with the JSON body
-            if(json){
-                setPosting(json)
+            if(posting){
+                setPosting(posting);
                 setFoundPost(true)
             }
 
@@ -387,4 +400,27 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         .catch(error => {
             console.log("error with getting post :", error);
         });
-};
+}
+
+export const getMemberPosts = (setPosting) => { //DONE
+
+    const url = `${BASE_API_URL}/api/postings/member`;
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Failed");
+            }   
+        })
+        .then(json => {
+            // the resolved promise with the JSON body
+            setPosting({ postings: json.postings });
+        })
+        .catch(error => {
+            console.log("error with getting post :", error);
+
+        });
+}
