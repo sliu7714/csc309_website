@@ -6,7 +6,8 @@
 const env = process.env.NODE_ENV // read the environment variable (will be 'production' in production mode)
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
-const TEST_USER_ID = '61aa60e1af5adf44801f1523' // the id of our test user
+// const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
+const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -109,7 +110,7 @@ const checkIsAdmin = async (req) =>{
                 // console.log("checkIsAdmin: did not find user")
                 return false
             }
-            return true
+            return user.isAdmin ? user.isAdmin : false
         })
         .catch(err =>{
             console.log(err)
@@ -145,13 +146,13 @@ const getProfileSummary = async (id) =>{
 const addUserInfoToPosts = async (postingList) =>{
     return Promise.all(postingList.map(async (posting) => {
         // get creator info
-        creatorInfo = await getProfileSummary(posting.creatorID)
+        const creatorInfo = await getProfileSummary(posting.creatorID)
         // get member info
-        memberInfo = await Promise.all(posting.members.map(async (member) =>{
+        const memberInfo = await Promise.all(posting.members.map(async (member) =>{
                 await getProfileSummary(member)
             }));
         // get applicant info
-        applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+        const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
             const applicantInfo = await getProfileSummary(application.applicantID)
             return({...application, applicantInfo})
         }));
@@ -260,16 +261,6 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
         // Save posting to the database
         const postResult = await posting.save()
-
-        // TODO: add post to user's postings list - idk if we still need
-        // const newPostID = postResult._id
-        // User.findOneAndUpdate({id_: req.session.user}, {$push: {createdPostings: newPostID}})
-        //     .then(user =>{
-        //         if (!user){
-        //             // shouldn't really happen since we authenticated unless there is a weird race condition
-        //             res.status(404).send('Could not find user')
-        //         }
-        //     })
         res.send(postResult)
     } catch(error) {
         console.log(error) // log server error to the console, not to the client.
