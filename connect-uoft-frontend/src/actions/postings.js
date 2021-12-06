@@ -80,7 +80,7 @@ export const addPosting = (postingInfo) => {
               
 export const deletePosting = (postID) => { //DONE
     // the URL for the request
-    const url = `${API_HOST}/api/postings`;
+    const url = `${BASE_API_URL}/api/postings`;
 
     // The data we are going to send in our request
     const requestBody = {
@@ -154,7 +154,7 @@ export const applyPost = (postID, applicantInfo) => { //DONE
 
 export const reportPost = (postID) => { // DONE
     // the URL for the request
-    const url = `${API_HOST}/api/postings/report`;
+    const url = `${BASE_API_URL}/api/postings/report`;
 
     const requestBody = {
         posting_id : postID
@@ -244,7 +244,7 @@ export const updateApplicantPost = (requestBody, setPosting) => {
 
 export const getUserPosts = () => { //Creator DONE
 
-    const url = `${API_HOST}/api/postings/user`;
+    const url = `${BASE_API_URL}/api/postings/user`;
 
     fetch(url)
         .then(res => {
@@ -266,7 +266,7 @@ export const getUserPosts = () => { //Creator DONE
 
 export const getPostID = (postID, setPosting) => { //DONE
 
-    const url = `${API_HOST}/api/postings/post`;
+    const url = `${BASE_API_URL}/api/postings/post`;
 
     const requestBody = {
         posting_id: postID
@@ -301,7 +301,7 @@ export const getPostID = (postID, setPosting) => { //DONE
 
 export const getMemberPosts = (setPosting) => { //DONE
 
-    const url = `${API_HOST}/api/postings/member`;
+    const url = `${BASE_API_URL}/api/postings/member`;
 
     fetch(url)
         .then(res => {
