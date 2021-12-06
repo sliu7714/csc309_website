@@ -10,73 +10,17 @@ import Header from "./components/Header/Header";
 import Logout from "./views/Logout/Logout";
 import PostingDetailed from "./views/PostingDetailed/PostingDetailed";
 import User from "./views/User/User";
-import ENV from './config.js'
-const BASE_API_URL = ENV.apiBaseUrl
+import {checkSession, logout} from "./actions/user";
 
 function App() {
 
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(true)
     const [isAdmin, setIsAdmin] = useState(false) // TODO: update components to use this boolean
 
-    const [tempCheckSession, setTempCheckSession] = useState(false) // TODO: remove
-
-
     // check if user is logged in on every refresh
     useEffect(() =>{
-        if(!ENV.useFrontendTestUser){
-            fetch(`${BASE_API_URL}/api/user/check-session`)
-                .then((res) => {
-                    if(!res.ok){
-                        console.log("check session response code:", res.status)
-                        setIsAdmin(false)
-                        setIsUserLoggedIn(false)
-                        return;
-                    }
-                    return res.json()
-                })
-                .then((sessionInfo) =>{
-                    // previous then only returns json if response code is 200
-                    if (sessionInfo){
-                        // console.log('session info', sessionInfo)
-                        setIsUserLoggedIn(true)
-                        setIsAdmin(sessionInfo.isAdmin ? sessionInfo.isAdmin : false)
-                    }
-                })
-                .catch((err) => {
-                    console.log("could not check session:",err)
-                    setIsUserLoggedIn(false)
-                })
-        }
-        else{
-            console.log('test user')
-            setIsUserLoggedIn(true)
-            setIsAdmin(ENV.frontendTestUserIsAdmin)
-        }
-
-    }, [tempCheckSession])
-
-
-    const logout = () =>{
-        console.log('logout')
-        fetch(`${BASE_API_URL}/api/user/logout`)
-            .then((res) => {
-                if(!res.ok){
-                    console.log("could not log out:", res.status)
-                    return;
-                }
-                return res.json()
-            })
-            .then((responseInfo) =>{
-                // previous then only returns json if response code is 200
-                if (responseInfo){
-                    setIsUserLoggedIn(false)
-                    setIsAdmin(false)
-                }
-            })
-            .catch((err) => {
-                console.log("could not log out:", err)
-            })
-    }
+        checkSession(setIsUserLoggedIn, setIsAdmin)
+    }, [])
 
 
   return (
@@ -110,7 +54,7 @@ function App() {
                 </Route>
 
                 <Route path="/logout">
-                    <Logout logout={logout} isUserLoggedIn={isUserLoggedIn}/>
+                    <Logout logout={() => logout(setIsUserLoggedIn, setIsAdmin)} isUserLoggedIn={isUserLoggedIn}/>
                 </Route>
 
                 <Route path="/posting/:id">
@@ -128,8 +72,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        {/*<button onClick={logout}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>*/}
-        {/*<button onClick={() => setTempCheckSession(!tempCheckSession)}>check session </button>*/}
+        {/*<button onClick={() => logout(isUserLoggedIn, isAdmin)}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>*/}
         {/*<button >isUserLoggedIn {isUserLoggedIn.toString()} </button>*/}
     </div>
   );
