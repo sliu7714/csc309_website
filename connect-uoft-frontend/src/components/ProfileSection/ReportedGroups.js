@@ -6,8 +6,8 @@ const getReportedGroups = () => {
     return [];
 }
 const addAllReportedGroups = () => {
-    const joinedGroups = getReportedGroups();
-    for (const group in joinedGroups){
+    const reportedGroups = getReportedGroups();
+    for (const group in reportedGroups){
         addReportedGroupToDOM(group.title, group.creator, group.description, group.link, group.members);
     }
 }

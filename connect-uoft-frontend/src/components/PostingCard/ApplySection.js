@@ -2,7 +2,7 @@ import {useState, useEffect} from "react";
 import "./styles.css"
 import {NOT_APPLIED, ACCEPTED_APPLICATION, CANCELED_APPLICATION, PENDING_APPLICATION, REJECTED_APPLICATION} from "../../data/constants";
 
-const ApplySection = ({posting, userID, updatePostings}) =>{
+const ApplySection = ({posting, updatePostings}) =>{
 
     const [applyMsg, setApplyMsg] = useState("")
 
@@ -12,7 +12,9 @@ const ApplySection = ({posting, userID, updatePostings}) =>{
     useEffect(() =>{
             // look through posting in applicants list for status
             if (posting.applicantsInfo){
-                const matchingApplicants = posting.applicantsInfo.filter(app => app.id == userID)
+                //TODO: make endpoint to check application status for a post?
+                const userID = 1; // temp
+                const matchingApplicants = posting.applicantsInfo.filter(app => app.id == 1)
                 console.log(posting.applicantsInfo, matchingApplicants)
                 if (matchingApplicants.length > 0 && matchingApplicants[0].applicationStatus){
                     setApplicationStatus(matchingApplicants[0].applicationStatus)
@@ -27,9 +29,9 @@ const ApplySection = ({posting, userID, updatePostings}) =>{
 
     const apply = () =>{
         // TODO add to backend
-        console.log("apply",posting.id, userID )
+        console.log("apply",posting.id )
         // now need to call function in parent to update postings data for frontend to reflect changes
-        // updatePostings()
+        updatePostings()
     }
 
     return(
@@ -57,8 +59,6 @@ const ApplySection = ({posting, userID, updatePostings}) =>{
 
 
             }
-
-
 
         </div>
     )

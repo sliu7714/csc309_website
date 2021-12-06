@@ -1,6 +1,6 @@
 .posting.posting-card {
     position: relative;
-    border: solid dimgrey;
+    border: 1px solid dimgrey;
     border-radius: 16px;
     width: 350px;
     text-align: left;
@@ -62,6 +62,9 @@
     padding: 10px 14px;
     background: darkseagreen;
     color: white;
+}
+.delete-button{
+    background-color: indianred;
 }
 
 .applicant .row1{
