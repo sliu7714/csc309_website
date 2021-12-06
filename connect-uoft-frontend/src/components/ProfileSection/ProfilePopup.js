@@ -22,15 +22,17 @@ const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
                         <div className="profile-picture-container--smaller profile-picture-container" title={(user.name).concat("'s ","profile icon")}>
                             <img src={profilePictures[user.profileImageIndex]} alt={(user.name).concat("'s ","profile icon")} className="profile-picture-container__image--smaller profile-picture-container__image"/>         
                         </div>
-                        {/* <div class="grid-photo"> */}
-                            <img src={profilePictures[0]} alt={"Smile"} title="Select Smiling Photo" className="selection-photo"/>         
-                        {/* </div> */}
-                        {/* <div class="grid-photo"> */}
-                            <img src={profilePictures[1]} alt={"Chef"} title="Select Chef Photo" className="selection-photo"/>         
-                        {/* </div> */}
-                        {/* <div class="grid-photo">                                 */}
-                            <img src={profilePictures[2]} alt={"Fish"} title="Select Fish Photo" className="selection-photo"/>         
-                        {/* </div> */}
+                        <div className="select-profile-picture-container">
+                            {/* <div class="grid-photo"> */}
+                                <img src={profilePictures[0]} alt={"Smile"} title="Select Smiling Photo" className="selection-photo"/>         
+                            {/* </div> */}
+                            {/* <div class="grid-photo"> */}
+                                <img src={profilePictures[1]} alt={"Chef"} title="Select Chef Photo" className="selection-photo"/>         
+                            {/* </div> */}
+                            {/* <div class="grid-photo">                                 */}
+                                <img src={profilePictures[2]} alt={"Fish"} title="Select Fish Photo" className="selection-photo"/>         
+                            {/* </div> */}
+                        </div>
                     </div>
                     <div className="edit-profile-content-text">
                         <label className="edit-profile-content-container__form__label">Name: 
