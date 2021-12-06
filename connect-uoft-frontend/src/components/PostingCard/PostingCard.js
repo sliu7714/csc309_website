@@ -21,21 +21,29 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
 
     const reportPosting = () =>{
         // TODO connect to backend
-        console.log('report posting', posting.id)
+        console.log('report posting', posting._id)
         // now need to call function in parent to update postings data for frontend to reflect changes
         updatePostings()
     }
 
     const deletePosting = () =>{
         // TODO connect to backend
-        console.log('delete posting', posting.id)
+        console.log('delete posting', posting._id)
         // now need to call function in parent to update postings data for frontend to reflect changes
         updatePostings()
     }
 
+    // convert date string to more readable format
+    const parseDateStr = (dateStr) =>{
+        return new Date(dateStr).toDateString()
+    }
+
     return (
         <div className="posting posting-card">
-            <h2 className="posting-text posting-card-title" href={`/posting/${posting.id}`}>{posting.title}</h2>
+            <a  id="title-link" href={`/posting/${posting._id}`} target="_blank">
+                <h2 className="posting-text posting-card-title" >{posting.title}</h2>
+            </a>
+
             <div className="tag-section">
                 {
                     posting.tags ?
@@ -51,7 +59,8 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                         <Popup trigger={showEditProfile}
                                setTrigger={setShowEditProfile}
                                isEditing={true}
-                               posting={posting}/>
+                               posting={posting}
+                               updatePostings={updatePostings}/>
                     </div>
                     :
                 isAdmin ?
@@ -67,7 +76,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                 <p>{posting.description}</p>
             </div>
 
-            <div className="posting-text"> End Date: {posting.endDate}</div>
+            <div className="posting-text"> End Date: <i>{posting.endDate ? parseDateStr(posting.endDate) : 'n/a'} </i></div>
 
 
             <hr />

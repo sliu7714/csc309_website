@@ -3,7 +3,7 @@ import Popup from "../EditCreatePostPopup/Popup";
 import { useState } from "react";
 
 
-const Header = ({isUserLoggedIn, userID}) => {
+const Header = ({isUserLoggedIn}) => {
 
     const [buttonPopup, setButtonPopup] = useState(false);
 
@@ -20,7 +20,7 @@ const Header = ({isUserLoggedIn, userID}) => {
                     <button className='create_btn' onClick={() => setButtonPopup(true)}>Create +</button>
                     <a className='manage_btn' href='/manage'>Manage</a>
 
-                    <Popup trigger={buttonPopup} setTrigger={setButtonPopup} userID={userID}/>
+                    <Popup trigger={buttonPopup} setTrigger={setButtonPopup} updatePostings={() =>{/**empty function**/}}/>
                 </div>
                 : null
             }
