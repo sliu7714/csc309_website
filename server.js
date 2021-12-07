@@ -380,7 +380,7 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update post
-    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.body.postingID)
     if (! canEditPost ){
         res.status(403).send("Cannot edit a post that a user has not created")
     }
@@ -394,6 +394,8 @@ app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
             endDate: req.body.posting.endDate,
             tags: req.body.posting.tags,
           }});
+
+        res.send("updated post")
 
     } catch(error) {
         console.log(error)
@@ -713,6 +715,23 @@ app.post("/api/user/create", mongoChecker, async (req, res)=>{
     }
     catch(err){
         res.status(400).send('Bad Request: Incorrect format or non-unique username')
+    }
+
+})
+
+// get userInfo of the user logged in
+app.get("/api/user/profile/:id", mongoChecker, async(req, res)=>{
+    const userID = req.params.id
+    if (!ObjectID.isValid(userID)) {
+		res.status(404).send()
+		return;
+	}
+    try{
+        const user = await User.findById(userID)
+        res.send(user)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
     }
 
 })
