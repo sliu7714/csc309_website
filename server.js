@@ -668,7 +668,7 @@ app.get('/api/postings/pending', mongoChecker, authenticate, async (req, res) =>
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'PENDING'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'PENDING'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
@@ -682,7 +682,7 @@ app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => 
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'REJECTED'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'REJECTED'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
