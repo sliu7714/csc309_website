@@ -28,7 +28,6 @@ export const SearchPostings = (tags, setPostings) =>{
             return res.json();
         })
         .then(postingList => {
-            console.log("here",postingList)
             if(postingList){
                 setPostings(postingList);
             }

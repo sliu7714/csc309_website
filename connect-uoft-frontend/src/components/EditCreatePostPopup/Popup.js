@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import './Popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
-import {addPosting, updatePost, deletePosting, deletePost} from "../../actions/postings";
+import {addPosting, updatePost, deletePost} from "../../actions/postings";
 
 
 
@@ -87,8 +87,13 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
     }
 
     const deletePosting = () =>{
-        console.log("deletePosting not fully implemented")
-        deletePost(posting._id)
+        // add confirm window to check for deletion
+        if (window.confirm("Please confirm if you want to delete this post. This action cannot be undone.")){
+            deletePost(posting._id)
+            updatePostings()
+            closePopup()
+        }
+
     }
 
     const createPost = () =>{

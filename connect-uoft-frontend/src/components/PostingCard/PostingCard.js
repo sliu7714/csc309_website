@@ -21,17 +21,17 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
     }
 
     const reportPosting = () =>{
-        console.log('report posting', posting._id)
-        
-        reportPost(posting._id)
-        updatePostings()
+        if (window.confirm(`Are you sure you want to report this post ${posting.title}?`)){
+            reportPost(posting._id)
+            updatePostings()
+        }
     }
 
     const deletePosting = () =>{
-        console.log('delete posting', posting._id)
-   
-        deletePost(posting._id)
-        updatePostings()
+        if (window.confirm("Please confirm if you want to delete this post. This action cannot be undone.")){
+            deletePost(posting._id)
+            updatePostings()
+        }
     }
 
     // convert date string to more readable format
