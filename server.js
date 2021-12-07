@@ -223,11 +223,11 @@ const addUserInfoToPosts = async (postingList, req) =>{
         }
         if (isCreator || isAdmin){
             // get applicant info
-            const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+            const applicantsInfo = await Promise.all(posting.applications.map(async (application) =>{
                 const applicantInfo = await getProfileSummary(application.applicantID)
                 return({...application._doc, applicantInfo})
             }));
-            postingInfo.applicantInfo = applicantInfo
+            postingInfo.applicantsInfo = applicantsInfo
         }
         if (hasApplied){
             // get application info
@@ -389,7 +389,7 @@ app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // only creator or admin can delete post
-    const isCreator = checkIsPostingCreator(req.session.user, req.postingID)
+    const isCreator = checkIsPostingCreator(req.session.user, req.body.postingID)
     const isAdmin = checkIsAdmin(req.session.user)
     const canDeletePost = isCreator || isAdmin
     if (! canDeletePost ){
@@ -416,8 +416,8 @@ app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
 app.post('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
 
     // only creator or admin or member can delete post
-    const isCreator = checkIsPostingCreator(req.session.user, req.postingID)
-    const isMember = checkIsPostingCreator(req.session.user, req.postingID)
+    const isCreator = checkIsPostingCreator(req.session.user, req.body.postingID)
+    const isMember = checkIsPostingCreator(req.session.user, req.body.postingID)
     const isAdmin = checkIsAdmin(req.session.user)
     const canComment = isCreator || isAdmin || isMember
     if (! canComment ){
@@ -523,7 +523,6 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
 });
 
 
-// PATCH to update the applicants
 // POST to create application to a post
 app.post('/api/postings/apply', mongoChecker, authenticate, async (req, res) => {
 
@@ -549,17 +548,21 @@ app.post('/api/postings/apply', mongoChecker, authenticate, async (req, res) => 
 app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update applicant status
-    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.body.postingID)
     if (! canEditPost ){
         res.status(403).send("Cannot edit a post that a user has not created")
     }
+
+    // TODO: check capacity, check that application is actually pending (so don't accept twice)
 
     // fix to use postingID to find the post
     // update the applicant status to ACCEPTED
     // update the members by pushing the userID
     try {
+        // TODO: doesn't seem to be updating application status properly
         await Posting.updateOne({ _id : req.body.postingID, "application.applicantID" : req.body.applicantID }, { $set: {"application.$.applicationStatus": 'ACCEPTED'}})
-        await Posting.updateOne({ _id : req.body.postingID }, { $push: { members: req.body.userID}})
+        await Posting.updateOne({ _id : req.body.postingID }, { $push: { members: req.body.applicantID}})
+        res.send("added applicant")
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -570,7 +573,7 @@ app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => 
 app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update applicant status
-    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.body.postingID)
     if (! canEditPost ){
         res.status(403).send("Cannot edit a post that a user has not created")
     }
