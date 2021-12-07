@@ -54,6 +54,10 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
             alert("please input a capacity greater than 1")
             return;
         }
+        if( postingInfo.members && postingInfo.members.length && capacity <= postingInfo.members.length){
+            alert("please input a capacity greater than the current number of members")
+            return;
+        }
         setPostingInfo({...postingInfo, capacity })
     }
 

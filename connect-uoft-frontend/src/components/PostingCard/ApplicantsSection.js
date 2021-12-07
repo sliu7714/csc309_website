@@ -30,7 +30,7 @@ const ApplicantSection = ({posting, updatePostings}) => {
             <span className="posting-text light-bold" >Applicants</span>
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
             { showApplicants ?
-                posting.applicantsInfo  ?
+                posting.applicantsInfo  && posting.applicantsInfo.length && posting.applicantsInfo.length > 0?
                     posting.applicantsInfo.map((application) =>
                         application.applicationStatus === PENDING_APPLICATION ?
                         <ApplicantListItem application={application}
