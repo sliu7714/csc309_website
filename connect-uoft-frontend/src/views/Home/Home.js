@@ -33,6 +33,7 @@ const Home = ({isAdmin }) => {
                     isCreator={posting.isCreator}
                     isMember={posting.isMember}
                     isAdmin={isAdmin}
+                    isFilled={posting.isFilled}
                 />
             )}
             </div>

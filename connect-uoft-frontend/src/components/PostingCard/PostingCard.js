@@ -7,15 +7,17 @@ import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplySection from "./ApplySection";
 import MemberListSection from "./MemberListSection";
-import { deletePost, reportPost, unreportPost } from "../../actions/postings";
+import { deleteApplication, deletePost, reportPost, unreportPost } from "../../actions/postings";
 
 
 // updatePostings is to call the function to rerender this post
 // showUnreport is only valid if isAdmin is true
-const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
+const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) => {
 
     const isCreator = posting.isCreator
     const isMember = posting.isMember
+    const isFilled = posting.isFilled
+
 
     const [showEditProfile, setShowEditProfile] = useState(false)
 
@@ -40,14 +42,26 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
         }
     }
 
+    const revokeApplication = () =>{
+        if (window.confirm("Please confirm if you want to revoke application to this post.")){
+            deleteApplication(posting._id)
+            updatePostings()
+        }
+    }
+
     // convert date string to more readable format
     const parseDateStr = (dateStr) =>{
         return new Date(dateStr).toDateString()
     }
 
+    if (isFilled) {
+        return(null)
+    }
+
     return (
+
         <div className="posting posting-card">
-            <a  className="title-link" href={`/posting/${posting._id}`} target="_blank">
+            <a  className="title-link" href={`/posting/${posting._id}`} target="_blank" rel="noreferrer" >
                 <h2 className="posting-text posting-card-title" >{posting.title}</h2>
             </a>
 
@@ -88,7 +102,15 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
 
 
             <hr />
-            <h4 className="posting-text posting-creator"> Creator: {posting.creatorInfo.name}</h4>
+
+                <h4 className="posting-text posting-creator">
+
+                    <a className="creator-name-link" href={`/user/${posting.creatorID}`}>
+                        Creator: {posting.creatorInfo.name}
+                    </a>
+                </h4>
+
+
             <div className="posting-text posting-desc">
                 <p>{posting.description}</p>
             </div>
@@ -116,6 +138,19 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
                     <div>
                         <hr/>
                         <CommentSection posting={posting} updatePostings={updatePostings}/>
+                    </div>
+                    :
+                    null
+            }
+
+            {
+                pending ?
+                    <div className="close_icon">
+                        <img id="close_icon"
+                            src="/images/close_icon.svg"
+                            alt="close icon"
+                            onClick={() => revokeApplication()}
+                        />
                     </div>
                     :
                     null

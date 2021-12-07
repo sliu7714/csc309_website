@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV // read the environment variable (will be 'prod
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
 // const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
-const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
+const TEST_USER_ID = '61aef6a7ac247e2bc024ac92' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -144,6 +144,26 @@ const checkHasApplied = async (userID, postingID) =>{
 
 }
 
+const checkIsFilled = async (postingID) =>{
+    return Posting.findById(postingID)
+        .then(posting =>{
+            if(!posting){
+                console.log(`checkIsApplied: did not find posting ${postingID}`)
+                return false
+            }
+            //check if the posting is filled
+            if ((posting.members.length + 1) >= posting.capacity){
+                return true
+            }
+            return false;
+
+        })
+        .catch(err =>{
+            console.log(err)
+            return false
+        })
+}
+
 // check if the current user is an admin user
 // make sure to await for the return value of this
 const checkIsAdmin = async (userID) =>{
@@ -197,12 +217,13 @@ const addUserInfoToPosts = async (postingList, req) =>{
         const isAdmin = await checkIsAdmin(req.session.user)
         // check if current user has applied to this post
         const hasApplied  = await checkHasApplied(req.session.user, posting._id)
+        const isFilled = await checkIsFilled(posting._id)
 
         // get creator info
         const creatorInfo = await getProfileSummary(posting.creatorID)
 
         // note : posting has some extra info from mongo so the actual posting is posting._doc
-        const postingInfo = {...posting._doc, isCreator, isMember, hasApplied, creatorInfo}
+        const postingInfo = {...posting._doc, isCreator, isMember, hasApplied, creatorInfo, isFilled}
 
         if(isCreator || isMember || isAdmin){
             // get member info
@@ -502,13 +523,13 @@ app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => 
 
 // a POST route to get all posts matching a list of tags
 // POST since we are generating search results
-// do not return any posts that the currently logged in user is a creator of
+// do not return any posts that the currently logged in user is a creator of or reported postings
 app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) => {
 
     // if tags is empty, don't filter
-    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}} 
+    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}, isReported: false} 
     : 
-    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}}
+    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}, isReported: false}
 
     //const filter =  {creatorID: {$ne: req.session.user}}
     // if tags is empty, don't filter by tags
@@ -551,6 +572,24 @@ app.post('/api/postings/apply', mongoChecker, authenticate, async (req, res) => 
     }
 });
 
+// DELETE to remove a application from posting
+app.delete('/api/postings/apply', mongoChecker, authenticate, async (req, res) => {
+
+    // delete the posting
+    try {
+        console.log('delete applicant', req.body.postingID)
+        const posting = await Posting.find({ _id: req.body.postingID})
+        if (!posting){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        posting.applications.applicantID(req.session.user).remove();
+        res.send(posting)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
 // a PUT to accept a applicant
 app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
@@ -560,14 +599,17 @@ app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => 
         res.status(403).send("Cannot edit a post that a user has not created")
     }
 
-    // TODO: check capacity, check that application is actually pending (so don't accept twice)
+    const isFilled = checkIsFilled(req.body.postingID)
+    if (isFilled) {
+        res.send("Posting is filled, cannot accept more members")
+    }
 
-    // fix to use postingID to find the post
-    // update the applicant status to ACCEPTED
-    // update the members by pushing the userID
     try {
-        await Posting.updateOne({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'ACCEPTED'}})
+        const posting = await Posting.updateOne({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'ACCEPTED'}})
         await Posting.updateOne({ _id: req.body.postingID }, { $push: { members: req.body.userID}})
+        if (!posting){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
         res.send("added applicant")
 
     } catch(error) {
@@ -588,7 +630,10 @@ app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) =>
     // update the applicant status to REJECTED
     try {
         const posting = await Posting.findOneAndUpdate({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'REJECTED'}})
-
+        if (!posting){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send("rejected applicant")
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -596,7 +641,7 @@ app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) =>
 });
 
 
-// get all reported posts
+// GET all reported posts
 app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
@@ -611,7 +656,7 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
     }
 });
 
-// report a specific post
+// PUT to report a specific post
 app.put('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting
@@ -628,11 +673,12 @@ app.put('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
 
 });
 
+// GET all pending application status posts
 app.get('/api/postings/pending', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'PENDING'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'PENDING'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
@@ -642,11 +688,12 @@ app.get('/api/postings/pending', mongoChecker, authenticate, async (req, res) =>
     }
 });
 
+// GET all rejected application status posts
 app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => {
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'REJECTED'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'REJECTED'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
@@ -656,15 +703,16 @@ app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => 
     }
 });
 
+// PUT update the post to not reported status
 app.put('/api/postings/unreport', mongoChecker, authenticate, async (req, res) => {
 
-    // Update the User to Reported status
+    // Update the User to not Reported status
     try {
         const user = await Posting.updateOne({ _id: req.body.postingID }, { isReported: false }) 
         if (!user){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
-        res.send(`unreported posting id: ${req.body.postingID}`)
+        res.send(`un-reported posting id: ${req.body.postingID}`)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
@@ -811,6 +859,28 @@ app.post('/api/user/unreport', mongoChecker, authenticate, async (req, res) => {
             res.status(404).send(`report: could not find posting id: ${req.body.userID}`)
         }
         res.send(`unreported posting id: ${req.body.userID}`)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+});
+
+app.delete('/api/user', mongoChecker, authenticate, async (req, res) => {
+
+    //Only delete if current user isAdmin
+    const isAdmin = checkIsAdmin(req.session.user)
+    if (! isAdmin ){
+        res.status(403).send("Only Admins may delete users")
+    }
+
+    // Delete the reported user, checks if user is reported
+    try {
+        const user = await User.deleteOne({ _id: req.body.userID, isReported: true })
+        if (!user){
+            res.status(404).send(`report: could not find reported user id: ${req.body.userID}`)
+        }
+        res.send(`deleted user id: ${req.body.userID}`)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")

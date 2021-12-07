@@ -25,7 +25,7 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
             const postingCopy = Object.assign({}, posting)
             setPostingInfo(postingCopy)
         }
-    }, [posting])
+    }, [posting, isEditing])
 
     // the current text in the tag input box
     const [inputTagText, setInputTagText] = useState("")
@@ -52,6 +52,10 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
         const capacity = event.target.value
         if ( capacity <= 1){
             alert("please input a capacity greater than 1")
+            return;
+        }
+        if( postingInfo.members && postingInfo.members.length && capacity <= postingInfo.members.length){
+            alert("please input a capacity greater than the current number of members")
             return;
         }
         setPostingInfo({...postingInfo, capacity })

@@ -2,12 +2,48 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(Min(23em, 100%), .2fr));
     grid-template-rows: masonry;
-    margin-left: 0px;
+    margin-left: 10px;
     grid-gap: 3px;
     padding: 10px;
 }
 
-.manage-page-title{
+.manage-page-container{
+    margin: 30px 20px;
+}
+.manage-section-container{
+    background-color: #C7DEC7;
+    border-radius: 0px 16px 16px 16px;
+}
+.manage-page-container .tab-section{
+    background-color: #F8F8F8;
+    border-radius: 20px 20px 0px 0px;
+    padding-bottom: 5px;
+    height: 43px;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+.manage-page-container .tab{
+    display: inline-block;
+    background-color: #F0F0F0;
     text-align: left;
-    margin-left: 20px;
+    border-radius: 16px 16px 0px 0px;
+    height: 48px;
+    margin-right: 8px;
+    box-shadow: 1px 0px 1px lightgrey;
+}
+.manage-page-container .tab.selected{
+    background-color: #C7DEC7;
+    box-shadow: none;
+}
+.tab .tab-title{
+    text-align: left;
+    /*color: darkslategrey;*/
+    font-size: 24px;
+    margin: 10px 20px ;
+    display: inline-block;
+}
+.manage-page-container .posting-card{
+    box-shadow: 1px 2px 2px darkseagreen;
+    border: none;
 }

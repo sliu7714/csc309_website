@@ -46,7 +46,7 @@ export const getUserCreatedPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting your postings")
+                // alert("Sorry there was a problem getting your postings")
                 return;
             }
             return res.json();
@@ -70,7 +70,7 @@ export const getUserMemberPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting the groups that you are a member of")
+                // alert("Sorry there was a problem getting the groups that you are a member of")
                 return;
             }
             return res.json();
@@ -171,14 +171,14 @@ export const updatePost = (postingInfo, postID) => {
         .then(function (res) {
             if(!res.ok){
                 console.log("Could not edit posting, status code:", res.status)
-                alert("Sorry there was a problem edit this post")
+                alert("Sorry there was a problem editing this post")
                 return;
             }
-            // created post
-            console.log('created post')
+            // updated post
+            console.log('updated post')
         })
         .catch(error => {
-            console.log("error edit post:", error);
+            console.log("error editing post:", error);
         });
 }
               
@@ -305,7 +305,7 @@ export const getReportedPost = (setPosting) => { //DONE
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get reported postings");
+                // alert("Could not get reported postings");
             }   
         })
         .then(postingsList => {
@@ -412,30 +412,6 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
-// use the one 'getUserMemberPostings' above
-// export const getMemberPosts = (setPosting) => { //DONE
-//
-//     const url = `${BASE_API_URL}/api/postings/member`;
-//
-//     fetch(url)
-//         .then(res => {
-//             if (res.status === 200) {
-//                 // return a promise that resolves with the JSON body
-//                 return res.json();
-//             } else {
-//                 alert("Failed");
-//             }
-//         })
-//         .then(json => {
-//             // the resolved promise with the JSON body
-//             setPosting({ postings: json.postings });
-//         })
-//         .catch(error => {
-//             console.log("error with getting post :", error);
-//
-//         });
-// }
-
 export const getPendingPosts = (setPosting) => { 
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/pending`;
@@ -447,7 +423,7 @@ export const getPendingPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get pending postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -457,7 +433,7 @@ export const getPendingPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get pending postings, error:",error);
         });
 }
 
@@ -472,7 +448,7 @@ export const getDeniedPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get denied postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -482,7 +458,7 @@ export const getDeniedPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log("error with getting post :", error);
+            console.log("Could not get denied postings, error:",error);
 
         });
 }
@@ -508,7 +484,7 @@ export const unreportPost = (postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Updated applicant")
+                alert("Unreported post")
             } else {
                 alert("Failed");
             }   
@@ -516,4 +492,38 @@ export const unreportPost = (postID) =>{
         .catch(error => {
             console.log(error);
         });
+}
+
+export const deleteApplication = (postID) => {
+    const url = `${BASE_API_URL}/api/postings/apply`;
+
+    const requestBody = {
+        postingID: postID,
+    }
+
+    const request = new Request(url, {
+        method: "delete",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If application deleted, tell the user.
+                alert("Deleted application successfully")
+            } else {
+                // If server couldn't delete the application
+                alert("Could not delete application")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }

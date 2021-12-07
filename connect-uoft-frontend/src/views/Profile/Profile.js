@@ -1,26 +1,36 @@
 import { useState, useEffect} from "react";
 import './styles.css'
-import {getProfileInfo} from "../../actions/user";
-// import { users } from "../../data/data";
-import { getUserMemberPostings } from "../../actions/postings";
+import {getProfileInfo, getReportedUsers} from "../../actions/user";
 import Bio from "../../components/ProfileSection/Bio";
 import UserHandle from "../../components/ProfileSection/UserHandle";
 import Courses  from "../../components/ProfileSection/Courses";
-import {Groups, LeadGroups} from "../../components/ProfileSection/Groups";
+import Groups from "../../components/ProfileSection/Groups";
 import ReportedGroups from "../../components/ProfileSection/ReportedGroups";
 import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import Stats from "../../components/ProfileSection/Stats";
+import {getReportedPost, getUserCreatedPostings, getUserMemberPostings} from "../../actions/postings";
 
-const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profile-pictures/chef.svg", "/images/profile-pictures/fish.svg"]
 
 
 const Profile = ({isAdmin, callLogout}) => {
     const [user, setUser] = useState()
-    const [postings, setPostings] = useState([])
+    const [userCreatedPosts, setUserCreatedPosts] = useState([])
+    const [userMemberPostings, setUserMemberPostings] = useState([])
 
+    // only for admin users, will just stay as empty lists for regular users
+    const [reportedPostings, setReportedPostings] = useState([])
+    const [reportedUsers, setReportedUsers] = useState([])
+
+    // fetch posts once initially
     useEffect(() =>{
+        getUserCreatedPostings(setUserCreatedPosts)
+        getUserMemberPostings(setUserMemberPostings)
+        if(isAdmin){
+            getReportedPost(setReportedPostings)
+            getReportedUsers(setReportedUsers)
+        }
         getProfileInfo(setUser)
-    }, [])
+    }, [isAdmin])
 
     if(!user){
         return(
@@ -30,9 +40,7 @@ const Profile = ({isAdmin, callLogout}) => {
             </div>
         )
     }
-    const userPostings = () => {
-        return getUserMemberPostings(setPostings)
-    }
+
 
     return(
         <div id="profile_page">
@@ -40,7 +48,7 @@ const Profile = ({isAdmin, callLogout}) => {
                     <button className='logout-btn' onClick={callLogout}>Logout</button>
                 </div>
                 <div className="user-container">
-                    <UserHandle profilePictures={_profilePictures} user={user}/>
+                    <UserHandle user={user}/>
                 </div>
                 <div className="no-group-container">
                     <div id='column1'>
@@ -50,19 +58,33 @@ const Profile = ({isAdmin, callLogout}) => {
                         <Courses user={user}/>
                     </div>
                     <div id='column3'>
-                        <Stats user={user}/>
+                        <Stats numCourses={user.courses ? user.courses.length: 0}
+                               numGroupsMade={userCreatedPosts.length}
+                               numMemberships={userMemberPostings.length}/>
                     </div>
                     
                 </div>
                 <div className="groups-content-container">
-                        <Groups profilePictures={_profilePictures} user={user}/>
-                        <LeadGroups profilePictures={_profilePictures}  user={user}/>
+                        <Groups
+                            postings={userCreatedPosts}
+                            title="Created Groups"
+                            noPostsMessage="You have not created any groups"
+                        />
+                        <Groups
+                            postings={userMemberPostings}
+                            title="My Groups"
+                            subtitle="groups you are a member of"
+                            noPostsMessage="You Have Not Joined Any Groups"
+                        />
                 </div>
-                {user.isAdmin ? <div className="reported-content-container">
-                                <ReportedUsers resportedUsers={user.postings}/>
-                                <ReportedGroups reportedGroups={user.postings}/>
-                            </div>           
-                : null}
+                { isAdmin ?
+                    <div className="reported-content-container">
+                        <ReportedUsers users={reportedUsers} />
+                        <ReportedGroups reportedPostings={reportedPostings}/>
+                    </div>
+                    :
+                    null
+                }
         </div>
     )
 }
