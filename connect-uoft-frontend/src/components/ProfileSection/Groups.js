@@ -7,7 +7,7 @@ const Groups = ({postings, title, noPostsMessage}) => {
     return (
         <div className='group-content profile-container profile-card-background'>
             <h1 className="section_title">{title}</h1>
-            <div id="joined-groups" className="groups-list">         
+            <div  className="groups-list">
                {postings && postings.length > 0 ?
                    postings.map(post =>
                        <div className="group">
