@@ -16,6 +16,8 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
 
     const isCreator = posting.isCreator
     const isMember = posting.isMember
+    const isFilled = posting.isFilled
+
 
     const [showEditProfile, setShowEditProfile] = useState(false)
 
@@ -45,7 +47,12 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
         return new Date(dateStr).toDateString()
     }
 
+    if (isFilled) {
+        return(null)
+    }
+
     return (
+
         <div className="posting posting-card">
             <a  className="title-link" href={`/posting/${posting._id}`} target="_blank">
                 <h2 className="posting-text posting-card-title" >{posting.title}</h2>

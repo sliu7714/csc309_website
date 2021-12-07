@@ -39,7 +39,7 @@ const Manage = ({isAdmin}) => {
                                 key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
-                                // do not pass isAdmin - want edit button to show
+                                isFilled={false} //isFilled does not matter in manage screen
                             />)
                         :
                             <h2 className="grey-text"><i>no groups</i></h2>
@@ -57,7 +57,7 @@ const Manage = ({isAdmin}) => {
                                 key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
-                                // do not pass isAdmin - want report button to show
+                                isFilled={false} //isFilled does not matter in manage screen
                             />)
                         :
                         <h2 className="grey-text"><i>no groups</i></h2>
