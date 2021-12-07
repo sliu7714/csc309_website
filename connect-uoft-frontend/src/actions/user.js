@@ -218,28 +218,7 @@ export const getReportedUsers = (setUsers) => {
         .catch((err) =>{
             console.log("error with getting profile info: ", err)
         });
-}
-
-export const getReportedUsers = (userID) => {
-
-    fetch(`${BASE_API_URL}/api/user/report`)
-        .then((res) =>{
-            if(!res.ok){
-                console.log("could not find users ", res.status)
-                return;
-            }
-            return res.json()
-        })
-        .then((userList) =>{
-            if (userList){
-                console.log(userList)
-                setUsers(userList)
-            }
-        })
-        .catch((err) =>{
-            console.log("error with getting profile info: ", err)
-        });
-}
+}   
 
 export const reportUser = (userID) => {
 
