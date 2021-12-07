@@ -606,7 +606,7 @@ app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => 
 
     try {
         const posting = await Posting.updateOne({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'ACCEPTED'}})
-        await Posting.updateOne({ _id: req.body.postingID }, { $push: { members: req.body.userID}})
+        await Posting.updateOne({ _id: req.body.postingID }, { $push: { members: req.body.applicantID}})
         if (!posting){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
@@ -629,7 +629,7 @@ app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) =>
 
     // update the applicant status to REJECTED
     try {
-        const posting = await Posting.findOneAndUpdate({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'REJECTED'}})
+        const posting = await Posting.updateOne({ _id: req.body.postingID, "applications.applicantID": req.body.applicantID }, { $set: {"applications.$.applicationStatus": 'REJECTED'}})
         if (!posting){
             res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
         }
@@ -799,7 +799,7 @@ app.put("/api/user/modify", mongoChecker, authenticate, async(req, res)=>{
     
     try {
         const user = await User.findById(req.session.user)
-        console.log(user)
+        // console.log(user)
         user.set(updatedInfo)
         const result = await user.save()
         if (!user) {

@@ -342,7 +342,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Updated applicant")
+                alert("Accepted applicant")
             } else {
                 alert("Failed");
             }   
@@ -355,7 +355,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
 // a put to reject an applicant
 export const rejectApplicantPost = (applicantID, postID) =>{
     // the URL for the request
-    const url = `${BASE_API_URL}/api/postings/reject`;
+    const url = `${BASE_API_URL}/api/postings/decline`;
 
     const requestBody = {
         applicantID: applicantID,
@@ -375,7 +375,7 @@ export const rejectApplicantPost = (applicantID, postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Updated applicant")
+                alert("Rejected applicant")
             } else {
                 alert("Failed");
             }   
