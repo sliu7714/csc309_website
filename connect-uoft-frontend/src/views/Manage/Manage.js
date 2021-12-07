@@ -131,6 +131,7 @@ const Manage = ({isAdmin}) => {
                                         key={posting._id}
                                         posting={posting}
                                         updatePostings={fetchPostings}
+                                        pending={true}
                                     />)
                                 :
                                 <h2 className="grey-text"><i>no groups</i></h2>

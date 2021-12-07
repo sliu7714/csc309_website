@@ -572,6 +572,21 @@ app.post('/api/postings/apply', mongoChecker, authenticate, async (req, res) => 
     }
 });
 
+// DELETE to remove a application from posting
+app.delete('/api/postings/apply', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the posting
+    try {
+        console.log('delete applicant', req.body.postingID)
+        const posting = await Posting.find({ _id: req.body.postingID})
+        posting.applications.applicantID(req.session.user).remove();
+        res.send(posting)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+});
+
 // a PUT to accept a applicant
 app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
