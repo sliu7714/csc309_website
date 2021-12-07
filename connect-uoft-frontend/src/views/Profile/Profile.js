@@ -55,8 +55,8 @@ const Profile = ({isAdmin, callLogout}) => {
                     
                 </div>
                 <div className="groups-content-container">
-                        <Groups user={user}/>
-                        <LeadGroups  user={user}/>
+                        <Groups profilePictures={_profilePictures} user={user}/>
+                        <LeadGroups profilePictures={_profilePictures}  user={user}/>
                 </div>
                 {user.isAdmin ? <div className="reported-content-container">
                                 <ReportedUsers resportedUsers={user.postings}/>
