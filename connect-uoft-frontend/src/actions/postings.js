@@ -37,7 +37,6 @@ export const SearchPostings = (tags, setPostings) =>{
         });
 }
 
-
 // return the posts that the current logged in user has created
 // assumes there is a current user logged in
 export const getUserCreatedPostings = (setPostings) =>{
@@ -86,6 +85,7 @@ export const getUserMemberPostings = (setPostings) =>{
         });
 }
 
+// create a posting
 export const addPosting = (postingInfo) => {
     const url = `${BASE_API_URL}/api/postings`;
 
@@ -113,6 +113,7 @@ export const addPosting = (postingInfo) => {
         });
 }
 
+// leave a comment on a posting
 export const commentPost = (content, postID) => {
     const url = `${BASE_API_URL}/api/postings/comment`;
 
@@ -145,6 +146,7 @@ export const commentPost = (content, postID) => {
         });
 }
 
+// update a specific post with postingInfo
 export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
 
@@ -177,7 +179,7 @@ export const updatePost = (postingInfo, postID) => {
         });
 }
               
-// deletes the post given by postID
+// deletes the posting given by postID
 export const deletePost = (postID) => {
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings`;
@@ -215,6 +217,7 @@ export const deletePost = (postID) => {
         });
 }        
 
+// apply to a posting
 export const applyPost = (postID, message) => { //DONE
     const url = `${BASE_API_URL}/api/postings/apply`;
 
@@ -251,6 +254,7 @@ export const applyPost = (postID, message) => { //DONE
         });
 }
 
+// report specific posting
 export const reportPost = (postID) => { // DONE
     const url = `${BASE_API_URL}/api/postings/report`;
 
@@ -287,6 +291,7 @@ export const reportPost = (postID) => { // DONE
         });
 }
 
+// return all reported postings
 export const getReportedPost = (setPosting) => { //DONE
     const url = `${BASE_API_URL}/api/postings/report`;
 
@@ -297,12 +302,14 @@ export const getReportedPost = (setPosting) => { //DONE
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                alert("Could not get reported postings");
             }   
         })
-        .then(json => {
+        .then(postingsList => {
             // the resolved promise with the JSON body
-            setPosting({ postings: json.postings });
+            if(postingsList){
+                setPosting(postingsList);
+            }
         })
         .catch(error => {
             console.log(error);
@@ -375,6 +382,7 @@ export const rejectApplicantPost = (applicantID, postID) =>{
         });
 }
 
+// get a single specific post from postID
 export const getPostByID = (postID, setPosting, setFoundPost) => {
     const url = `${BASE_API_URL}/api/postings/get-by-id/${postID}`;
 
@@ -401,6 +409,7 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
+// get postings the currently logged in user is a member of (not creator)
 export const getMemberPosts = (setPosting) => { //DONE
 
     const url = `${BASE_API_URL}/api/postings/member`;

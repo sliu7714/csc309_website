@@ -1,20 +1,25 @@
 import PostingCard from "../../components/PostingCard/PostingCard";
 import {useState, useEffect} from 'react'
 import "./style.css"
-import {getUserCreatedPostings, getUserMemberPostings} from "../../actions/postings";
+import {getReportedPost, getUserCreatedPostings, getUserMemberPostings} from "../../actions/postings";
 
-const Manage = ({}) => {
+const Manage = ({isAdmin}) => {
 
     const [userCreatedPostings, setUserCreatedPostings] = useState([])
-
     const [userMemberPostings, setUserMemberPostings] = useState([])
+
+    // only for admin users, will just stay as empty lists for regular users
+    const [reportedPostings, setReportedPostings] = useState([])
 
     // call this function everytime a post needs to be updated
     const fetchPostings = () =>{
         getUserCreatedPostings(setUserCreatedPostings)
 
-        // TODO: set userMember posts from backend
         getUserMemberPostings(setUserMemberPostings)
+
+        if(isAdmin){
+            getReportedPost(setReportedPostings)
+        }
     }
 
     // fetch once initially
@@ -59,6 +64,31 @@ const Manage = ({}) => {
                     }
                 </div>
             </div>
+
+            {
+                isAdmin ?
+                    <div>
+                        <h1 className="manage-page-title">Reported posts</h1>
+                        <div className="manage-posts-grid">
+                            {reportedPostings &&  reportedPostings.length > 0?
+                                reportedPostings.map(posting =>
+                                    <PostingCard
+                                        key={posting._id}
+                                        posting={posting}
+                                        updatePostings={fetchPostings}
+                                        isMember={posting.isMember}
+                                        isCreator={posting.isCreator}
+                                        isAdmin={isAdmin}
+
+                                    />)
+                                :
+                                <h2 className="grey-text"><i>no groups</i></h2>
+                            }
+                        </div>
+                    </div>
+                    :
+                    null
+            }
         </div>
     )
 
