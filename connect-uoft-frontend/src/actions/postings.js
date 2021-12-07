@@ -519,12 +519,11 @@ export const unreportPost = (postID) =>{
         });
 }
 
-export const deleteApplication = (postID, applicationID) => {
+export const deleteApplication = (postID) => {
     const url = `${BASE_API_URL}/api/postings/apply`;
 
     const requestBody = {
         postingID: postID,
-        applicationID: applicationID
     }
 
     const request = new Request(url, {

@@ -7,12 +7,12 @@ import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplySection from "./ApplySection";
 import MemberListSection from "./MemberListSection";
-import { deletePost, reportPost, unreportPost } from "../../actions/postings";
+import { deleteApplication, deletePost, reportPost, unreportPost } from "../../actions/postings";
 
 
 // updatePostings is to call the function to rerender this post
 // showUnreport is only valid if isAdmin is true
-const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
+const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) => {
 
     const isCreator = posting.isCreator
     const isMember = posting.isMember
@@ -38,6 +38,13 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
     const deletePosting = () =>{
         if (window.confirm("Please confirm if you want to delete this post. This action cannot be undone.")){
             deletePost(posting._id)
+            updatePostings()
+        }
+    }
+
+    const revokeApplication = () =>{
+        if (window.confirm("Please confirm if you want to revoke application to this post.")){
+            deleteApplication(posting._id)
             updatePostings()
         }
     }
@@ -123,6 +130,19 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
                     <div>
                         <hr/>
                         <CommentSection posting={posting} updatePostings={updatePostings}/>
+                    </div>
+                    :
+                    null
+            }
+
+            {
+                pending ?
+                    <div className="close_icon">
+                        <img id="close_icon"
+                            src="/images/close_icon.svg"
+                            alt="close icon"
+                            onClick={() => revokeApplication()}
+                        />
                     </div>
                     :
                     null
