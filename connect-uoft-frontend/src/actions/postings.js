@@ -28,7 +28,6 @@ export const SearchPostings = (tags, setPostings) =>{
             return res.json();
         })
         .then(postingList => {
-            console.log("here",postingList)
             if(postingList){
                 setPostings(postingList);
             }
@@ -37,7 +36,6 @@ export const SearchPostings = (tags, setPostings) =>{
             console.log("error with getting search results :",error);
         });
 }
-
 
 // return the posts that the current logged in user has created
 // assumes there is a current user logged in
@@ -87,6 +85,7 @@ export const getUserMemberPostings = (setPostings) =>{
         });
 }
 
+// create a posting
 export const addPosting = (postingInfo) => {
     const url = `${BASE_API_URL}/api/postings`;
 
@@ -114,7 +113,10 @@ export const addPosting = (postingInfo) => {
         });
 }
 
-export const commentPost = ({content, postID}) => {
+
+// leave a comment on a posting
+export const commentPost = (content, postID) => {
+
     const url = `${BASE_API_URL}/api/postings/comment`;
 
     const requestBody = {
@@ -146,7 +148,9 @@ export const commentPost = ({content, postID}) => {
         });
 }
 
-export const updatePost = ({postingInfo, postID}) => {
+
+// update a specific post with postingInfo
+export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
 
     const postInfo = {
@@ -156,7 +160,7 @@ export const updatePost = ({postingInfo, postID}) => {
 
     const request = new Request(url, {
         method: "put",
-        body: JSON.stringify(postingInfo),
+        body: JSON.stringify(postInfo),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -166,19 +170,19 @@ export const updatePost = ({postingInfo, postID}) => {
     fetch(request)
         .then(function (res) {
             if(!res.ok){
-                console.log("Could not create posting, status code:", res.status)
-                alert("Sorry there was a problem creating this post")
+                console.log("Could not edit posting, status code:", res.status)
+                alert("Sorry there was a problem edit this post")
                 return;
             }
             // created post
             console.log('created post')
         })
         .catch(error => {
-            console.log("error creating post:", error);
+            console.log("error edit post:", error);
         });
 }
               
-// deletes the post given by postID
+// deletes the posting given by postID
 export const deletePost = (postID) => {
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings`;
@@ -216,6 +220,7 @@ export const deletePost = (postID) => {
         });
 }        
 
+// apply to a posting
 export const applyPost = (postID, message) => { //DONE
     const url = `${BASE_API_URL}/api/postings/apply`;
 
@@ -252,6 +257,7 @@ export const applyPost = (postID, message) => { //DONE
         });
 }
 
+// report specific posting
 export const reportPost = (postID) => { // DONE
     const url = `${BASE_API_URL}/api/postings/report`;
 
@@ -288,6 +294,7 @@ export const reportPost = (postID) => { // DONE
         });
 }
 
+// return all reported postings
 export const getReportedPost = (setPosting) => { //DONE
     const url = `${BASE_API_URL}/api/postings/report`;
 
@@ -298,12 +305,14 @@ export const getReportedPost = (setPosting) => { //DONE
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                alert("Could not get reported postings");
             }   
         })
-        .then(json => {
+        .then(postingsList => {
             // the resolved promise with the JSON body
-            setPosting({ postings: json.postings });
+            if(postingsList){
+                setPosting(postingsList);
+            }
         })
         .catch(error => {
             console.log(error);
@@ -343,7 +352,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
         });
 }
 
-// a patch to reject an applicant
+// a put to reject an applicant
 export const rejectApplicantPost = (applicantID, postID) =>{
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/reject`;
@@ -354,7 +363,7 @@ export const rejectApplicantPost = (applicantID, postID) =>{
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -376,6 +385,7 @@ export const rejectApplicantPost = (applicantID, postID) =>{
         });
 }
 
+// get a single specific post from postID
 export const getPostByID = (postID, setPosting, setFoundPost) => {
     const url = `${BASE_API_URL}/api/postings/get-by-id/${postID}`;
 
@@ -402,29 +412,29 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
-export const getMemberPosts = (setPosting) => { 
-
-    const url = `${BASE_API_URL}/api/postings/member`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Failed");
-            }   
-        })
-        .then(posting => {
-            // the resolved promise with the JSON body
-            if(posting){
-                setPosting(posting);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
+// use the one 'getUserMemberPostings' above
+// export const getMemberPosts = (setPosting) => { //DONE
+//
+//     const url = `${BASE_API_URL}/api/postings/member`;
+//
+//     fetch(url)
+//         .then(res => {
+//             if (res.status === 200) {
+//                 // return a promise that resolves with the JSON body
+//                 return res.json();
+//             } else {
+//                 alert("Failed");
+//             }
+//         })
+//         .then(json => {
+//             // the resolved promise with the JSON body
+//             setPosting({ postings: json.postings });
+//         })
+//         .catch(error => {
+//             console.log("error with getting post :", error);
+//
+//         });
+// }
 
 export const getPendingPosts = (setPosting) => { 
     // the URL for the request
@@ -474,5 +484,36 @@ export const getDeniedPosts = (setPosting) => {
         .catch(error => {
             console.log("error with getting post :", error);
 
+        });
+}
+
+export const unreportPost = (postID) =>{
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/unreport`;
+
+    const requestBody = {
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "put",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                alert("Updated applicant")
+            } else {
+                alert("Failed");
+            }   
+        })
+        .catch(error => {
+            console.log(error);
         });
 }

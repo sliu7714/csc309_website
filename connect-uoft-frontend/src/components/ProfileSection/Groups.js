@@ -37,6 +37,7 @@ const Groups = (props) => {
                                                     <div className="group-member-list">
                                                         <h2 className="group-content-container__h2">Members</h2>
                                                     {post.members.map(member =>  <div className="group-member-list-member" title={(getProfile(member))}></div> )}
+
                                                     </div>
                                                 </div>
                                             </div>)}
