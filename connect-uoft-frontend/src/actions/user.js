@@ -3,6 +3,7 @@ const BASE_API_URL = ENV.apiBaseUrl
 
 // note: careful with order of parameters
 
+// check if session is valid
 export const checkSession = (setIsUserLoggedIn, setIsAdmin) => {
     if(!ENV.useFrontendTestUser){
         fetch(`${BASE_API_URL}/api/user/check-session`)
@@ -29,12 +30,12 @@ export const checkSession = (setIsUserLoggedIn, setIsAdmin) => {
             })
     }
     else{
-        console.log('test user')
         setIsUserLoggedIn(true)
         setIsAdmin(ENV.frontendTestUserIsAdmin)
     }
 }
 
+// logout, delete session
 export const logout = (setIsUserLoggedIn, setIsAdmin) => {
     console.log('logout')
     fetch(`${BASE_API_URL}/api/user/logout`)
@@ -48,10 +49,11 @@ export const logout = (setIsUserLoggedIn, setIsAdmin) => {
             setIsAdmin(false)
         })
         .catch((err) => {
-            console.log("could not log out:", err)
+            console.log("could not log out, error:", err)
         })
 }
 
+// login, create session
 export const login = (username, password, setIsIncorrectCredentials, setIsUserLoggedIn, setIsAdmin, setPassword) =>{
 
     fetch(`${BASE_API_URL}/api/user/login`,{
@@ -83,11 +85,13 @@ export const login = (username, password, setIsIncorrectCredentials, setIsUserLo
         })
 }
 
+// returns true if the email passed in is a valid email format
 const validateEmail = (email) =>{
     // RFC 5322 standard email regex from http://emailregex.com/
     return email.match('(?:[a-z0-9!#$%&\'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&\'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])')
 }
 
+// create a account (does not sign in)
 export const signup = (username, password, email, setMessage, setPassword, passwordLengthMessage, invalidEmailMessage, nonUniqueUsernameMsg, successSignupMessage, signupErrorMsg) =>{
     setMessage(null)
 
@@ -129,6 +133,7 @@ export const signup = (username, password, email, setMessage, setPassword, passw
         })
 }
 
+// get profile info of the current user logged in
 export const getProfileInfo = (setUser) =>{
     fetch(`${BASE_API_URL}/api/user`)
         .then((res) =>{
@@ -148,7 +153,9 @@ export const getProfileInfo = (setUser) =>{
             console.log("error with getting profile info: ", err)
         })
 }
-export const getProfileInfoNotSignedIn = (userID, setUser) =>{
+
+// get profile user of another user by id
+export const getProfileInfoNotSignedIn = (userID, setUser, setFoundUser) =>{
     fetch(`${BASE_API_URL}/api/user/profile/${userID}`)
         .then((res) =>{
             if(!res.ok){
@@ -161,6 +168,10 @@ export const getProfileInfoNotSignedIn = (userID, setUser) =>{
             if (userInfo){
                 console.log(userInfo)
                 setUser(userInfo)
+                // set this state variable using the setFoundUser function but only if it is defined
+                if (setFoundUser){
+                    setFoundUser(true)
+                }
             }
         })
         .catch((err) =>{
@@ -168,6 +179,7 @@ export const getProfileInfoNotSignedIn = (userID, setUser) =>{
         })
 }
 
+// for editing the profile info of the user signed in
 export const setProfileInfo = (name, email, username, password, bio, profileImage, courses) =>{
    
     const url = `${BASE_API_URL}/api/user/modify`;
@@ -217,12 +229,13 @@ export const setProfileInfo = (name, email, username, password, bio, profileImag
         });
 }
 
+// get all reported users
 export const getReportedUsers = (setUsers) => {
 
     fetch(`${BASE_API_URL}/api/user/report`)
         .then((res) =>{
             if(!res.ok){
-                console.log("could not find users ", res.status)
+                console.log("could not find reported users ", res.status)
                 return;
             }
             return res.json()
@@ -234,10 +247,11 @@ export const getReportedUsers = (setUsers) => {
             }
         })
         .catch((err) =>{
-            console.log("error with getting profile info: ", err)
+            console.log("error with getting reported user info: ", err)
         });
 }   
 
+// report a specific user
 export const reportUser = (userID) => {
 
     const url = `${BASE_API_URL}/api/user/report`;
@@ -262,18 +276,18 @@ export const reportUser = (userID) => {
             // Handle response we get from the API.
             // Usually check the error codes to see what happened.
             if (res.status === 200) {
-                // If student was added successfully, tell the user.
-                alert("Deleted posting successfully")
+                alert("Reported user successfully")
             } else {
-                // If server couldn't add the student, tell the user.
-                alert("Could not delete posting")
+                alert("Could not report user")
+                console.log("Could not report user", res.status)
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not report user, error:", error);
         });
 }
 
+// un-report a specific user
 export const unreportUser = (userID) => {
     const url = `${BASE_API_URL}/api/user/unreport`;
     
@@ -297,14 +311,13 @@ export const unreportUser = (userID) => {
             // Handle response we get from the API.
             // Usually check the error codes to see what happened.
             if (res.status === 200) {
-                // If student was added successfully, tell the user.
-                alert("Deleted posting successfully")
+                alert("un-reported user successfully")
             } else {
-                // If server couldn't add the student, tell the user.
-                alert("Could not delete posting")
+                alert("Could not un-report user")
+                console.log("Could not un-report user, status:", res.status)
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not un-report user, error:", error);
         });
 }
