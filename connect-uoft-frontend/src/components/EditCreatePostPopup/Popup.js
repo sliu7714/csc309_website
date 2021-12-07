@@ -102,14 +102,11 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
             return;
         }
 
-        console.log(postingInfo)
-
         if(isEditing){
             updatePost(postingInfo, posting._id)
 
         }
         else{
-            console.log(postingInfo)
             addPosting(postingInfo)
         }
         updatePostings() // function to re-fetch posts in page if needed

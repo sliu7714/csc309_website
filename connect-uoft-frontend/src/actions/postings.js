@@ -155,7 +155,7 @@ export const updatePost = (postingInfo, postID) => {
 
     const request = new Request(url, {
         method: "put",
-        body: JSON.stringify(postingInfo),
+        body: JSON.stringify(postInfo),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -165,15 +165,15 @@ export const updatePost = (postingInfo, postID) => {
     fetch(request)
         .then(function (res) {
             if(!res.ok){
-                console.log("Could not create posting, status code:", res.status)
-                alert("Sorry there was a problem creating this post")
+                console.log("Could not edit posting, status code:", res.status)
+                alert("Sorry there was a problem edit this post")
                 return;
             }
             // created post
             console.log('created post')
         })
         .catch(error => {
-            console.log("error creating post:", error);
+            console.log("error edit post:", error);
         });
 }
               
