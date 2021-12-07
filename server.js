@@ -683,6 +683,23 @@ app.post("/api/user/create", mongoChecker, async (req, res)=>{
 })
 
 // get userInfo of the user logged in
+app.get("/api/user/profile/:id", mongoChecker, async(req, res)=>{
+    const userID = req.params.id
+    if (!ObjectID.isValid(userID)) {
+		res.status(404).send()
+		return;
+	}
+    try{
+        const user = await User.findById(userID)
+        res.send(user)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
+})
+
+// get userInfo of the user logged in
 app.get("/api/user", mongoChecker, authenticate, (req, res)=>{
 
     // check if there is user logged in

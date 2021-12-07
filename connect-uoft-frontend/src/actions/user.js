@@ -148,7 +148,25 @@ export const getProfileInfo = (setUser) =>{
             console.log("error with getting profile info: ", err)
         })
 }
-
+export const getProfileInfoNotSignedIn = (userID, setUser) =>{
+    fetch(`${BASE_API_URL}/api/user/profile/${userID}`)
+        .then((res) =>{
+            if(!res.ok){
+                console.log("could not find user ", res.status)
+                return;
+            }
+            return res.json()
+        })
+        .then((userInfo) =>{
+            if (userInfo){
+                console.log(userInfo)
+                setUser(userInfo)
+            }
+        })
+        .catch((err) =>{
+            console.log("error with getting profile info: ", err)
+        })
+}
 
 export const setProfileInfo = (name, email, username, password, bio, profileImage, courses) =>{
    
