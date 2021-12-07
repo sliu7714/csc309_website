@@ -7,22 +7,28 @@ import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
 import ApplySection from "./ApplySection";
 import MemberListSection from "./MemberListSection";
-import { deletePost, reportPost } from "../../actions/postings";
+import { deletePost, reportPost, unreportPost } from "../../actions/postings";
 
 
 // updatePostings is to call the function to rerender this post
-// isCreator is a boolean that is true only if this post will be shown to the creator and same for isMember
-const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) => {
+// showUnreport is only valid if isAdmin is true
+const PostingCard = ({posting, updatePostings, isAdmin, showUnreport}) => {
+
+    const isCreator = posting.isCreator
+    const isMember = posting.isMember
 
     const [showEditProfile, setShowEditProfile] = useState(false)
 
-    const showEditProfilePopup = () =>{
-        setShowEditProfile(true)
+    const reportPosting = () =>{
+        if (window.confirm(`Are you sure you want to report this post "${posting.title}"?`)){
+            reportPost(posting._id)
+            updatePostings()
+        }
     }
 
-    const reportPosting = () =>{
-        if (window.confirm(`Are you sure you want to report this post ${posting.title}?`)){
-            reportPost(posting._id)
+    const unreportPosting = () =>{
+        if (window.confirm(`Are you sure you want to un-report this post "${posting.title}"?`)){
+            unreportPost(posting._id)
             updatePostings()
         }
     }
@@ -71,6 +77,13 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                     <button className="report-button top-right-btn red" onClick={() => alert("this post has already been reported by someone")}>Reported</button>
                     :
                     <button className="report-button top-right-btn" onClick={() => reportPosting()}>Report </button>
+            }
+
+            {
+                isAdmin && showUnreport ?
+                    <button className="report-button top-right-btn2" onClick={() => unreportPosting()}>Un-Report</button>
+                    :
+                    null
             }
 
 

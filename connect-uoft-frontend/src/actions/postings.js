@@ -291,6 +291,43 @@ export const reportPost = (postID) => { // DONE
         });
 }
 
+// report specific posting
+export const unreportPost = (postID) => { // DONE
+    const url = `${BASE_API_URL}/api/postings/unreport`;
+    alert('need to connect when endpoint is ready')
+    // const requestBody = {
+    //     postingID : postID
+    // }
+    //
+    // // Create our request constructor with all the parameters we need
+    // const request = new Request(url, {
+    //     method: "put",
+    //     body: JSON.stringify(requestBody),
+    //     headers: {
+    //         Accept: "application/json, text/plain, */*",
+    //         "Content-Type": "application/json"
+    //     }
+    // });
+    //
+    // // Send the request with fetch()
+    // fetch(request)
+    //     .then(function (res) {
+    //         // Handle response we get from the API.
+    //         // Usually check the error codes to see what happened.
+    //         if (res.status === 200) {
+    //             // If student was added successfully, tell the user.
+    //             alert("un-reported posting successfully")
+    //         } else {
+    //             // If server couldn't add the student, tell the user.
+    //             alert("Could not un-report posting")
+    //             console.log("Could not un-report posting, status code:", res.status)
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     });
+}
+
 // return all reported postings
 export const getReportedPost = (setPosting) => { //DONE
     const url = `${BASE_API_URL}/api/postings/report`;
@@ -409,26 +446,26 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
-// get postings the currently logged in user is a member of (not creator)
-export const getMemberPosts = (setPosting) => { //DONE
-
-    const url = `${BASE_API_URL}/api/postings/member`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Failed");
-            }   
-        })
-        .then(json => {
-            // the resolved promise with the JSON body
-            setPosting({ postings: json.postings });
-        })
-        .catch(error => {
-            console.log("error with getting post :", error);
-
-        });
-}
+// use the one 'getUserMemberPostings' above
+// export const getMemberPosts = (setPosting) => { //DONE
+//
+//     const url = `${BASE_API_URL}/api/postings/member`;
+//
+//     fetch(url)
+//         .then(res => {
+//             if (res.status === 200) {
+//                 // return a promise that resolves with the JSON body
+//                 return res.json();
+//             } else {
+//                 alert("Failed");
+//             }
+//         })
+//         .then(json => {
+//             // the resolved promise with the JSON body
+//             setPosting({ postings: json.postings });
+//         })
+//         .catch(error => {
+//             console.log("error with getting post :", error);
+//
+//         });
+// }

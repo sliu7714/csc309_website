@@ -38,9 +38,7 @@ const PostingDetailed = ({isAdmin}) =>{
             <div className="posting-card-container">
                 <PostingCard
                     posting={posting}
-                    updatePostings={getPosting}
-                    isCreator={posting.isCreator}
-                    isMember={posting.isMember} />
+                    updatePostings={getPosting} />
             </div>
 
         </div>

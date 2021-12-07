@@ -25,7 +25,7 @@ const Manage = ({isAdmin}) => {
     // fetch once initially
     useEffect(() =>{
         fetchPostings()
-    }, [])
+    }, [isAdmin])
 
 
     return(
@@ -39,7 +39,7 @@ const Manage = ({isAdmin}) => {
                                 key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
-                                isCreator={true}
+                                // do not pass isAdmin - want edit button to show
                             />)
                         :
                             <h2 className="grey-text"><i>no groups</i></h2>
@@ -57,7 +57,7 @@ const Manage = ({isAdmin}) => {
                                 key={posting._id}
                                 posting={posting}
                                 updatePostings={fetchPostings}
-                                isMember={true}
+                                // do not pass isAdmin - want report button to show
                             />)
                         :
                         <h2 className="grey-text"><i>no groups</i></h2>
@@ -76,10 +76,8 @@ const Manage = ({isAdmin}) => {
                                         key={posting._id}
                                         posting={posting}
                                         updatePostings={fetchPostings}
-                                        isMember={posting.isMember}
-                                        isCreator={posting.isCreator}
                                         isAdmin={isAdmin}
-
+                                        showUnreport={true}
                                     />)
                                 :
                                 <h2 className="grey-text"><i>no groups</i></h2>
