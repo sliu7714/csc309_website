@@ -148,9 +148,10 @@ const checkIsFilled = async (postingID) =>{
     return Posting.findById(postingID)
         .then(posting =>{
             if(!posting){
-                // console.log(`checkIsApplied: did not find posting ${postingID}`)
+                console.log(`checkIsApplied: did not find posting ${postingID}`)
                 return false
             }
+            //check if the posting is filled
             if ((posting.members.length + 1) >= posting.capacity){
                 return true
             }
@@ -526,9 +527,9 @@ app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => 
 app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) => {
 
     // if tags is empty, don't filter
-    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}} 
+    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}, isReported: false} 
     : 
-    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}}
+    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}, isReported: false}
 
     //const filter =  {creatorID: {$ne: req.session.user}}
     // if tags is empty, don't filter by tags
