@@ -1,4 +1,5 @@
 // environment configurations
+import { application } from 'express';
 import ENV from './../config.js'
 const BASE_API_URL = ENV.apiBaseUrl
 
@@ -516,4 +517,39 @@ export const unreportPost = (postID) =>{
         .catch(error => {
             console.log(error);
         });
+}
+
+export const deleteApplication = (postID, applicationID) => {
+    const url = `${BASE_API_URL}/api/postings/apply`;
+
+    const requestBody = {
+        postingID: postID,
+        applicationID: applicationID
+    }
+
+    const request = new Request(url, {
+        method: "delete",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If application deleted, tell the user.
+                alert("Deleted application successfully")
+            } else {
+                // If server couldn't delete the application
+                alert("Could not delete application")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
 }
