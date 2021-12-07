@@ -188,6 +188,7 @@
   padding-bottom: 20px;
   width: 42%;
 }
+.user-list,
 .groups-list {
   position: relative;
   width: 100%;
@@ -196,6 +197,7 @@
   border-top: 1px solid black;
 }
 
+.user,
 .group {
   /* min-height: 100px;
   height: auto; */
@@ -215,21 +217,23 @@
   background-color: darkseagreen;
   border-radius: 100%;
 } */
+.user-content-container,
 .group-content-container {
   min-height: 100px;
   height: auto;
   float: left;
   margin-left: 20px;
 }
-
+.user-content-container__h2,
 .group-content-container__h2 {
   margin-top: 0px;
 }
-
+.user-content-container__h3,
 .group-content-container__h3 {
   margin-top: 0px;
   margin-bottom: 5px;
 }
+.user-content-container__h4,
 .group-content-container__h4 {
   margin-top: 0px;
   margin-bottom: 5px;
@@ -269,3 +273,79 @@
 /* .group-member-list-member:hover {
   cursor: pointer;
 } */
+
+.group-button-container {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  float: right;
+}
+.reported-user-handle-container__button,
+.group-button-container__button {
+  color: white;
+  width: 105px;
+  height: 50px;
+  background-color: darkseagreen;
+  text-align: center;
+}
+
+.group-button-container__button--red {
+  background-color: #cd5c5c;
+}
+.reported-user-handle-container__button:hover,
+.group-button-container__button:hover {
+  cursor: pointer;
+  border-color: black;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.reported-user-handle-container {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-bottom: 1px solid grey;
+}
+.reported-user-picture-container {
+  width: 150px;
+  float: left;
+}
+
+.reported-user-picture-container__image {
+  margin: 10px;
+  padding: 8px;
+  background-color: darkseagreen;
+  border-radius: 100%;
+  border-width: 2px;
+  border-style: double;
+  width: 100px;
+  height: 100px;
+}
+
+.reported-user-handle-infotmation-container {
+  text-align: left;
+  width: 400px;
+  float: left;
+}
+.reported-user-handle-infotmation-container__h1 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.reported-user-handle-infotmation-container__h2 {
+  margin: 0px;
+}
+.reported-user-handle-infotmation-container__h3 {
+  margin: 0px;
+  color: rgb(65, 65, 65);
+}
+.reported-user-handle-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  float: right;
+  height: 100%;
+  width: 125px;
+}

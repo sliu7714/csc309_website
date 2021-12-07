@@ -47,7 +47,7 @@ export const getUserCreatedPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting your postings")
+                // alert("Sorry there was a problem getting your postings")
                 return;
             }
             return res.json();
@@ -71,7 +71,7 @@ export const getUserMemberPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting the groups that you are a member of")
+                // alert("Sorry there was a problem getting the groups that you are a member of")
                 return;
             }
             return res.json();
@@ -306,7 +306,7 @@ export const getReportedPost = (setPosting) => { //DONE
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get reported postings");
+                // alert("Could not get reported postings");
             }   
         })
         .then(postingsList => {
