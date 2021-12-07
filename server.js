@@ -144,6 +144,26 @@ const checkHasApplied = async (userID, postingID) =>{
 
 }
 
+const checkIsFilled = async (postingID) =>{
+    return Posting.findById(postingID)
+        .then(posting =>{
+            if(!posting){
+                console.log(`checkIsApplied: did not find posting ${postingID}`)
+                return false
+            }
+            //check if the posting is filled
+            if ((posting.members.length + 1) >= posting.capacity){
+                return true
+            }
+            return false;
+
+        })
+        .catch(err =>{
+            console.log(err)
+            return false
+        })
+}
+
 // check if the current user is an admin user
 // make sure to await for the return value of this
 const checkIsAdmin = async (userID) =>{
@@ -197,12 +217,13 @@ const addUserInfoToPosts = async (postingList, req) =>{
         const isAdmin = await checkIsAdmin(req.session.user)
         // check if current user has applied to this post
         const hasApplied  = await checkHasApplied(req.session.user, posting._id)
+        const isFilled = await checkIsFilled(posting._id)
 
         // get creator info
         const creatorInfo = await getProfileSummary(posting.creatorID)
 
         // note : posting has some extra info from mongo so the actual posting is posting._doc
-        const postingInfo = {...posting._doc, isCreator, isMember, hasApplied, creatorInfo}
+        const postingInfo = {...posting._doc, isCreator, isMember, hasApplied, creatorInfo, isFilled}
 
         if(isCreator || isMember || isAdmin){
             // get member info
@@ -506,9 +527,9 @@ app.get('/api/postings/member', mongoChecker, authenticate, async (req, res) => 
 app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) => {
 
     // if tags is empty, don't filter
-    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}} 
+    const filter = req.body.tags && req.body.tags.length > 0? {tags: {$all: req.body.tags}, creatorID: {$ne: req.session.user}, members: {$not: {$all: [req.session.user]}}, isReported: false} 
     : 
-    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}}
+    {creatorID: {$not: {$eq: req.session.user}}, members: {$not: {$all: [req.session.user]}}, isReported: false}
 
     //const filter =  {creatorID: {$ne: req.session.user}}
     // if tags is empty, don't filter by tags

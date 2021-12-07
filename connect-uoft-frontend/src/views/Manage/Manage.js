@@ -50,6 +50,7 @@ const Manage = ({isAdmin}) => {
 
 
     return(
+
         <div className='manage-page-container'>
             <div className='tab-section'>
                 <div
@@ -69,6 +70,7 @@ const Manage = ({isAdmin}) => {
                     onClick={() => setSelectedTab(PENDING)}
                 >
                     <div className="tab-title">Pending</div>
+
                 </div>
                 <div
                     className={`tab ${selectedTab === DENIED ? 'selected' : null}`}
