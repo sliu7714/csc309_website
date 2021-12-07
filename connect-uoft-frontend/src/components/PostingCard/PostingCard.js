@@ -61,7 +61,7 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) 
     return (
 
         <div className="posting posting-card">
-            <a  className="title-link" href={`/posting/${posting._id}`} target="_blank">
+            <a  className="title-link" href={`/posting/${posting._id}`} target="_blank" rel="noreferrer" >
                 <h2 className="posting-text posting-card-title" >{posting.title}</h2>
             </a>
 

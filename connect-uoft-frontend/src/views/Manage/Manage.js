@@ -1,5 +1,5 @@
 import PostingCard from "../../components/PostingCard/PostingCard";
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import "./style.css"
 import {
     getDeniedPosts,
@@ -27,7 +27,7 @@ const Manage = ({isAdmin}) => {
     const [reportedPostings, setReportedPostings] = useState([])
 
     // call this function everytime a post needs to be updated
-    const fetchPostings = () =>{
+    const fetchPostings = useCallback( () =>{
         getUserCreatedPostings(setUserCreatedPostings)
 
         getUserMemberPostings(setUserMemberPostings)
@@ -39,12 +39,12 @@ const Manage = ({isAdmin}) => {
         if(isAdmin){
             getReportedPost(setReportedPostings)
         }
-    }
+    }, [isAdmin, setUserCreatedPostings, setUserMemberPostings, setUserPendingPostings, setUserDeniedPostings, setReportedPostings])
 
     // fetch once initially
     useEffect(() =>{
         fetchPostings()
-    }, [isAdmin])
+    }, [isAdmin, fetchPostings])
 
     const [selectedTab, setSelectedTab] = useState(CREATED)
 
