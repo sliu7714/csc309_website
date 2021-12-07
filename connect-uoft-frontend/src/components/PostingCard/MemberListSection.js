@@ -21,7 +21,7 @@ const MemberListSection = ({showMemberSection, posting}) =>{
                 <DropdownArrow show={showMembers} setShow={setShowMembers}/> : null
             }
             { showMembers ?
-                posting.memberInfo  ?
+                posting.memberInfo && posting.memberInfo.length && posting.memberInfo.length > 0?
                     posting.memberInfo.map((member) =>
                             <MemberListItem member={member}
                                                key={member.id}
