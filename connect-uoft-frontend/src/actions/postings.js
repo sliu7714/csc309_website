@@ -294,43 +294,6 @@ export const reportPost = (postID) => { // DONE
         });
 }
 
-// report specific posting
-export const unreportPost = (postID) => { // DONE
-    const url = `${BASE_API_URL}/api/postings/unreport`;
-    alert('need to connect when endpoint is ready')
-    // const requestBody = {
-    //     postingID : postID
-    // }
-    //
-    // // Create our request constructor with all the parameters we need
-    // const request = new Request(url, {
-    //     method: "put",
-    //     body: JSON.stringify(requestBody),
-    //     headers: {
-    //         Accept: "application/json, text/plain, */*",
-    //         "Content-Type": "application/json"
-    //     }
-    // });
-    //
-    // // Send the request with fetch()
-    // fetch(request)
-    //     .then(function (res) {
-    //         // Handle response we get from the API.
-    //         // Usually check the error codes to see what happened.
-    //         if (res.status === 200) {
-    //             // If student was added successfully, tell the user.
-    //             alert("un-reported posting successfully")
-    //         } else {
-    //             // If server couldn't add the student, tell the user.
-    //             alert("Could not un-report posting")
-    //             console.log("Could not un-report posting, status code:", res.status)
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     });
-}
-
 // return all reported postings
 export const getReportedPost = (setPosting) => { //DONE
     const url = `${BASE_API_URL}/api/postings/report`;
