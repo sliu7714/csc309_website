@@ -12,7 +12,7 @@ import { deletePost, reportPost } from "../../actions/postings";
 
 // updatePostings is to call the function to rerender this post
 // isCreator is a boolean that is true only if this post will be shown to the creator and same for isMember
-const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) => {
+const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin, isFilled}) => {
 
     const [showEditProfile, setShowEditProfile] = useState(false)
 
@@ -39,7 +39,12 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
         return new Date(dateStr).toDateString()
     }
 
+    if (isFilled) {
+        return(null)
+    }
+
     return (
+
         <div className="posting posting-card">
             <a  className="title-link" href={`/posting/${posting._id}`} target="_blank">
                 <h2 className="posting-text posting-card-title" >{posting.title}</h2>

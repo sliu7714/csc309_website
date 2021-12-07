@@ -35,6 +35,7 @@ const Manage = ({}) => {
                                 posting={posting}
                                 updatePostings={fetchPostings}
                                 isCreator={true}
+                                isFilled={false} //isFilled does not matter in manage screen
                             />)
                         :
                             <h2 className="grey-text"><i>no groups</i></h2>
@@ -53,6 +54,7 @@ const Manage = ({}) => {
                                 posting={posting}
                                 updatePostings={fetchPostings}
                                 isMember={true}
+                                isFilled={false} //isFilled does not matter in manage screen
                             />)
                         :
                         <h2 className="grey-text"><i>no groups</i></h2>
