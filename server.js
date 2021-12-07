@@ -360,7 +360,7 @@ app.post('/api/postings', mongoChecker, authenticate, async (req, res) => {
 app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update post
-    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
+    const canEditPost = await checkIsPostingCreator(req.session.user, req.body.postingID)
     if (! canEditPost ){
         res.status(403).send("Cannot edit a post that a user has not created")
     }
@@ -374,6 +374,8 @@ app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
             endDate: req.body.posting.endDate,
             tags: req.body.posting.tags,
           }});
+
+        res.send("updated post")
 
     } catch(error) {
         console.log(error)

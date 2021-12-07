@@ -15,7 +15,7 @@ import {checkSession, logout} from "./actions/user";
 function App() {
 
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(true)
-    const [isAdmin, setIsAdmin] = useState(false) // TODO: update components to use this boolean
+    const [isAdmin, setIsAdmin] = useState(false)
 
     // check if user is logged in on every refresh
     useEffect(() =>{
@@ -56,7 +56,7 @@ function App() {
                 </Route>
 
                 <Route path="/manage" >
-                    {isUserLoggedIn ? <Manage userID={1}/> : <Redirect to="/login" />} {/*TODO change to remove userID*/}
+                    {isUserLoggedIn ? <Manage isAdmin={isAdmin}/> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/logout">
@@ -64,7 +64,7 @@ function App() {
                 </Route>
 
                 <Route path="/posting/:id">
-                    <PostingDetailed userID={1} isUserLoggedIn={isUserLoggedIn}/> {/*TODO change to remove userID*/}
+                    <PostingDetailed isAdmin={isAdmin}/>
                 </Route>
 
                 <Route path="/user/:id">
@@ -78,7 +78,7 @@ function App() {
         </BrowserRouter>
 
         {/*TEMPORARY*/}
-        {/*<button onClick={() => logout(isUserLoggedIn, isAdmin)}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>*/}
+        {/*<button onClick={() => callLogout()}>logout (temporary - need additional refresh) isAdmin: {isAdmin}</button>*/}
         {/*<button >isUserLoggedIn {isUserLoggedIn.toString()} </button>*/}
     </div>
   );
