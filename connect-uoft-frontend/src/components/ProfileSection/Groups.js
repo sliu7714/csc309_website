@@ -2,27 +2,20 @@ import "./styles.css"
 import { useState, useEffect} from "react";
 
 import { getUserCreatedPostings, getUserMemberPostings } from "../../actions/postings";
-import { getProfileInfo } from "../../actions/user";
+import { getProfileInfoNotSignedIn } from "../../actions/user";
 
-// const getJoinedGroups = () => {
-//     // TODO
-//     return [];
-// }
-// const addAllJoinedGroups = () => {
-//     const joinedGroups = getJoinedGroups();
-//     for (const group in joinedGroups){
-//         addJoinedGroupToDOM(group.title, group.creator, group.description, group.link, group.members);
-//     }
-// }
-// // 
 
 const Groups = (props) => {
 
     const [postings, setPostings] = useState([])
-    
+    // const [member, setMember] = useState([])
     const getUserPostings = () => {
         getUserMemberPostings(setPostings)
     }
+    //  const getProfile = (toGetMember) => {
+    //     getProfileInfoNotSignedIn(toGetMember, setMember)
+    //     return member.name
+    // }
     // GET JOINED POSTINGS
     useEffect(() =>{
         getUserPostings()
@@ -43,9 +36,7 @@ const Groups = (props) => {
                                                     </div>
                                                     <div className="group-member-list">
                                                         <h2 className="group-content-container__h2">Members</h2>
-                                                    {/* {post.members.map(member => <div>
-                                                                                    <div className="group-member-list-member" title={"User.findById(member).name"}></div>
-                                                                                </div>)} */}
+                                                    {/* {post.members.map(member =>  <div className="group-member-list-member" title={(getProfile(member))}></div> )} */}
                                                     </div>
                                                 </div>
                                             </div>)}
@@ -133,9 +124,13 @@ const Groups = (props) => {
 
 const LeadGroups = (props) => {
     const [postings, setPostings] = useState([])
-    const [members, setMembers] = useState([])
+    const [member, setMember] = useState([])
     const getUserCreatePostings = () => {
         getUserCreatedPostings(setPostings)
+    }
+    const getProfile = (toGetMember) => {
+        getProfileInfoNotSignedIn(toGetMember, setMember)
+        return member.name
     }
     // GET JOINED POSTINGS ON LOAD
     useEffect(() =>{
@@ -156,10 +151,11 @@ const LeadGroups = (props) => {
                                                         <a className="group-content-container-link" href="/profile">Link to meeting through discord</a>
                                                     </div>
                                                     <div className="group-member-list">
+                                                        <div>
                                                         <h2 className="group-content-container__h2">Members</h2>
-                                                    {/* {post.members.map(member => <div>
-                                                                                    <div className="group-member-list-member" title={"User.findById(member).name"}></div>
-                                                                                </div>)} */}
+                                                        {post.members.map(member =>  <div className="group-member-list-member" title={(getProfile(member))}></div> )}
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>)}

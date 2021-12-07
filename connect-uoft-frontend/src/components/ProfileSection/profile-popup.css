@@ -5,11 +5,12 @@
   width: 100% !important;
   height: 100% !important;
   background-color: rgba(0, 0, 0, 0.534);
+  min-height: 650px;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  overflow: auto;
+  /* overflow: auto; */
   z-index: 10;
 }
 
@@ -18,8 +19,8 @@
   padding: 23px;
   width: 33%;
   min-width: 600px;
-  height: 70%;
-
+  height: 650px;
+  overflow: auto;
   background-color: white;
 }
 
