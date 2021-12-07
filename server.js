@@ -180,13 +180,18 @@ const addUserInfoToPosts = async (postingList, req) =>{
         // get applicant info
         const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
             const applicantInfo = await getProfileSummary(application.applicantID)
-            return({...application, applicantInfo})
+            return({...application._doc, applicantInfo})
         }));
-        // check if the current user is a
+        // add userinfo to comments
+        const commentsInfo = await Promise.all(posting.comments.map(async (comment) =>{
+            const creatorInfo = await getProfileSummary(comment.creatorID)
+            return({...comment._doc, creatorInfo})
+        }));
+        // check if the current user is the creator or a memeber
         const isCreator = await checkIsPostingCreator(req.session.user, posting._id)
         const isMember = await checkIsPostingMember(req.session.user, posting._id)
         // note : posting has some extra info from mongo so the actual posting is posting._doc
-        return {...posting._doc, creatorInfo, memberInfo, applicantInfo, isCreator, isMember}
+        return {...posting._doc, creatorInfo, memberInfo, applicantInfo, commentsInfo, isCreator, isMember}
     }));
 }
 
@@ -372,7 +377,7 @@ app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) 
     const isAdmin = checkIsAdmin(req.session.user)
     const canComment = isCreator || isAdmin || isMember
     if (! canComment ){
-        res.status(403).send("Cannot edit a post that a user has not created")
+        res.status(401).send("Cannot edit a post that a user has not created")
     }
 
 

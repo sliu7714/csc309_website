@@ -116,7 +116,7 @@ export const addPosting = (postingInfo) => {
 
 export const commentPost = (content, postID) => {
     const url = `${BASE_API_URL}/api/postings/comment`;
-
+    console.log(content, postID)
     const commentInfo = {
         content: content,
         postingID: postID
