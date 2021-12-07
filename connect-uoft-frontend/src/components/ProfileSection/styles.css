@@ -97,7 +97,7 @@
   /* height: auto; Might need to bring back */
   /* min-width: 300px; */
   width: 100%;
-  border-style: dashed;
+  border: 1px solid lightgrey;
   border-width: 2px;
   border-radius: 20px;
 }
@@ -264,18 +264,24 @@
   justify-content: center;
   margin: 10px;
   float: left;
-  height: 75px;
-  width: 75px;
+  height: 50px;
+  width: 50px;
   border: 1px solid black;
-  border-radius: 100%;
-  background-color: seagreen;
+  border-radius: 50%;
+  background-color: darkslategrey;
+  color: white;
 }
-/* .group-member-list-member:hover {
-  cursor: pointer;
-} */
+/* .group-member-list-member:hover {*/
+/*  cursor: pointer;*/
+/*}*/
+.group-member-list-member
+.member-name-link{
+  color: white;
+  font-size: 14px;
+}
 
 .group-button-container {
-  margin-top: 10px;
+  /*margin-top: 10px;*/
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -348,4 +354,31 @@
   float: right;
   height: 100%;
   width: 125px;
+}
+
+/* POST SECTION COMPONENT*/
+
+.post-section-card
+a {
+  margin: 0px;
+  padding: 0px;
+}
+.post-section-card
+h2 {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+}
+.post-section-card
+h3 {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+}
+.post-section-card
+h4 {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+  /*color: darkslategrey;*/
 }

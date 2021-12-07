@@ -2,19 +2,10 @@
 import "./styles.css"
 import { useState, useEffect } from "react"
 import {getReportedUsers, unreportUser} from "../../actions/user"
+import {_profilePictures} from "../../data/constants";
 
-const ReportedUsers = (props) => {
-const profilePictures = props.profilePictures;
-const [users, setReportedUsers] = useState([])
-    
-    const getReportUsers = () => {
-        getReportedUsers(setReportedUsers)
-    }
-    
-    // GET REPORTED USERS ON LOAD
-    useEffect(() =>{
-        getReportUsers()
-    },[])
+const ReportedUsers = ({users}) => {
+    const profilePictures = _profilePictures;
     return (
         <div className='reported-content profile-card-background profile-container'>
             <h1 className="section_title">Reported Users</h1>

@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import './profile-popup.css'
 import TagRemovable from "../SearchTag/TagRemovable";
+import {_profilePictures} from "../../data/constants";
 
 import { setProfileInfo } from '../../actions/user';
 
-const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
+const ProfilePopup = ({trigger, setTrigger, user}) => {
 
     const [updateProfilePictureIndex, setProfilePictureIndex] = useState(user.profileImageIndex)
     const [updatedName, setName] = useState(user.name);
@@ -42,12 +43,12 @@ const ProfilePopup = ({profilePictures, trigger, setTrigger, user}) => {
                 <form className="edit-profile-content-container__form">
                     <div className="edit-profile-content-photos">
                         <div className="profile-picture-container--smaller profile-picture-container" title={(user.name).concat("'s ","profile icon")}>
-                            <img src={profilePictures[updateProfilePictureIndex]} alt={(user.name).concat("'s ","profile icon")} className="profile-picture-container__image--smaller profile-picture-container__image"/>         
+                            <img src={_profilePictures[updateProfilePictureIndex]} alt={(user.name).concat("'s ","profile icon")} className="profile-picture-container__image--smaller profile-picture-container__image"/>
                         </div>
                         <div className="select-profile-picture-container">
-                                <img src={profilePictures[0]} onClick={() => setProfilePictureIndex(0)} alt={"Smile"} title="Select Smiling Photo" className="selection-photo"/>         
-                                <img src={profilePictures[1]} onClick={() => setProfilePictureIndex(1)} alt={"Chef"} title="Select Chef Photo" className="selection-photo"/>         
-                                <img src={profilePictures[2]} onClick={() => setProfilePictureIndex(2)}c alt={"Fish"} title="Select Fish Photo" className="selection-photo"/>         
+                                <img src={_profilePictures[0]} onClick={() => setProfilePictureIndex(0)} alt={"Smile"} title="Select Smiling Photo" className="selection-photo"/>
+                                <img src={_profilePictures[1]} onClick={() => setProfilePictureIndex(1)} alt={"Chef"} title="Select Chef Photo" className="selection-photo"/>
+                                <img src={_profilePictures[2]} onClick={() => setProfilePictureIndex(2)}c alt={"Fish"} title="Select Fish Photo" className="selection-photo"/>
                         </div>
                     </div>
                     <div className="edit-profile-content-text">

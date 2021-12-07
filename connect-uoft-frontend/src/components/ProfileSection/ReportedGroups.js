@@ -1,43 +1,29 @@
 import "./styles.css"
-import { useState, useEffect } from "react"
-import {getReportedPost, unreportPost, deletePost} from "../../actions/postings"
-import {getProfileInfoNotSignedIn} from "../../actions/user"
+import {unreportPost, deletePost} from "../../actions/postings"
+import PostSection from "./PostSection";
 
-const ReportedGroups = (props) => {
-    const [reportedPostings, setPostings] = useState([])
-    const [creatorUser, setCreatorUser] = useState("")
-    const getReportedGroups = () => {
-        getReportedPost(setPostings)
-    }
-
-     const getProfileName = (toGetMember) => {
-        getProfileInfoNotSignedIn(toGetMember, setCreatorUser)
-        return creatorUser.name
-    }
-    // GET REPORTED POSTINGS ON LOAD
-    useEffect(() =>{
-        getReportedGroups()
-    },[])
+const ReportedGroups = ({reportedPostings}) => {
     return (
         <div className='profile-card-background reported-content profile-container'>
 
             <h1 className="section_title">Reported Groups</h1>
             <div id="reported-groups" className="groups-list">
                
-               {(reportedPostings.length === 0) ? <div>There are no groups that have been reported</div>: 
-               reportedPostings.map(post =>  <div className="group">
-                                                <div className="group-content-container">
-                                                    <h2 className="group-content-container__h2">{post.title}</h2>
-                                                    <h3 className="group-content-container__h3">Creator: {getProfileName(post.creatorID)}</h3>
-                                                    <h4 className="group-content-container__h4">Description: {post.description}</h4>
-                                                </div>
-                                                <div className="group-button-container">
-                                                    <form>
-                                                        <button className="group-button-container__button" onClick={()=> unreportPost(post._id)}>Un-Report</button>
-                                                        <button className="group-button-container__button group-button-container__button--red" onClick={()=> deletePost(post._id)}>Delete</button>
-                                                    </form>
-                                                </div>
-                                            </div>)}
+               { reportedPostings && reportedPostings.length > 0 ?
+                   reportedPostings.map(post =>
+                       <div className="group">
+                           <PostSection post={post}/>
+
+                            <div className="group-button-container">
+                                <form>
+                                    <button className="group-button-container__button" onClick={()=> unreportPost(post._id)}>Un-Report</button>
+                                    <button className="group-button-container__button group-button-container__button--red" onClick={()=> deletePost(post._id)}>Delete</button>
+                                </form>
+                            </div>
+                        </div>)
+                   :
+                   <div>There are no groups that have been reported</div>
+               }
             </div>
         </div>
     )
