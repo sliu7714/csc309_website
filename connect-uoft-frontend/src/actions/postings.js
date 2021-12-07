@@ -123,7 +123,7 @@ export const commentPost = ({content, postID}) => {
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -226,7 +226,7 @@ export const applyPost = (postID, message) => { //DONE
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -261,7 +261,7 @@ export const reportPost = (postID) => { // DONE
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -321,7 +321,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -354,7 +354,7 @@ export const rejectApplicantPost = (applicantID, postID) =>{
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -474,5 +474,36 @@ export const getDeniedPosts = (setPosting) => {
         .catch(error => {
             console.log("error with getting post :", error);
 
+        });
+}
+
+export const unreportPost = (postID) =>{
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/unreport`;
+
+    const requestBody = {
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "put",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                alert("Updated applicant")
+            } else {
+                alert("Failed");
+            }   
+        })
+        .catch(error => {
+            console.log(error);
         });
 }

@@ -350,7 +350,7 @@ app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
-app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
+app.put('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
 
     const comment = {
         creatorID: req.session.user,
@@ -449,8 +449,8 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
 });
 
 
-// PATCH to update the applicants
-app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
+// PUT to update the applicants
+app.put('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     const applicant = {
         applicantID: req.session.user,
@@ -468,8 +468,8 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
-// a PATCH to accept a applicant
-app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
+// a PUT to accept a applicant
+app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
     // fix to use postingID to find the post
     // update the applicant status to ACCEPTED
@@ -483,8 +483,8 @@ app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) =
     }
 });
 
-// a PATCH to decline a applicant
-app.patch('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
+// a PUT to decline a applicant
+app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
 
     // update the applicant status to REJECTED
     try {
@@ -513,7 +513,7 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
 });
 
 // report a specific post
-app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+app.put('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting
     try {
@@ -555,6 +555,22 @@ app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => 
         console.log(error)
         res.status(500).send("Internal Server Error")
     }
+});
+
+app.put('/api/postings/unreport', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the User to Reported status
+    try {
+        const user = await Posting.updateOne({ _id: req.body.postingID }, { isReported: false }) 
+        if (!user){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`unreported posting id: ${req.body.postingID}`)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
 });
 
 
