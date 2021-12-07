@@ -30,9 +30,7 @@ const Profile = ({isAdmin, callLogout}) => {
             </div>
         )
     }
-    const userPostings = () => {
-        return getUserMemberPostings(setPostings)
-    }
+
 
     return(
         <div id="profile_page">
@@ -59,8 +57,8 @@ const Profile = ({isAdmin, callLogout}) => {
                         <LeadGroups profilePictures={_profilePictures}  user={user}/>
                 </div>
                 {user.isAdmin ? <div className="reported-content-container">
-                                <ReportedUsers resportedUsers={user.postings}/>
-                                <ReportedGroups reportedGroups={user.postings}/>
+                                <ReportedUsers profilePictures={_profilePictures} />
+                                <ReportedGroups profilePictures={_profilePictures}/>
                             </div>           
                 : null}
         </div>
