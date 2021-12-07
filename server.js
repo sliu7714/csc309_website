@@ -426,7 +426,6 @@ app.post('/api/postings/comment', mongoChecker, authenticate, async (req, res) =
         res.status(401).send("Cannot edit a post that a user has not created")
     }
 
-
     const comment = {
         creatorID: req.session.user,
         content: req.body.content,
@@ -655,6 +654,22 @@ app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => 
         console.log(error)
         res.status(500).send("Internal Server Error")
     }
+});
+
+app.put('/api/postings/unreport', mongoChecker, authenticate, async (req, res) => {
+
+    // Update the User to Reported status
+    try {
+        const user = await Posting.updateOne({ _id: req.body.postingID }, { isReported: false }) 
+        if (!user){
+            res.status(404).send(`report: could not find posting id: ${req.body.postingID}`)
+        }
+        res.send(`unreported posting id: ${req.body.postingID}`)
+    } catch(error) {
+        console.log(error)
+        res.status(500).send("Internal Server Error")
+    }
+
 });
 
 
