@@ -102,7 +102,15 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) 
 
 
             <hr />
-            <h4 className="posting-text posting-creator"> Creator: {posting.creatorInfo.name}</h4>
+
+                <h4 className="posting-text posting-creator">
+
+                    <a className="creator-name-link" href={`/user/${posting.creatorID}`}>
+                        Creator: {posting.creatorInfo.name}
+                    </a>
+                </h4>
+
+
             <div className="posting-text posting-desc">
                 <p>{posting.description}</p>
             </div>
