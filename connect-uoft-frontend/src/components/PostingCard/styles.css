@@ -89,6 +89,9 @@
     width: 320px;
 }
 
+.red{
+    background-color: indianred;
+}
 .green-text{
     color: seagreen;
     margin: 0px;

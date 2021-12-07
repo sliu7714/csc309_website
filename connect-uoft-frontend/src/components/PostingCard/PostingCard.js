@@ -67,6 +67,9 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
                 isAdmin ?
                     <button className="delete-button top-right-btn" onClick={() => deletePosting()}> Delete</button>
                     :
+                posting.isReported ?
+                    <button className="report-button top-right-btn red" onClick={() => alert("this post has already been reported by someone")}>Reported</button>
+                    :
                     <button className="report-button top-right-btn" onClick={() => reportPosting()}>Report </button>
             }
 
