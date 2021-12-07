@@ -1,5 +1,4 @@
 // environment configurations
-import { application } from 'express';
 import ENV from './../config.js'
 const BASE_API_URL = ENV.apiBaseUrl
 
@@ -172,14 +171,14 @@ export const updatePost = (postingInfo, postID) => {
         .then(function (res) {
             if(!res.ok){
                 console.log("Could not edit posting, status code:", res.status)
-                alert("Sorry there was a problem edit this post")
+                alert("Sorry there was a problem editing this post")
                 return;
             }
-            // created post
-            console.log('created post')
+            // updated post
+            console.log('updated post')
         })
         .catch(error => {
-            console.log("error edit post:", error);
+            console.log("error editing post:", error);
         });
 }
               
@@ -413,30 +412,6 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
-// use the one 'getUserMemberPostings' above
-// export const getMemberPosts = (setPosting) => { //DONE
-//
-//     const url = `${BASE_API_URL}/api/postings/member`;
-//
-//     fetch(url)
-//         .then(res => {
-//             if (res.status === 200) {
-//                 // return a promise that resolves with the JSON body
-//                 return res.json();
-//             } else {
-//                 alert("Failed");
-//             }
-//         })
-//         .then(json => {
-//             // the resolved promise with the JSON body
-//             setPosting({ postings: json.postings });
-//         })
-//         .catch(error => {
-//             console.log("error with getting post :", error);
-//
-//         });
-// }
-
 export const getPendingPosts = (setPosting) => { 
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/pending`;
@@ -448,7 +423,7 @@ export const getPendingPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get pending postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -458,7 +433,7 @@ export const getPendingPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get pending postings, error:",error);
         });
 }
 
@@ -473,7 +448,7 @@ export const getDeniedPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get denied postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -483,7 +458,7 @@ export const getDeniedPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log("error with getting post :", error);
+            console.log("Could not get denied postings, error:",error);
 
         });
 }
@@ -519,12 +494,11 @@ export const unreportPost = (postID) =>{
         });
 }
 
-export const deleteApplication = (postID, applicationID) => {
+export const deleteApplication = (postID) => {
     const url = `${BASE_API_URL}/api/postings/apply`;
 
     const requestBody = {
         postingID: postID,
-        applicationID: applicationID
     }
 
     const request = new Request(url, {
