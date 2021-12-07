@@ -1,20 +1,14 @@
 import "./styles.css";
-// import "./profile-popup.css";
-import {users} from '../../data/data';
 import { useState } from "react";
 import ProfilePopup from "./ProfilePopup";
-
+import {_profilePictures} from "../../data/constants"
 
 
 const UserHandle = (props) => {
     const user1 = props.user;
-    const profilePictures = props.profilePictures;
-    const _profilePicture = profilePictures[user1.profileImageIndex];
+    const _profilePicture = _profilePictures[user1.profileImageIndex];
 
     const [editProfilePopup, showEditProfilePopup] = useState(false);
-    const [editProfileImage, setEditProfileImage] = useState(false);
-
-    const user = props.user
 
     return (
         
@@ -32,7 +26,7 @@ const UserHandle = (props) => {
                     <img className="profile-user-handle-container__button__img" src={"/images/edit_icon.svg"} alt="Edit Profile Information"></img>
                 </button>
             </div>
-            <ProfilePopup profilePictures={profilePictures} trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
+            <ProfilePopup trigger={editProfilePopup} setTrigger={showEditProfilePopup} user={user1} type="Profile"/>
 
         </div>
     )

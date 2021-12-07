@@ -1,5 +1,4 @@
 // environment configurations
-import { application } from 'express';
 import ENV from './../config.js'
 const BASE_API_URL = ENV.apiBaseUrl
 
@@ -47,7 +46,7 @@ export const getUserCreatedPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting your postings")
+                // alert("Sorry there was a problem getting your postings")
                 return;
             }
             return res.json();
@@ -71,7 +70,7 @@ export const getUserMemberPostings = (setPostings) =>{
         .then(res => {
             if(!res.ok){
                 console.log("Could not get postings, status code:", res.status)
-                alert("Sorry there was a problem getting the groups that you are a member of")
+                // alert("Sorry there was a problem getting the groups that you are a member of")
                 return;
             }
             return res.json();
@@ -175,7 +174,7 @@ export const updatePost = (postingInfo, postID) => {
                 alert("Sorry there was a problem editing this post")
                 return;
             }
-            // created post
+            // updated post
             console.log('updated post')
         })
         .catch(error => {
@@ -306,7 +305,7 @@ export const getReportedPost = (setPosting) => { //DONE
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get reported postings");
+                // alert("Could not get reported postings");
             }   
         })
         .then(postingsList => {
@@ -424,7 +423,7 @@ export const getPendingPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get pending postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -434,7 +433,7 @@ export const getPendingPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get pending postings, error:",error);
         });
 }
 
@@ -449,7 +448,7 @@ export const getDeniedPosts = (setPosting) => {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Could not get postings");
+                console.log("Could not get denied postings, status:", res.status);
             }   
         })
         .then(posting => {
@@ -459,7 +458,7 @@ export const getDeniedPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log("error with getting post :", error);
+            console.log("Could not get denied postings, error:",error);
 
         });
 }

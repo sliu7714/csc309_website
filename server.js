@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV // read the environment variable (will be 'prod
 
 const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
 // const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
-const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
+const TEST_USER_ID = '61aef6a7ac247e2bc024ac92' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -678,7 +678,7 @@ app.get('/api/postings/pending', mongoChecker, authenticate, async (req, res) =>
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'PENDING'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'PENDING'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)
@@ -693,7 +693,7 @@ app.get('/api/postings/denied', mongoChecker, authenticate, async (req, res) => 
 
     // Get the postings
     try {
-        const postings = await Posting.find({applications: {$elemMatch: {_id: req.session.user, applicationStatus: 'REJECTED'}}})
+        const postings = await Posting.find({applications: {$elemMatch: {applicantID: req.session.user, applicationStatus: 'REJECTED'}}})
         //  parse posting applicants and members to include other profile info
         const parsedPostings = await addUserInfoToPosts(postings, req)
         res.send(parsedPostings)

@@ -97,7 +97,7 @@
   /* height: auto; Might need to bring back */
   /* min-width: 300px; */
   width: 100%;
-  border-style: dashed;
+  border: 1px solid lightgrey;
   border-width: 2px;
   border-radius: 20px;
 }
@@ -175,6 +175,58 @@
 }
 
 /* GROUP AND REPORTED CONTENT */
+.group{
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  margin: 8px 0px;
+  /*color: black;*/
+}
+.group-content{
+  padding-left: 10px;
+  padding-right: 10px;
+  /*background-color: #c7dec7;*/
+  /*color: white;*/
+}
+.group-content-container
+.description{
+  margin: 0px 10px 0px 0px;
+}
+.post-section-card {
+  width: 100%;
+  padding-top: 0px;
+  padding-bottom: 10px;
+}
+.post-section-card
+hr{
+  width: 90%;
+  float: left;
+  margin: 0px;
+  padding: 0px;
+  border-top: 1px solid black;
+}
+.post-section-card
+.creator-name-link{
+  font-size: 16px;
+  font-weight: 500;
+}
+.post-section-card
+.small-br{
+  display: block;
+  margin: 1px 0px;
+}
+
+.post-section-card
+a {
+  margin: 0px;
+  padding: 0px;
+}
+.post-section-card
+h2,h3,h4,h5 {
+  font-weight: 600;
+  margin: 0px;
+  padding: 0px;
+}
+
 .group-content,
 .reported-content {
   position: relative;
@@ -188,14 +240,18 @@
   padding-bottom: 20px;
   width: 42%;
 }
+.user-list,
 .groups-list {
   position: relative;
   width: 100%;
   overflow: auto;
   height: 500px;
   border-top: 1px solid black;
+  padding-right: 5px;
+  padding-left: 5px
 }
 
+.user,
 .group {
   /* min-height: 100px;
   height: auto; */
@@ -205,7 +261,7 @@
   padding-bottom: 5px;
   padding-top: 10px;
 
-  border-bottom: 2px solid gray;
+  /*border-bottom: 2px solid gray;*/
   overflow: hidden;
 }
 /* .group-image-container {
@@ -215,21 +271,23 @@
   background-color: darkseagreen;
   border-radius: 100%;
 } */
+.user-content-container,
 .group-content-container {
   min-height: 100px;
   height: auto;
   float: left;
   margin-left: 20px;
 }
-
+.user-content-container__h2,
 .group-content-container__h2 {
   margin-top: 0px;
 }
-
+.user-content-container__h3,
 .group-content-container__h3 {
   margin-top: 0px;
   margin-bottom: 5px;
 }
+.user-content-container__h4,
 .group-content-container__h4 {
   margin-top: 0px;
   margin-bottom: 5px;
@@ -251,21 +309,108 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0px;
+  margin: 20px 0px 0px 0px;
 }
 .group-member-list-member {
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin: 10px;
+  margin: 0px 6px;
   float: left;
-  height: 75px;
-  width: 75px;
+  height: 50px;
+  width: 50px;
   border: 1px solid black;
-  border-radius: 100%;
-  background-color: seagreen;
+  border-radius: 50%;
+  background-color: darkslategrey;
+  color: white;
 }
-/* .group-member-list-member:hover {
+/* .group-member-list-member:hover {*/
+/*  cursor: pointer;*/
+/*}*/
+.group-member-list-member
+.member-name-link{
+  color: white;
+  font-size: 14px;
+}
+
+.group-button-container {
+  /*margin-top: 10px;*/
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  float: right;
+}
+.reported-user-handle-container__button,
+.group-button-container__button {
+  color: white;
+  width: 105px;
+  height: 50px;
+  background-color: darkseagreen;
+  text-align: center;
+}
+
+.group-button-container__button--red {
+  background-color: #cd5c5c;
+}
+.reported-user-handle-container__button:hover,
+.group-button-container__button:hover {
   cursor: pointer;
-} */
+  /*border-color: black;*/
+  /*border-style: solid;*/
+  /*border-width: 2px;*/
+  box-shadow: 2px 2px 1px darkgray;
+}
+
+.reported-user-handle-container {
+  position: relative;
+  width: 100%;
+  height: 150px;
+  border-bottom: 1px solid grey;
+}
+.reported-user-picture-container {
+  width: 50px;
+  float: left;
+}
+
+.reported-user-picture-container__image {
+  margin: 10px;
+  padding: 8px;
+  background-color: darkseagreen;
+  border-radius: 100%;
+  border-width: 2px;
+  border-style: double;
+  width: 100px;
+  height: 100px;
+}
+
+.reported-user-handle-infotmation-container {
+  text-align: left;
+  width: 400px;
+  /*float: left;*/
+  margin-left: 150px;
+  padding-top: 10px;
+}
+.reported-user-handle-infotmation-container__h1 {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
+.reported-user-handle-infotmation-container__h2 {
+  margin: 0px;
+}
+.reported-user-handle-infotmation-container__h3 {
+  margin: 0px;
+  color: rgb(65, 65, 65);
+}
+.reported-user-handle-button-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*float: right;*/
+  /*height: 100%;*/
+  width: 125px;
+}

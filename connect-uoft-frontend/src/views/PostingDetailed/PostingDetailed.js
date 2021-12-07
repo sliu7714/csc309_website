@@ -1,6 +1,6 @@
 // note:  this is the posting *view* not posting component
 import {useParams} from "react-router";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import PostingCard from "../../components/PostingCard/PostingCard";
 import "./styles.css"
 import {getPostByID} from "../../actions/postings";
@@ -13,16 +13,16 @@ const PostingDetailed = ({isAdmin}) =>{
     const [posting, setPosting] = useState({})
     const [foundPost, setFoundPost] = useState(false)
 
-    const getPosting = () =>{
+    const getPosting = useCallback (() =>{
         // fetch post info from backend
         getPostByID(id, setPosting, setFoundPost)
-    }
+    }, [id, setPosting, setFoundPost])
 
     useEffect(() => {
         // first call to get initial info about posting from backend
         getPosting()
 
-    }, [])
+    }, [getPosting])
 
 
     if (!foundPost){

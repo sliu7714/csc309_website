@@ -25,7 +25,7 @@ const Popup = ({trigger, setTrigger, isEditing, posting, updatePostings }) => {
             const postingCopy = Object.assign({}, posting)
             setPostingInfo(postingCopy)
         }
-    }, [posting])
+    }, [posting, isEditing])
 
     // the current text in the tag input box
     const [inputTagText, setInputTagText] = useState("")
