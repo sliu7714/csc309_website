@@ -1,4 +1,4 @@
-// environment configutations
+// environment configurations
 import ENV from './../config.js'
 const BASE_API_URL = ENV.apiBaseUrl
 
@@ -216,8 +216,7 @@ export const deletePost = (postID) => {
         });
 }        
 
-export const applyPost = ({postID, message}) => { //DONE
-    // the URL for the request
+export const applyPost = (postID, message) => { //DONE
     const url = `${BASE_API_URL}/api/postings`;
 
     const requestBody = {
@@ -254,7 +253,6 @@ export const applyPost = ({postID, message}) => { //DONE
 }
 
 export const reportPost = (postID) => { // DONE
-    // the URL for the request
     const url = `${BASE_API_URL}/api/postings/report`;
 
     const requestBody = {
@@ -290,9 +288,7 @@ export const reportPost = (postID) => { // DONE
         });
 }
 
-
 export const getReportedPost = (setPosting) => { //DONE
-    // the URL for the request
     const url = `${BASE_API_URL}/api/postings/report`;
 
     // Since this is a GET request, simply call fetch on the URL
@@ -380,42 +376,29 @@ export const rejectApplicantPost = (applicantID, postID) =>{
         });
 }
 
+export const getPostByID = (postID, setPosting, setFoundPost) => {
+    const url = `${BASE_API_URL}/api/postings/get-by-id/${postID}`;
 
-export const getPostByID = (postID, setPosting) => {
-
-    const url = `${BASE_API_URL}/api/postings/post`;
-
-    const requestBody = {
-        postingID: postID
-    }
-
-    const request = new Request(url, {
-        method: "get",
-        body: JSON.stringify(requestBody),
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    });
-
-    fetch(request)
+    fetch(url)
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
                 return res.json();
             } else {
-                alert("Failed");
+                console.log("Failed to get post ", postID, " response code: ", res.status)
+                return;
             }   
         })
         .then(posting => {
             // the resolved promise with the JSON body
             if(posting){
                 setPosting(posting);
+                setFoundPost(true)
             }
 
         })
         .catch(error => {
-            console.log(error);
+            console.log("error with getting post :", error);
         });
 }
 
@@ -489,6 +472,7 @@ export const getDeniedPosts = (setPosting) => {
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("error with getting post :", error);
+
         });
 }

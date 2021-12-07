@@ -1,7 +1,7 @@
 import { useState, useEffect} from "react";
 import './styles.css'
 import {getProfileInfo} from "../../actions/user";
-import { users } from "../../data/data";
+// import { users } from "../../data/data";
 import Bio from "../../components/ProfileSection/Bio";
 import UserHandle from "../../components/ProfileSection/UserHandle";
 import Courses  from "../../components/ProfileSection/Courses";
@@ -10,15 +10,10 @@ import ReportedGroups from "../../components/ProfileSection/ReportedGroups";
 import ReportedUsers from "../../components/ProfileSection/ReportedUsers";
 import Stats from "../../components/ProfileSection/Stats";
 
-
-// import profilePic1 from "/images/Timmy_Turner1.png";
-// import profilePic2 from "/images/profile-pictures/chef.svg";
-// import profilePic3 from "/images/profile-pictures/fish.svg";
 const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profile-pictures/chef.svg", "/images/profile-pictures/fish.svg"]
 
 
-const Profile = ({userID, isAdmin}) => {
-    // const user = users[userID]
+const Profile = ({isAdmin, callLogout}) => {
     const [user, setUser] = useState()
 
     useEffect(() =>{
@@ -35,14 +30,15 @@ const Profile = ({userID, isAdmin}) => {
     }
     return(
         <div id="profile_page">
+                <div id='logout-btn-container'>
+                    <button className='logout-btn' onClick={callLogout}>Logout</button>
+                </div>
                 <div className="user-container">
                     <UserHandle profilePictures={_profilePictures} user={user}/>
-
                 </div>
                 <div className="no-group-container">
                     <div id='column1'>
                         <Bio user={user}/>
-                        {/* <Courses courses={_courses}/> */}
                     </div>
                     <div id='column2'>
                         <Courses user={user}/>

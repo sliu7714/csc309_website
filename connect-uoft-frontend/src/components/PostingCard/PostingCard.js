@@ -2,10 +2,9 @@ import React from "react";
 import "./styles.css"
 import Tag from "../SearchTag/Tag";
 import CommentSection from "./CommentSection";
-import ApplicantSection from "./ApplicantsSection";
+import ApplicantsSection from "./ApplicantsSection";
 import Popup from "../EditCreatePostPopup/Popup";
 import {useState} from "react";
-import ApplicantsSection from "./ApplicantsSection";
 import ApplySection from "./ApplySection";
 import MemberListSection from "./MemberListSection";
 import { deletePost, reportPost } from "../../actions/postings";
@@ -88,7 +87,7 @@ const PostingCard = ({posting, updatePostings, isCreator, isMember, isAdmin}) =>
 
             {
                 isCreator ?
-                    <ApplicantSection posting={posting} updatePostings={updatePostings}/>
+                    <ApplicantsSection posting={posting} updatePostings={updatePostings}/>
                     :
                 !isMember ?
                     <ApplySection posting={posting} updatePostings={updatePostings}/>

@@ -7,7 +7,7 @@ const env = process.env.NODE_ENV // read the environment variable (will be 'prod
 
 // const USE_TEST_USER = env !== 'production' && process.env.TEST_USER_ON // option to turn on the test user.
 // const USE_TEST_USER = true; //TODO: COMMENT OUT IF PUSHING
-const TEST_USER_ID = '61ad3f5f4cfb5b410c2ecd0a' // the id of our test user - username: test2 password: pass
+const TEST_USER_ID = '61ad4286130ef012341ffcfa' // the id of our test user - username: test2 password: pass
 
 //setup for path macro
 const path = require('path')
@@ -183,8 +183,8 @@ const addUserInfoToPosts = async (postingList, req) =>{
             return({...application, applicantInfo})
         }));
         // check if the current user is a
-        const isCreator = await checkIsPostingCreator(req.session.username, posting._id)
-        const isMember = await checkIsPostingMember(req.session.username, posting._id)
+        const isCreator = await checkIsPostingCreator(req.session.user, posting._id)
+        const isMember = await checkIsPostingMember(req.session.user, posting._id)
         // note : posting has some extra info from mongo so the actual posting is posting._doc
         return {...posting._doc, creatorInfo, memberInfo, applicantInfo, isCreator, isMember}
     }));
@@ -376,24 +376,30 @@ app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) 
 
 // a GET route to get a specific posting by id
 // note the id is part of the url
-app.get('api/postings/:pid', mongoChecker, authenticate, async (req, res) => {
+// add the /get-by-id/ to prevent the other paths (ex - /api/postings/create) from being directed to this route
+app.get('/api/postings/get-by-id/:pid', mongoChecker, authenticate, async (req, res) => {
+
+    if(!ObjectID.isValid(req.params.pid)){
+        console.log('cant find post with id: ', req.params.pid)
+        res.status(404).send("Cannot find resource, Invalid id.")
+    }
 
     try {
         const posting = await Posting.findById(req.params.pid)
         if(!posting){
             res.status(404).send("post not found")
         }
-        const parsedPosting = await addUserInfoToPosts([posting])
+        const parsedPosting = await addUserInfoToPosts([posting], req)
         res.send(parsedPosting[0])
     } catch(error) {
-        console.lof(error)
+        console.log(error)
         res.status(500).send("Internal Server Error")
     }
 });
 
 // a GET route to get all posts a user has created
 app.get('/api/postings/created', mongoChecker, authenticate, async (req, res) => {
-
+    console.log('created posts')
     // Get the postings
     try {
         const postings = await Posting.find({creatorID: ObjectID(req.session.user)})
@@ -607,7 +613,8 @@ app.put("/api/user/modify", mongoChecker, authenticate, async(req, res)=>{
 		username: req.body.username,
         password: req.body.password,
         bio: req.body.bio,
-        profileImageIndex: req.body.profileImageIndex
+        profileImageIndex: req.body.profileImageIndex,
+        courses: req.body.courses
 	}
     
     try {
