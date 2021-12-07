@@ -2,23 +2,24 @@ import DropdownArrow from "../DropdownArrow/DropdownArrow";
 import {useState} from "react";
 import ApplicantListItem from "./ApplicantListItem";
 import {PENDING_APPLICATION} from "../../data/constants";
+import { rejectApplicantPost, acceptApplicantPost } from "../../actions/postings";
 
 
 const ApplicantSection = ({posting, updatePostings}) => {
 
     const [showApplicants, setShowApplicants] = useState(false)
 
-    const acceptApplicant =(applicantID) =>{
+    const acceptApplicant =(applicantID, applicationID) =>{
         // TODO connect to backend
-        console.log('accept', applicantID)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        console.log('accept', applicantID, posting._id, applicantID)
+        acceptApplicantPost(applicantID, posting._id)
         updatePostings()
     }
 
-    const denyApplicant = (applicantID) =>{
+    const denyApplicant = (applicantID, applicationID) =>{
         // TODO connect to backend
         console.log('deny', applicantID)
-        // now need to call function in parent to update postings data for frontend to reflect changes
+        rejectApplicantPost(applicantID, posting._id, applicationID)
         updatePostings()
     }
 
@@ -30,15 +31,15 @@ const ApplicantSection = ({posting, updatePostings}) => {
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
             { showApplicants ?
                 posting.applicantsInfo  ?
-                    posting.applicantsInfo.map((applicant) =>
-                        applicant.applicationStatus === PENDING_APPLICATION ?
-                        <ApplicantListItem applicant={applicant}
+                    posting.applicantsInfo.map((application) =>
+                        application.applicationStatus === PENDING_APPLICATION ?
+                        <ApplicantListItem application={application}
                                            acceptApplicant={acceptApplicant}
                                            denyApplicant={denyApplicant}
-                                           key={applicant.id}
+                                           key={application._id}
                         />
                         :
-                        null
+                            null
                     )
                     :
                     <div className="grey-text posting-text">

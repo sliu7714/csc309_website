@@ -1,30 +1,6 @@
-// environment configutations
+// environment configurations
 import ENV from './../config.js'
-import {postings} from "../data/data";
 const BASE_API_URL = ENV.apiBaseUrl
-
-// gets all the postings
-export const getPostings = (setPosting) => {
-    const url = `${BASE_API_URL}/api/postings`;
-
-    fetch(url)
-        .then(res => {
-            if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                return res.json();
-            } else {
-                alert("Could not get postings");
-            }   
-        })
-        .then(json => {
-            if(json){
-                setPosting(postings);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
-};
 
 // search posts by tags
 export const SearchPostings = (tags, setPostings) =>{
@@ -131,13 +107,44 @@ export const addPosting = (postingInfo) => {
                 return;
             }
             // created post
-            console.log('created post')
+            console.log('Created post')
         })
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
 
+export const commentPost = (content, postID) => {
+    const url = `${BASE_API_URL}/api/postings/comment`;
+
+    const commentInfo = {
+        content: content,
+        postingID: postID
+    }
+
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify(commentInfo),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            if(!res.ok){
+                console.log("Could not create comment, status code:", res.status)
+                alert("Sorry there was problem a commenting on this post")
+                return;
+            }
+            // created post
+            console.log('comment created')
+        })
+        .catch(error => {
+            console.log("error commenting on post:", error);
+        });
+}
 
 export const updatePost = (postingInfo, postID) => {
     const url = `${BASE_API_URL}/api/postings`;
@@ -169,7 +176,7 @@ export const updatePost = (postingInfo, postID) => {
         .catch(error => {
             console.log("error creating post:", error);
         });
-};
+}
               
 // deletes the post given by postID
 export const deletePost = (postID) => {
@@ -207,20 +214,19 @@ export const deletePost = (postID) => {
         .catch(error => {
             console.log(error);
         });
-};           
+}        
 
 export const applyPost = (postID, message) => { //DONE
-    // the URL for the request
-    const url = `${BASE_API_URL}/api/postings`;
+    const url = `${BASE_API_URL}/api/postings/apply`;
 
     const requestBody = {
-        posting_id : postID,
+        postingID : postID,
         message : message
     }
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "post",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -244,10 +250,9 @@ export const applyPost = (postID, message) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
 export const reportPost = (postID) => { // DONE
-    // the URL for the request
     const url = `${BASE_API_URL}/api/postings/report`;
 
     const requestBody = {
@@ -256,7 +261,7 @@ export const reportPost = (postID) => { // DONE
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -281,11 +286,9 @@ export const reportPost = (postID) => { // DONE
         .catch(error => {
             console.log(error);
         });
-};
-
+}
 
 export const getReportedPost = (setPosting) => { //DONE
-    // the URL for the request
     const url = `${BASE_API_URL}/api/postings/report`;
 
     // Since this is a GET request, simply call fetch on the URL
@@ -305,17 +308,21 @@ export const getReportedPost = (setPosting) => { //DONE
         .catch(error => {
             console.log(error);
         });
-};
+}
 
-export const updateApplicantPost = (datum) => {
+// a put to accept an applicant
+export const acceptApplicantPost = (applicantID, postID) =>{
     // the URL for the request
-    const url = `${BASE_API_URL}/api/postings/applicant`;
+    const url = `${BASE_API_URL}/api/postings/accept`;
 
-    if (datum.newStatus == true) {}
+    const requestBody = {
+        applicantID: applicantID,
+        postingID: postID
+    }
 
     const request = new Request(url, {
-        method: "patch",
-        body: JSON.stringify(datum),
+        method: "put",
+        body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -334,19 +341,20 @@ export const updateApplicantPost = (datum) => {
         .catch(error => {
             console.log(error);
         });
-};
+}
 
-
-export const getPostByID = (postID, setPosting) => {
-
-    const url = `${BASE_API_URL}/api/postings/post`;
+// a patch to reject an applicant
+export const rejectApplicantPost = (applicantID, postID) =>{
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/reject`;
 
     const requestBody = {
-        posting_id: postID
+        applicantID: applicantID,
+        postingID: postID
     }
 
     const request = new Request(url, {
-        method: "get",
+        method: "patch",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -358,22 +366,41 @@ export const getPostByID = (postID, setPosting) => {
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                return res.json();
+                alert("Updated applicant")
             } else {
                 alert("Failed");
             }   
         })
-        .then(json => {
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const getPostByID = (postID, setPosting, setFoundPost) => {
+    const url = `${BASE_API_URL}/api/postings/get-by-id/${postID}`;
+
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                console.log("Failed to get post ", postID, " response code: ", res.status)
+                return;
+            }   
+        })
+        .then(posting => {
             // the resolved promise with the JSON body
-            if(json){
-                setPosting(json.postings);
+            if(posting){
+                setPosting(posting);
+                setFoundPost(true)
             }
 
         })
         .catch(error => {
-            console.log(error);
+            console.log("error with getting post :", error);
         });
-};
+}
 
 export const getMemberPosts = (setPosting) => { //DONE
 
@@ -393,6 +420,7 @@ export const getMemberPosts = (setPosting) => { //DONE
             setPosting({ postings: json.postings });
         })
         .catch(error => {
-            console.log(error);
+            console.log("error with getting post :", error);
+
         });
-};
+}

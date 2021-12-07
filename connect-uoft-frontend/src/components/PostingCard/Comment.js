@@ -7,7 +7,7 @@ const Comment = ({comment}) =>{
         <div >
             <hr className="hr-dotted"/>
             <div className="comment">
-                <p className="green-text">{comment.creator.name}</p>
+                <p className="green-text">{comment.creatorInfo.name}</p>
                 {comment.content}
             </div>
         </div>

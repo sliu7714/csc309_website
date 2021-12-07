@@ -14,7 +14,7 @@ import Stats from "../../components/ProfileSection/Stats";
 const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profile-pictures/chef.svg", "/images/profile-pictures/fish.svg"]
 
 
-const Profile = ({userID, isAdmin}) => {
+const Profile = ({isAdmin, callLogout}) => {
     const [user, setUser] = useState()
     const [postings, setPostings] = useState([])
 
@@ -36,6 +36,9 @@ const Profile = ({userID, isAdmin}) => {
 
     return(
         <div id="profile_page">
+                <div id='logout-btn-container'>
+                    <button className='logout-btn' onClick={callLogout}>Logout</button>
+                </div>
                 <div className="user-container">
                     <UserHandle profilePictures={_profilePictures} user={user}/>
                 </div>
