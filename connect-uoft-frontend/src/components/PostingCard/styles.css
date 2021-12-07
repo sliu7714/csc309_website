@@ -89,6 +89,8 @@
 }
 .applicant-name{
     margin-left: 5px;
+    margin-top: 8px;
+    margin-bottom: 0px;
 }
 .application-msg{
     margin-left: 10px;
@@ -143,7 +145,7 @@
     border-radius: 40px;
     height: 35px;
     width: 35px;
-    margin: 8px 4px;
+    margin: 2px 4px;
 }
 .member .profile-icon{
     margin-top: 6px;
