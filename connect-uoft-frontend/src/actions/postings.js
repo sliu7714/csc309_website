@@ -412,30 +412,6 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
         });
 }
 
-// use the one 'getUserMemberPostings' above
-// export const getMemberPosts = (setPosting) => { //DONE
-//
-//     const url = `${BASE_API_URL}/api/postings/member`;
-//
-//     fetch(url)
-//         .then(res => {
-//             if (res.status === 200) {
-//                 // return a promise that resolves with the JSON body
-//                 return res.json();
-//             } else {
-//                 alert("Failed");
-//             }
-//         })
-//         .then(json => {
-//             // the resolved promise with the JSON body
-//             setPosting({ postings: json.postings });
-//         })
-//         .catch(error => {
-//             console.log("error with getting post :", error);
-//
-//         });
-// }
-
 export const getPendingPosts = (setPosting) => { 
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/pending`;
