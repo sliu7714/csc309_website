@@ -113,18 +113,20 @@ export const addPosting = (postingInfo) => {
         });
 }
 
+
 // leave a comment on a posting
 export const commentPost = (content, postID) => {
+
     const url = `${BASE_API_URL}/api/postings/comment`;
 
-    const commentInfo = {
+    const requestBody = {
         content: content,
         postingID: postID
     }
 
     const request = new Request(url, {
         method: "post",
-        body: JSON.stringify(commentInfo),
+        body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
             "Content-Type": "application/json"
@@ -138,13 +140,14 @@ export const commentPost = (content, postID) => {
                 alert("Sorry there was problem a commenting on this post")
                 return;
             }
-            // created post
+            // created comment
             console.log('comment created')
         })
         .catch(error => {
             console.log("error commenting on post:", error);
         });
 }
+
 
 // update a specific post with postingInfo
 export const updatePost = (postingInfo, postID) => {
@@ -469,3 +472,54 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
 //
 //         });
 // }
+
+export const getPendingPosts = (setPosting) => { 
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/pending`;
+
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Could not get postings");
+            }   
+        })
+        .then(posting => {
+            // the resolved promise with the JSON body
+            if(posting){
+                setPosting(posting);
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const getDeniedPosts = (setPosting) => { 
+    // the URL for the request
+    const url = `${BASE_API_URL}/api/postings/denied`;
+
+    // Since this is a GET request, simply call fetch on the URL
+    fetch(url)
+        .then(res => {
+            if (res.status === 200) {
+                // return a promise that resolves with the JSON body
+                return res.json();
+            } else {
+                alert("Could not get postings");
+            }   
+        })
+        .then(posting => {
+            // the resolved promise with the JSON body
+            if(posting){
+                setPosting(posting);
+            }
+        })
+        .catch(error => {
+            console.log("error with getting post :", error);
+
+        });
+}
