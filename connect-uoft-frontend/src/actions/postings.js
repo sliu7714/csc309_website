@@ -508,7 +508,7 @@ export const unreportPost = (postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Updated applicant")
+                alert("Unreported post")
             } else {
                 alert("Failed");
             }   
