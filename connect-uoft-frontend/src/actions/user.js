@@ -198,3 +198,116 @@ export const setProfileInfo = (name, email, username, password, bio, profileImag
             console.log(error);
         });
 }
+
+export const getReportedUsers = (setUsers) => {
+
+    fetch(`${BASE_API_URL}/api/user/report`)
+        .then((res) =>{
+            if(!res.ok){
+                console.log("could not find users ", res.status)
+                return;
+            }
+            return res.json()
+        })
+        .then((userList) =>{
+            if (userList){
+                console.log(userList)
+                setUsers(userList)
+            }
+        })
+        .catch((err) =>{
+            console.log("error with getting profile info: ", err)
+        });
+}
+
+export const getReportedUsers = (userID) => {
+
+    fetch(`${BASE_API_URL}/api/user/report`)
+        .then((res) =>{
+            if(!res.ok){
+                console.log("could not find users ", res.status)
+                return;
+            }
+            return res.json()
+        })
+        .then((userList) =>{
+            if (userList){
+                console.log(userList)
+                setUsers(userList)
+            }
+        })
+        .catch((err) =>{
+            console.log("error with getting profile info: ", err)
+        });
+}
+
+export const reportUser = (userID) => {
+
+    const url = `${BASE_API_URL}/api/user/report`;
+    
+    const requestBody = {
+        userID : userID
+    }
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If student was added successfully, tell the user.
+                alert("Deleted posting successfully")
+            } else {
+                // If server couldn't add the student, tell the user.
+                alert("Could not delete posting")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const unreportUser = (userID) => {
+    const url = `${BASE_API_URL}/api/user/unreport`;
+    
+    const requestBody = {
+        userID : userID
+    }
+
+    // Create our request constructor with all the parameters we need
+    const request = new Request(url, {
+        method: "post",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    // Send the request with fetch()
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If student was added successfully, tell the user.
+                alert("Deleted posting successfully")
+            } else {
+                // If server couldn't add the student, tell the user.
+                alert("Could not delete posting")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
