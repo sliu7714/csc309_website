@@ -116,14 +116,14 @@ export const addPosting = (postingInfo) => {
 
 export const commentPost = (content, postID) => {
     const url = `${BASE_API_URL}/api/postings/comment`;
-    console.log(content, postID)
+
     const commentInfo = {
         content: content,
         postingID: postID
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "post",
         body: JSON.stringify(commentInfo),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -135,7 +135,7 @@ export const commentPost = (content, postID) => {
         .then(function (res) {
             if(!res.ok){
                 console.log("Could not create comment, status code:", res.status)
-                alert("Sorry there was a commenting on this post")
+                alert("Sorry there was problem a commenting on this post")
                 return;
             }
             // created post
@@ -217,7 +217,7 @@ export const deletePost = (postID) => {
 }        
 
 export const applyPost = (postID, message) => { //DONE
-    const url = `${BASE_API_URL}/api/postings`;
+    const url = `${BASE_API_URL}/api/postings/apply`;
 
     const requestBody = {
         postingID : postID,
@@ -226,7 +226,7 @@ export const applyPost = (postID, message) => { //DONE
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "post",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -261,7 +261,7 @@ export const reportPost = (postID) => { // DONE
 
     // Create our request constructor with all the parameters we need
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",
@@ -310,7 +310,7 @@ export const getReportedPost = (setPosting) => { //DONE
         });
 }
 
-// a patch to accept an applicant
+// a put to accept an applicant
 export const acceptApplicantPost = (applicantID, postID) =>{
     // the URL for the request
     const url = `${BASE_API_URL}/api/postings/accept`;
@@ -321,7 +321,7 @@ export const acceptApplicantPost = (applicantID, postID) =>{
     }
 
     const request = new Request(url, {
-        method: "patch",
+        method: "put",
         body: JSON.stringify(requestBody),
         headers: {
             Accept: "application/json, text/plain, */*",

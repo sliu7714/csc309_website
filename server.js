@@ -16,6 +16,7 @@ const express = require("express")
 // starting the express server
 const app = express()
 
+// NOTE: it seems like PATCH requests are acting weird with cors?
 // enable CORS if in development, for React local development server to connect to the web server.
 const cors = require('cors')
 if (env !== 'production') { app.use(cors()) }
@@ -120,6 +121,29 @@ const checkIsPostingMember = (userID, postingID) =>{
 
 }
 
+// check if the current user has a application in posting
+// make sure to await for the return value of this
+const checkHasApplied = async (userID, postingID) =>{
+    return Posting.findById(postingID)
+        .then(posting =>{
+            if(!posting){
+                // console.log(`checkIsApplied: did not find posting ${postingID}`)
+                return false
+            }
+            if (posting.applications){
+                const matchingApplicantIDs = posting.applications.filter(application => application.applicantID == userID)
+                return matchingApplicantIDs.length > 0
+            }
+            return false;
+
+        })
+        .catch(err =>{
+            console.log(err)
+            return false
+        })
+
+}
+
 // check if the current user is an admin user
 // make sure to await for the return value of this
 const checkIsAdmin = async (userID) =>{
@@ -167,31 +191,51 @@ const getProfileSummary = async (id) =>{
 // add profile info the the creator, applicant, and member sections of the posts
 const addUserInfoToPosts = async (postingList, req) =>{
     return Promise.all(postingList.map(async (posting) => {
-        // get creator info
-        const creatorInfo = await getProfileSummary(posting.creatorID)
-        // get member info
-        // note not sure why indexing into members works to get id but using map or for...in... the member returns value of 0?
-        // NOTE: might run into the same problem with applicants id below TODO: make sure to fix if this is the case
-        const memberInfo = []
-        for (let i=0 ; i< posting.members.length; i++){
-            const info = await getProfileSummary(posting.members[i])
-            memberInfo.push(info)
-        }
-        // get applicant info
-        const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
-            const applicantInfo = await getProfileSummary(application.applicantID)
-            return({...application._doc, applicantInfo})
-        }));
-        // add userinfo to comments
-        const commentsInfo = await Promise.all(posting.comments.map(async (comment) =>{
-            const creatorInfo = await getProfileSummary(comment.creatorID)
-            return({...comment._doc, creatorInfo})
-        }));
-        // check if the current user is the creator or a memeber
+        // check if the current user is the creator or a member or admin
         const isCreator = await checkIsPostingCreator(req.session.user, posting._id)
         const isMember = await checkIsPostingMember(req.session.user, posting._id)
+        const isAdmin = await checkIsAdmin(req.session.user)
+        // check if current user has applied to this post
+        const hasApplied  = await checkHasApplied(req.session.user, posting._id)
+
+        // get creator info
+        const creatorInfo = await getProfileSummary(posting.creatorID)
+
         // note : posting has some extra info from mongo so the actual posting is posting._doc
-        return {...posting._doc, creatorInfo, memberInfo, applicantInfo, commentsInfo, isCreator, isMember}
+        const postingInfo = {...posting._doc, isCreator, isMember, hasApplied, creatorInfo}
+
+        if(isCreator || isMember || isAdmin){
+            // get member info
+            // note not sure why indexing into members works to get id but using map or for...in... the member returns value of 0?
+            // NOTE: might run into the same problem with applicants id below TODO: make sure to fix if this is the case
+            const memberInfo = []
+            for (let i=0 ; i< posting.members.length; i++){
+                const info = await getProfileSummary(posting.members[i])
+                memberInfo.push(info)
+            }
+            postingInfo.memberInfo = memberInfo
+            // add userinfo to comments
+            const commentsInfo = await Promise.all(posting.comments.map(async (comment) =>{
+                const creatorInfo = await getProfileSummary(comment.creatorID)
+                return({...comment._doc, creatorInfo})
+            }));
+            postingInfo.commentsInfo = commentsInfo
+        }
+        if (isCreator || isAdmin){
+            // get applicant info
+            const applicantInfo = await Promise.all(posting.applications.map(async (application) =>{
+                const applicantInfo = await getProfileSummary(application.applicantID)
+                return({...application._doc, applicantInfo})
+            }));
+            postingInfo.applicantInfo = applicantInfo
+        }
+        if (hasApplied){
+            // get application info
+            const application = posting.applications.filter(application => application.applicantID == req.session.user)[0]
+            postingInfo.application = application
+        }
+
+        return postingInfo
     }));
 }
 
@@ -368,8 +412,8 @@ app.delete('/api/postings', mongoChecker, authenticate, async (req, res) => {
     }
 });
 
-// PATCH route to add a comment to a specific post
-app.patch('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
+// a POST rout to leave a comment on a post, creator,member, or admin only
+app.post('/api/postings/comment', mongoChecker, authenticate, async (req, res) => {
 
     // only creator or admin or member can delete post
     const isCreator = checkIsPostingCreator(req.session.user, req.postingID)
@@ -480,13 +524,8 @@ app.post('/api/postings/search', mongoChecker, authenticate, async (req, res) =>
 
 
 // PATCH to update the applicants
-app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
-
-    // only creator can update applicant status
-    const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
-    if (! canEditPost ){
-        res.status(403).send("Cannot edit a post that a user has not created")
-    }
+// POST to create application to a post
+app.post('/api/postings/apply', mongoChecker, authenticate, async (req, res) => {
 
     const applicant = {
         applicantID: req.session.user,
@@ -496,16 +535,18 @@ app.patch('/api/postings', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting
     try {
-        const postings = await Posting.updateOne({ _id: req.body.postingID }, { $push: {applicants: applicant }})
-        //res.send(postings) 
+        console.log('apply', req.body.postingID)
+        const retval = await Posting.findOneAndUpdate({ _id: req.body.postingID }, { $push: {applications: applicant }})
+        //res.send(postings)
+        res.send(retval)
     } catch(error) {
         console.log(error)
         res.status(500).send("Internal Server Error")
     }
 });
 
-// a PATCH to accept a applicant
-app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
+// a PUT to accept a applicant
+app.put('/api/postings/accept', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update applicant status
     const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
@@ -525,8 +566,8 @@ app.patch('/api/postings/accept', mongoChecker, authenticate, async (req, res) =
     }
 });
 
-// a PATCH to decline a applicant
-app.patch('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
+// a PUT to decline a applicant
+app.put('/api/postings/decline', mongoChecker, authenticate, async (req, res) => {
 
     // only creator can update applicant status
     const canEditPost = await checkIsPostingCreator(req.session.user, req.postingID)
@@ -560,7 +601,7 @@ app.get('/api/postings/report', mongoChecker, authenticate, async (req, res) => 
 });
 
 // report a specific post
-app.patch('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
+app.put('/api/postings/report', mongoChecker, authenticate, async (req, res) => {
 
     // Update the posting
     try {
