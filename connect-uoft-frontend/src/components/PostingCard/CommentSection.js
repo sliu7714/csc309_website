@@ -10,10 +10,8 @@ const CommentSection = ({posting, updatePostings}) => {
     const [newCommentText, setNewCommentText] = useState("")
 
     const createComment = () => {
-        // TODO: backend connect
-        console.log('comment', newCommentText)
-        // now need to call function in parent to update postings data for frontend to reflect changes
         commentPost(newCommentText, posting._id)
+        // now need to call function in parent to update postings data for frontend to reflect changes
         updatePostings()
     }
 
@@ -23,13 +21,13 @@ const CommentSection = ({posting, updatePostings}) => {
             <span className="posting-text light-bold" >Comments</span>
             <DropdownArrow show={showComments} setShow={setShowComments}/>
             {
-                posting.comments  && showComments ?
-                    posting.comments.length < 1 ?
+                posting.commentsInfo  && showComments ?
+                    posting.commentsInfo.length < 1 ?
                         <div className="grey-text posting-text">
                             no comments
                         </div>
                         :
-                        posting.comments.map(comment => <Comment key={comment.id} comment={comment}/>)
+                        posting.commentsInfo.map(comment => <Comment key={comment._id} comment={comment}/>)
                         :
                         null
             }
