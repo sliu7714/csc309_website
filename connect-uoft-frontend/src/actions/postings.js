@@ -172,14 +172,14 @@ export const updatePost = (postingInfo, postID) => {
         .then(function (res) {
             if(!res.ok){
                 console.log("Could not edit posting, status code:", res.status)
-                alert("Sorry there was a problem edit this post")
+                alert("Sorry there was a problem editing this post")
                 return;
             }
             // created post
-            console.log('created post')
+            console.log('updated post')
         })
         .catch(error => {
-            console.log("error edit post:", error);
+            console.log("error editing post:", error);
         });
 }
               
@@ -412,30 +412,6 @@ export const getPostByID = (postID, setPosting, setFoundPost) => {
             console.log("error with getting post :", error);
         });
 }
-
-// use the one 'getUserMemberPostings' above
-// export const getMemberPosts = (setPosting) => { //DONE
-//
-//     const url = `${BASE_API_URL}/api/postings/member`;
-//
-//     fetch(url)
-//         .then(res => {
-//             if (res.status === 200) {
-//                 // return a promise that resolves with the JSON body
-//                 return res.json();
-//             } else {
-//                 alert("Failed");
-//             }
-//         })
-//         .then(json => {
-//             // the resolved promise with the JSON body
-//             setPosting({ postings: json.postings });
-//         })
-//         .catch(error => {
-//             console.log("error with getting post :", error);
-//
-//         });
-// }
 
 export const getPendingPosts = (setPosting) => { 
     // the URL for the request

@@ -263,10 +263,10 @@ export const reportUser = (userID) => {
             // Usually check the error codes to see what happened.
             if (res.status === 200) {
                 // If student was added successfully, tell the user.
-                alert("Deleted posting successfully")
+                alert("reported user successfully")
             } else {
                 // If server couldn't add the student, tell the user.
-                alert("Could not delete posting")
+                alert("Could not report user")
             }
         })
         .catch(error => {
@@ -302,6 +302,39 @@ export const unreportUser = (userID) => {
             } else {
                 // If server couldn't add the student, tell the user.
                 alert("Could not delete posting")
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+export const deleteUser = (userID) => {
+    const url = `${BASE_API_URL}/api/user`;
+
+    const requestBody = {
+        userID: userID,
+    }
+
+    const request = new Request(url, {
+        method: "delete",
+        body: JSON.stringify(requestBody),
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+        }
+    });
+
+    fetch(request)
+        .then(function (res) {
+            // Handle response we get from the API.
+            // Usually check the error codes to see what happened.
+            if (res.status === 200) {
+                // If application deleted, tell the user.
+                alert("Deleted user successfully")
+            } else {
+                // If server couldn't delete the application
+                alert("Could not delete user")
             }
         })
         .catch(error => {
