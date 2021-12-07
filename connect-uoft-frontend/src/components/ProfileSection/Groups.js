@@ -2,26 +2,19 @@ import "./styles.css"
 import { useState, useEffect} from "react";
 
 import { getUserCreatedPostings, getUserMemberPostings } from "../../actions/postings";
-import { getProfileInfo } from "../../actions/user";
+import { getProfileInfoNotSignedIn } from "../../actions/user";
 
-// const getJoinedGroups = () => {
-//     // TODO
-//     return [];
-// }
-// const addAllJoinedGroups = () => {
-//     const joinedGroups = getJoinedGroups();
-//     for (const group in joinedGroups){
-//         addJoinedGroupToDOM(group.title, group.creator, group.description, group.link, group.members);
-//     }
-// }
-// // 
 
 const Groups = (props) => {
 
     const [postings, setPostings] = useState([])
-    
+    const [member, setMember] = useState([])
     const getUserPostings = () => {
         getUserMemberPostings(setPostings)
+    }
+     const getProfile = (toGetMember) => {
+        getProfileInfoNotSignedIn(toGetMember, setMember)
+        return member.name
     }
     // GET JOINED POSTINGS
     useEffect(() =>{
@@ -43,9 +36,8 @@ const Groups = (props) => {
                                                     </div>
                                                     <div className="group-member-list">
                                                         <h2 className="group-content-container__h2">Members</h2>
-                                                    {/* {post.members.map(member => <div>
-                                                                                    <div className="group-member-list-member" title={"User.findById(member).name"}></div>
-                                                                                </div>)} */}
+                                                    {post.members.map(member =>  <div className="group-member-list-member" title={(getProfile(member))}></div> )}
+
                                                     </div>
                                                 </div>
                                             </div>)}
@@ -54,88 +46,16 @@ const Groups = (props) => {
     )
 }
 
-// const getCreatedGroups = () => {
-//     // TODO
-//     return [];
-// }
-
-// const addAllCreatedGroups = () => {
-//     const createdGroups = getCreatedGroups();
-//     for (const group in createdGroups){
-//         addCreatedGroupToDOM(group.title, group.creator, group.description, group.link, group.members);
-//     }
-// }
-// const addCreatedGroupToDOM = (title, creator, description, link, members) =>{
-
-//     const groupContainer = document.getElementById("joined-groups");
-//     const group = document.createElement("div");
-//     group.className="group"
-    
-//     const groupContent = document.createElement("div");
-//     groupContent.className="group-content-container";
-
-//     const titleContainer = document.createElement("h2");
-//     titleContainer.className="group-content-container__h2";
-//     const titleText = document.createTextNode(title);
-//     titleContainer.appendChild(titleText);
-
-//     const creatorContainer = document.createElement("h3");
-//     creatorContainer.className="group-content-container__h3";
-//     creatorContainer.textContent = "Creator: ".concat(creator);
-
-//     const descriptionContainer = document.createElement("h4");
-//     descriptionContainer.className="group-content-container__h4";
-//     descriptionContainer.textContent = description;
-
-//     const linkContainer = document.createElement("div");
-//     linkContainer.className="group-content-container-meeting";
-
-//     const linkLabel = document.createElement("p");
-//     linkLabel.className = "text";
-//     linkLabel.textContent = "Link:";
-
-//     const linkText = document.createElement("a");
-//     linkText.className = "group-content-container-link";
-//     linkText.href = link;
-//     linkText.textContent = "Meeting Link";
-//     linkText.title = link;
-
-//     linkContainer.appendChild(linkLabel);
-//     linkContainer.appendChild(linkText);
-
-//     const membersContainer = document.createElement("div");
-//     membersContainer.className = "group-member-list";
-
-//     const membersExtraDiv = document.createElement("div");
-//     const membersHeading = document.createElement("h2");
-//     membersHeading.className="group-content-container__h2";
-//     membersHeading.textContent="Members";
-
-//     membersExtraDiv.appendChild(membersHeading);
-//     for (const member in members){
-//         const memberContainer = document.createElement("div");
-//         memberContainer.className= "group-member-list-member";
-//         memberContainer.title = member.name;
-//         membersContainer.appendChild(memberContainer);
-//     }
-
-//     membersContainer.appendChild(membersExtraDiv);
-
-//     groupContent.appendChild(titleContainer);
-//     groupContent.appendChild(creatorContainer);
-//     groupContent.appendChild(descriptionContainer);
-//     groupContent.appendChild(linkContainer);
-//     groupContent.appendChild(membersContainer);
-
-//     group.appendChild(groupContent);
-//     groupContainer.appendChild(group);
-// }
 
 const LeadGroups = (props) => {
     const [postings, setPostings] = useState([])
-    const [members, setMembers] = useState([])
+    const [member, setMember] = useState([])
     const getUserCreatePostings = () => {
         getUserCreatedPostings(setPostings)
+    }
+    const getProfile = (toGetMember) => {
+        getProfileInfoNotSignedIn(toGetMember, setMember)
+        return member.name
     }
     // GET JOINED POSTINGS ON LOAD
     useEffect(() =>{
@@ -156,10 +76,11 @@ const LeadGroups = (props) => {
                                                         <a className="group-content-container-link" href="/profile">Link to meeting through discord</a>
                                                     </div>
                                                     <div className="group-member-list">
+                                                        <div>
                                                         <h2 className="group-content-container__h2">Members</h2>
-                                                    {/* {post.members.map(member => <div>
-                                                                                    <div className="group-member-list-member" title={"User.findById(member).name"}></div>
-                                                                                </div>)} */}
+                                                        {post.members.map(member1 =>  <div className="group-member-list-member">{(getProfile(member1))}</div> )}
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>)}

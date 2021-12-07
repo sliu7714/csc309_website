@@ -63,6 +63,15 @@
     background: darkseagreen;
     color: white;
 }
+.top-right-btn2{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 52px 10px 0px 0px;
+    padding: 10px 14px;
+    background: darkseagreen;
+    color: white;
+}
 .delete-button{
     background-color: indianred;
 }
@@ -89,6 +98,9 @@
     width: 320px;
 }
 
+.red{
+    background-color: indianred;
+}
 .green-text{
     color: seagreen;
     margin: 0px;
