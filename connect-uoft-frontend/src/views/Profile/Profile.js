@@ -2,6 +2,7 @@ import { useState, useEffect} from "react";
 import './styles.css'
 import {getProfileInfo} from "../../actions/user";
 // import { users } from "../../data/data";
+import { getUserMemberPostings } from "../../actions/postings";
 import Bio from "../../components/ProfileSection/Bio";
 import UserHandle from "../../components/ProfileSection/UserHandle";
 import Courses  from "../../components/ProfileSection/Courses";
@@ -15,6 +16,7 @@ const _profilePictures = ["/images/profile-pictures/smiley.svg", "/images/profil
 
 const Profile = ({isAdmin, callLogout}) => {
     const [user, setUser] = useState()
+    const [postings, setPostings] = useState([])
 
     useEffect(() =>{
         getProfileInfo(setUser)
@@ -28,6 +30,10 @@ const Profile = ({isAdmin, callLogout}) => {
             </div>
         )
     }
+    const userPostings = () => {
+        return getUserMemberPostings(setPostings)
+    }
+
     return(
         <div id="profile_page">
                 <div id='logout-btn-container'>
@@ -49,8 +55,8 @@ const Profile = ({isAdmin, callLogout}) => {
                     
                 </div>
                 <div className="groups-content-container">
-                        <Groups groups={user.postings} user={user}/>
-                        <LeadGroups groups={user.postings}/>
+                        <Groups user={user}/>
+                        <LeadGroups  user={user}/>
                 </div>
                 {user.isAdmin ? <div className="reported-content-container">
                                 <ReportedUsers resportedUsers={user.postings}/>
