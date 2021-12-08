@@ -88,9 +88,9 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) 
                     <button className="delete-button top-right-btn" onClick={() => deletePosting()}> Delete</button>
                     :
                 posting.isReported ?
-                    <button className="report-button top-right-btn red" onClick={() => alert("this post has already been reported by someone")}>Reported</button>
+                    <button title="this posting has been reported" className="report-button top-right-btn red" onClick={() => alert("this post has already been reported by someone")}>Reported</button>
                     :
-                    <button className="report-button top-right-btn" onClick={() => reportPosting()}>Report </button>
+                    <button title="report button" className="report-button top-right-btn" onClick={() => reportPosting()}>Report </button>
             }
 
             {
