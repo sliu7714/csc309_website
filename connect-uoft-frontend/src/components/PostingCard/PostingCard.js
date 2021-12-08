@@ -118,7 +118,7 @@ const PostingCard = ({posting, updatePostings, isAdmin, showUnreport, pending}) 
             <div className="posting-text"> End Date: <i>{posting.endDate ? parseDateStr(posting.endDate) : 'n/a'} </i></div>
 
 
-            <MemberListSection showMemberSection={isCreator || isMember || isCreator} posting={posting}/>
+            <MemberListSection showMemberSection={isCreator || isMember || isAdmin} posting={posting}/>
 
 
 

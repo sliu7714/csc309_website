@@ -1,9 +1,9 @@
 // profile card for another user's profile info
-import {_profilePictures} from "../../data/constants";
+import {_profilePicturesWhite} from "../../data/constants";
 import {reportUser} from "../../actions/user";
 
 const OtherUserInfo = ({user}) => {
-    const _profilePicture = _profilePictures[user.profileImageIndex];
+    const _profilePicture = _profilePicturesWhite[user.profileImageIndex];
     console.log('otherprofile', user, user.isReported)
 
     return (
