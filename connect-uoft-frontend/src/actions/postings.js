@@ -141,6 +141,7 @@ export const commentPost = (content, postID) => {
                 return;
             }
             // created comment
+            alert("Comment added successfully")
             console.log('comment created')
         })
         .catch(error => {

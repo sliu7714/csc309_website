@@ -36,6 +36,7 @@ const ApplicantSection = ({posting, updatePostings}) => {
                         <ApplicantListItem application={application}
                                            acceptApplicant={acceptApplicant}
                                            denyApplicant={denyApplicant}
+                                           posting={posting}
                                            key={application._id}
                         />
                         :
