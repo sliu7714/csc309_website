@@ -95,8 +95,9 @@ This view was changed to separate editing a profile from viewing the profile
   * For 'Lead Groups': You are able to view all your made groups and view details
      * Clicking on the post will take the user to a post card view that isolates the post
      * Clicking on the different members will take the user to a user profile view that showcases the selected user
-Admin Added
-![admin added screenshot](Files/screenshots_phase1/admin_added.png)
+- Admin Additions
+  * On the admin profile page 
+![admin added screenshot](Files/screenshots_phase2/admin-reported-users.png)
 * For 'Reported Groups': You as an admin are able to view reported groups and manage them
 * For 'Reported Users': You as an admin are able to view reported users and manage them
 
