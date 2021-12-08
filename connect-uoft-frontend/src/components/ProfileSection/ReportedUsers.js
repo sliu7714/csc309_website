@@ -1,6 +1,6 @@
 
 import "./styles.css"
-import { unreportUser} from "../../actions/user"
+import { deleteUser, unreportUser} from "../../actions/user"
 import {_profilePicturesWhite} from "../../data/constants";
 
 const ReportedUsers = ({users}) => {
@@ -22,7 +22,7 @@ const ReportedUsers = ({users}) => {
                     </div>
                     <div className="reported-user-handle-button-container">
                         <button className="reported-user-handle-container__button" title="un-report user" onClick={() => unreportUser(user._id)}>Un-Report</button>
-                        <button className="reported-user-handle-container__button group-button-container__button--red" title="delete user" onClick={() => alert("TODO")}>Delete User</button>
+                        <button className="reported-user-handle-container__button group-button-container__button--red" title="delete user" onClick={() => deleteUser(user._id)}>Delete User</button>
                     </div>
 
                 </div>
