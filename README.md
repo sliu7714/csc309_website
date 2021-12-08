@@ -120,6 +120,8 @@ This view was changed to separate editing a profile from viewing the profile
 - Admin Additions
   * On the admin profile page 
 ![admin added screenshot](Files/screenshots_phase2/admin-reported-users.png)
+![admin added screenshot](Files/screenshots_phase2/admin-reported-groups.png)
+
 * For 'Reported Groups': You as an admin are able to view reported groups and manage them
 * For 'Reported Users': You as an admin are able to view reported users and manage them
 
