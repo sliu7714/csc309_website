@@ -75,24 +75,38 @@ Once you are done, click submit to create a posting with the information provide
 
 ![create section screenshot](Files/screenshots_phase2/create.PNG)
 
-### View/Edit Profile
+
+### View Profile - Logged In User
 Depending on who is logged in, a profile page will be shown to the user.
 By clicking on the rightmost green profile button icon on the header,
-you are sent a profile page
+you are sent a profile page.
+This view was change to separate editing a profile from viewing the profile
 
-Regular User and Admin
-![regular user profile](Files/screenshots_phase1/reg_user.png)
-* For 'My Details': You are presented a form to change name, username, password and email
-* For 'About Me': You are able to view your old bio and change it in the text area
-* For 'My Courses': You are able to view and add courses that you are taking/teaching
-* For 'Stats': You are able to view your statistics such as groups made/a member of
-* For 'My Groups': You are able to view all your groups and view details
-* For 'Lead Groups': You are able to view all your made groups and view details
+- Regular User and Admin
+ ![regular user profile](Files/screenshots_phase1/profile-main.png)
+  * For 'About Me': The user is able to view their bio
+  * For 'My Courses': You are able to viewcourses that you are taking/teaching
+  * For 'Stats': You are able to view your statistics such as groups made/a member of
+  * For 'My Groups': You are able to view all your groups and view details
+  * For 'Lead Groups': You are able to view all your made groups and view details
 
 Admin Added
 ![admin added screenshot](Files/screenshots_phase1/admin_added.png)
 * For 'Reported Groups': You as an admin are able to view reported groups and manage them
 * For 'Reported Users': You as an admin are able to view reported users and manage them
+
+### Edit Profile
+We have added the ability for a user to change several attributes in one focused element.
+![profile_screenshot](Files/screenshots_phase2/profile-edit.PNG)
+A user can change their profile picture, name, email, username, password, bio and the courses that they are taking.
+To be specific a user can not add more than 6 courses currently 3.00 credit limit.
+
+### View Profile - Other User
+We have added a feature to view other user's profile.
+![profile screenshot](Files/screenshots_phase2/profile-other-user.PNG)
+Here the currently logged in user can view another user's profile.
+The information includes, user profile picture, name, username, reporting status,
+bio and courses.
 
 ### Manage Posts
 On this page you may find postings that you are a creator of
