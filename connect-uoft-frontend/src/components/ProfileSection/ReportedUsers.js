@@ -1,10 +1,10 @@
 
 import "./styles.css"
 import { deleteUser, unreportUser} from "../../actions/user"
-import {_profilePictures} from "../../data/constants";
+import {_profilePicturesWhite} from "../../data/constants";
 
 const ReportedUsers = ({users}) => {
-    const profilePictures = _profilePictures;
+    const profilePictures = _profilePicturesWhite;
     return (
         <div className='reported-content profile-card-background profile-container'>
             <h1 className="section_title">Reported Users</h1>
