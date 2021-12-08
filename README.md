@@ -73,7 +73,7 @@ Clicking this button will prompt the user for information to create a new post
 Once you are done, click submit to create a posting with the information provided
 (you may see the new posting object in the console but the UI will update when we connect with a backend)
 
-![create section screenshot](Files/screenshots_phase2/create.PNG)
+![create section screenshot](Files/screenshots_phase2/create.png)
 
 
 ### View Profile - Logged In User
@@ -83,7 +83,8 @@ you are sent a profile page.
 This view was change to separate editing a profile from viewing the profile
 
 - Regular User and Admin
- ![regular user profile](Files/screenshots_phase1/profile-main.png)
+- 
+ ![regular user profile](Files/screenshots_phase2/profile-main.png)
   * For 'About Me': The user is able to view their bio
   * For 'My Courses': You are able to viewcourses that you are taking/teaching
   * For 'Stats': You are able to view your statistics such as groups made/a member of
@@ -97,13 +98,17 @@ Admin Added
 
 ### Edit Profile
 We have added the ability for a user to change several attributes in one focused element.
-![profile_screenshot](Files/screenshots_phase2/profile-edit.PNG)
+
+![profile_screenshot](Files/screenshots_phase2/profile-edit.png)
+
 A user can change their profile picture, name, email, username, password, bio and the courses that they are taking.
 To be specific a user can not add more than 6 courses currently 3.00 credit limit.
 
 ### View Profile - Other User
 We have added a feature to view other user's profile.
-![profile screenshot](Files/screenshots_phase2/profile-other-user.PNG)
+
+![profile screenshot](Files/screenshots_phase2/profile-other-user.png)
+
 Here the currently logged in user can view another user's profile.
 The information includes, user profile picture, name, username, reporting status,
 bio and courses.
@@ -112,11 +117,12 @@ bio and courses.
 To access manage postings the user must click on "Manage"
 On this page the user will be able to view all of the postings they are associated with
 * The user can filter postings by the ones they have created, that they are a member of, that they have applied to and the postings that they were denied
+* Each posting has been given a comment section where all users can communicate and share information
 * User created postings allow the user to see a list of applicants to their posting
   * Each applicant has an associated accept or reject button that the creator can click
 * User created postings also have the option to go into edit mode where the user can edit all fields associated with post as well as delete the post.
 
-![manage section screenshot](Files/screenshots_phase1/manage.PNG)
+![manage section screenshot](Files/screenshots_phase2/manage-page.png)
 
 ## External Libraries Used:
 * `react` and its dependencies
