@@ -80,17 +80,21 @@ Once you are done, click submit to create a posting with the information provide
 Depending on who is logged in, a profile page will be shown to the user.
 By clicking on the rightmost green profile button icon on the header,
 you are sent a profile page.
-This view was change to separate editing a profile from viewing the profile
+This view was changed to separate editing a profile from viewing the profile
 
 - Regular User and Admin
-- 
  ![regular user profile](Files/screenshots_phase2/profile-main.png)
   * For 'About Me': The user is able to view their bio
   * For 'My Courses': You are able to viewcourses that you are taking/teaching
   * For 'Stats': You are able to view your statistics such as groups made/a member of
-  * For 'My Groups': You are able to view all your groups and view details
-  * For 'Lead Groups': You are able to view all your made groups and view details
+  ![regular user profile](Files/screenshots_phase2/profile-main-other.png)
 
+  * For 'My Groups': You are able to view all your groups and view details about that group/post
+    * Clicking on the post will take the user to a post card view that isolates the post
+    * Clicking on the different members will take the user to a user profile view that showcases the selected user
+  * For 'Lead Groups': You are able to view all your made groups and view details
+     * Clicking on the post will take the user to a post card view that isolates the post
+     * Clicking on the different members will take the user to a user profile view that showcases the selected user
 Admin Added
 ![admin added screenshot](Files/screenshots_phase1/admin_added.png)
 * For 'Reported Groups': You as an admin are able to view reported groups and manage them
