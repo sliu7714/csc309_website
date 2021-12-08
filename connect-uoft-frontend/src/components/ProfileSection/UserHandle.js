@@ -1,12 +1,12 @@
 import "./styles.css";
 import { useState } from "react";
 import ProfilePopup from "./ProfilePopup";
-import {_profilePictures} from "../../data/constants"
+import {_profilePicturesWhite} from "../../data/constants"
 
 
 const UserHandle = (props) => {
     const user1 = props.user;
-    const _profilePicture = _profilePictures[user1.profileImageIndex];
+    const _profilePicture = _profilePicturesWhite[user1.profileImageIndex];
 
     const [editProfilePopup, showEditProfilePopup] = useState(false);
 

@@ -16,7 +16,6 @@ const ApplicantListItem = ({application, acceptApplicant, denyApplicant, posting
                     <img className="profile-icon" src="/images/user_icon_green.svg" alt="profile icon"/>
                     <p className="applicant-name">{application.applicantInfo.name}</p>
                 </div>
-
                 <button className="applicant-btn accept" onClick={() => acceptApplicant(application.applicantID, posting._id)}>Accept</button>
                 <button className="applicant-btn deny" onClick={() => denyApplicant(application.applicantID, posting._id)}>Reject</button>
             </div>

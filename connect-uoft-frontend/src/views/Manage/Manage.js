@@ -54,18 +54,21 @@ const Manage = ({isAdmin}) => {
         <div className='manage-page-container'>
             <div className='tab-section'>
                 <div
+                    title={"tab to view groups you created"}
                     className={`tab ${selectedTab === CREATED ? 'selected' : null}`}
                     onClick={() => setSelectedTab(CREATED)}
                 >
                     <div className="tab-title">Created</div>
                 </div>
                 <div
+                    title={"tab to view groups you are a member of"}
                     className={`tab ${selectedTab === MEMBER ? 'selected' : null}`}
                     onClick={() => setSelectedTab(MEMBER)}
                 >
                     <div className="tab-title">Member</div>
                 </div>
                 <div
+                    title={"tab to view groups have a pending application for"}
                     className={`tab ${selectedTab === PENDING ? 'selected' : null}`}
                     onClick={() => setSelectedTab(PENDING)}
                 >
@@ -73,6 +76,7 @@ const Manage = ({isAdmin}) => {
 
                 </div>
                 <div
+                    title={"tab to view groups have a denied application for"}
                     className={`tab ${selectedTab === DENIED ? 'selected' : null}`}
                     onClick={() => setSelectedTab(DENIED)}
                 >
@@ -81,6 +85,7 @@ const Manage = ({isAdmin}) => {
                 {
                     isAdmin ?
                         <div
+                            title={"tab to view postings that are reported"}
                             className={`tab ${selectedTab === REPORTED ? 'selected' : null}`}
                             onClick={() => setSelectedTab(REPORTED)}
                         >
@@ -92,50 +97,60 @@ const Manage = ({isAdmin}) => {
             </div>
 
             <div className='manage-section-container'>
+
                 {
                     selectedTab === CREATED ?
-                        <div className="manage-posts-grid">
-                            {userCreatedPostings && userCreatedPostings.length > 0 ?
-                                userCreatedPostings.map(posting =>
-                                    <PostingCard
-                                        key={posting._id}
-                                        posting={posting}
-                                        updatePostings={fetchPostings}
-                                        // do not pass isAdmin - want edit button to show
-                                    />)
-                                :
-                                <h2 className="grey-text"><i>no groups</i></h2>
-                            }
+                        <div>
+                            <h1 className="manage-subtitle"> Groups you created:</h1>
+                            <div className="manage-posts-grid">
+                                {userCreatedPostings && userCreatedPostings.length > 0 ?
+                                    userCreatedPostings.map(posting =>
+                                        <PostingCard
+                                            key={posting._id}
+                                            posting={posting}
+                                            updatePostings={fetchPostings}
+                                            // do not pass isAdmin - want edit button to show
+                                        />)
+                                    :
+                                    <h2 className="grey-text"><i>no groups</i></h2>
+                                }
+                            </div>
                         </div>
                         :
                     selectedTab === MEMBER ?
-                        <div className="manage-posts-grid">
-                            {userMemberPostings &&  userMemberPostings.length > 0?
-                                userMemberPostings.map(posting =>
-                                    <PostingCard
-                                        key={posting._id}
-                                        posting={posting}
-                                        updatePostings={fetchPostings}
-                                        // do not pass isAdmin - want report button to show
-                                    />)
-                                :
-                                <h2 className="grey-text"><i>no groups</i></h2>
-                            }
+                        <div>
+                            <h1 className="manage-subtitle"> Groups you are a member of:</h1>
+                            <div className="manage-posts-grid">
+                                {userMemberPostings &&  userMemberPostings.length > 0?
+                                    userMemberPostings.map(posting =>
+                                        <PostingCard
+                                            key={posting._id}
+                                            posting={posting}
+                                            updatePostings={fetchPostings}
+                                            // do not pass isAdmin - want report button to show
+                                        />)
+                                    :
+                                    <h2 className="grey-text"><i>no groups</i></h2>
+                                }
+                            </div>
                         </div>
                         :
                     selectedTab === PENDING ?
-                        <div className="manage-posts-grid">
-                            {userPendingPostings &&  userPendingPostings.length > 0?
-                                userPendingPostings.map(posting =>
-                                    <PostingCard
-                                        key={posting._id}
-                                        posting={posting}
-                                        updatePostings={fetchPostings}
-                                        pending={true}
-                                    />)
-                                :
-                                <h2 className="grey-text"><i>no groups</i></h2>
-                            }
+                        <div>
+                            <h1 className="manage-subtitle"> Groups you created:</h1>
+                            <div className="manage-posts-grid">
+                                {userPendingPostings &&  userPendingPostings.length > 0?
+                                    userPendingPostings.map(posting =>
+                                        <PostingCard
+                                            key={posting._id}
+                                            posting={posting}
+                                            updatePostings={fetchPostings}
+                                            pending={true}
+                                        />)
+                                    :
+                                    <h2 className="grey-text"><i>no groups</i></h2>
+                                }
+                            </div>
                         </div>
                         :
                     selectedTab === DENIED ?
