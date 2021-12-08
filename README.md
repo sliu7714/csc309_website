@@ -1,7 +1,7 @@
 # team59
 
 ## ConnectUofT Link
-https://connectuoft.herokuapp.com/login
+https://connectuoft.herokuapp.com
 ## Who this is for?
 ConnectUofT's mission is to give students attending UofT the ability to create and join groups to meet new people and organize study sessions.
 ## User Interactions
@@ -29,7 +29,7 @@ Any user using the link for the first time will be presented with the Login Scre
 ![login page screenshot](Files/screenshots_phase1/login.png)
 
 ### Login
-Please note that you will stay logged in as a user until you decide to logout (logout in profile page)
+Please note that you will stay logged in as a user until you decide to logout (logout in profile page) or until the session expires (1 hour)
 Here are some mock credentials that you are already loaded in the database
 MOCK-DATA credentials:
 - Regular-User-1:
@@ -75,6 +75,7 @@ On the homepage, the left section can be used to search for posts.
 * If you want to delete a tag, click the white "x" on the right of the tag to remove it 
   from the list of tags to search for 
 Once you are done, you may press the "Search" button that will filter all the current postings with the tags selected
+Posts a user has created themselves and reported posts are excluded from search results.
   
 ![search section screenshot](Files/screenshots_phase1/search.png)
 
