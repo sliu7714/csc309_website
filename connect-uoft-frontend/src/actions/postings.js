@@ -213,10 +213,11 @@ export const deletePost = (postID) => {
             } else {
                 // If server couldn't add the student, tell the user.
                 alert("Could not delete posting")
+                console.log("Could not delete posting, status:", res.status)
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not delete posting, error:", error)
         });
 }        
 
@@ -250,10 +251,11 @@ export const applyPost = (postID, message) => { //DONE
             } else {
                 // If server couldn't add the student, tell the user.
                 alert("Could not apply to posting")
+                console.log("Could not apply to posting, status:", res.status)
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not apply to posting, erro:", error)
         });
 }
 
@@ -290,7 +292,7 @@ export const reportPost = (postID) => { // DONE
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not report posting, error:", error);
         });
 }
 
@@ -306,6 +308,7 @@ export const getReportedPost = (setPosting) => { //DONE
                 return res.json();
             } else {
                 // alert("Could not get reported postings");
+                console.log("Could not get reported posts, status:", res.status);
             }   
         })
         .then(postingsList => {
@@ -315,7 +318,7 @@ export const getReportedPost = (setPosting) => { //DONE
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get reported posts, error:", error);
         });
 }
 
@@ -342,13 +345,14 @@ export const acceptApplicantPost = (applicantID, postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Accepted applicant")
+                alert("Accepted applicant successfully")
             } else {
-                alert("Failed");
+                alert("Could not accept applicant");
+                console.log("Could not accept applicant, status:", res.status);
             }   
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not accept applicant, error:", error);
         });
 }
 
@@ -375,13 +379,14 @@ export const rejectApplicantPost = (applicantID, postID) =>{
         .then(res => {
             if (res.status === 200) {
                 // return a promise that resolves with the JSON body
-                alert("Rejected applicant")
+                alert("Rejected applicant successfully")
             } else {
-                alert("Failed");
+                alert("Could not reject applicant");
+                console.log("Could not reject applicant, status:", res.status);
             }   
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not reject applicant, error:", error);
         });
 }
 
@@ -483,14 +488,14 @@ export const unreportPost = (postID) =>{
     fetch(request)
         .then(res => {
             if (res.status === 200) {
-                // return a promise that resolves with the JSON body
-                alert("Unreported post")
+                alert("Un-reported post successfully")
             } else {
-                alert("Failed");
+                alert("Could not un-report posting");
+                console.log("Could not get un-report posting, status:", res.status);
             }   
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get un-report posting, error:",error);
         });
 }
 
@@ -520,10 +525,11 @@ export const deleteApplication = (postID) => {
             } else {
                 // If server couldn't delete the application
                 alert("Could not delete application")
+                console.log("Could not get delete application, status:", res.status);
             }
         })
         .catch(error => {
-            console.log(error);
+            console.log("Could not get denied postings, status:", error);
         });
 
 }
