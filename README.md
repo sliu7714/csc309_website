@@ -109,10 +109,12 @@ The information includes, user profile picture, name, username, reporting status
 bio and courses.
 
 ### Manage Posts
-On this page you may find postings that you are a creator of
-* You will see a delete button on the postings you are creator of
-* You will see a list of applicants to your posting
-  * You may accept or reject an applicant
+To access manage postings the user must click on "Manage"
+On this page the user will be able to view all of the postings they are associated with
+* The user can filter postings by the ones they have created, that they are a member of, that they have applied to and the postings that they were denied
+* User created postings allow the user to see a list of applicants to their posting
+  * Each applicant has an associated accept or reject button that the creator can click
+* User created postings also have the option to go into edit mode where the user can edit all fields associated with post as well as delete the post.
 
 ![manage section screenshot](Files/screenshots_phase1/manage.PNG)
 
