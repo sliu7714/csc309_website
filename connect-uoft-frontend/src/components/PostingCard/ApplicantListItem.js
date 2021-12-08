@@ -17,8 +17,8 @@ const ApplicantListItem = ({application, acceptApplicant, denyApplicant}) =>{
                     <p className="applicant-name">{application.applicantInfo.name}</p>
                 </div>
 
-                <button className="applicant-btn accept" onClick={() => acceptApplicant(application.applicantID, application._id)}>Accept</button>
-                <button className="applicant-btn deny" onClick={() => denyApplicant(application.applicantID, application._id)}>Reject</button>
+                <button className="applicant-btn accept" onClick={() => acceptApplicant(application.applicantID)}>Accept</button>
+                <button className="applicant-btn deny" onClick={() => denyApplicant(application.applicantID)}>Reject</button>
             </div>
             <div className="application-msg ">
                 {application.applyMsg}

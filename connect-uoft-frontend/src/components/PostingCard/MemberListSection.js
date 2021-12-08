@@ -17,20 +17,21 @@ const MemberListSection = ({showMemberSection, posting}) =>{
             <hr />
             <span className="posting-text" > Spaces Filled: {posting.members.length + 1} / {posting.capacity}</span>
 
-            {showMemberSection ?
-                <DropdownArrow show={showMembers} setShow={setShowMembers}/> : null
-            }
+            {showMemberSection ? <DropdownArrow show={showMembers} setShow={setShowMembers}/>: null}
+
             { showMembers ?
-                posting.memberInfo && posting.memberInfo.length && posting.memberInfo.length > 0?
-                    posting.memberInfo.map((member) =>
+                <div>
+                    <MemberListItem member={posting.creatorInfo} key={posting.creatorID}/>
+                    {posting.memberInfo ?
+                        posting.memberInfo.map((member) =>
                             <MemberListItem member={member}
-                                               key={member.id}
+                                            key={member.id}
                             />
-                    )
-                    :
-                    <div className="grey-text posting-text">
-                        no other members
-                    </div>
+                        )
+                        :
+                        null
+                    }
+                </div>
                 :
                 null
             }

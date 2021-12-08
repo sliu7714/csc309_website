@@ -47,9 +47,12 @@ function App() {
                     <Signup/>
                 </Route>
 
-                <Route path="/home"  >
+                {/*order of path matters here: want to check for search first */}
+                <Route path={["/home/search/:tag","/home"]}  >
                     {isUserLoggedIn ? <Home isAdmin={isAdmin}/> : <Redirect to="/login" />}
                 </Route>
+
+
 
                 <Route path="/profile" >
                     {isUserLoggedIn ? <Profile callLogout={callLogout} isAdmin={isAdmin}/> : <Redirect to="/login" />}

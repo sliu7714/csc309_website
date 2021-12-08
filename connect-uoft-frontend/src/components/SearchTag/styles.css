@@ -50,6 +50,12 @@ button{
     border-radius: 10px;
     margin: 5px;
 }
+.tag_regular a{
+    margin: 0px;
+    padding: 0px;
+    color: inherit;
+    font-size: inherit;
+}
 
 #close_icon{
     margin-left: 8px;

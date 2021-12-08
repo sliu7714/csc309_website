@@ -7,6 +7,7 @@ const PostSection = ({post}) =>{
                 <h3 className="group-content-container__h3">{post.title}</h3>
             </a>
             <hr/>
+            <div className="small-br"/>
             <a  className="creator-name-link" href={`/user/${post.creatorID}`} target="_blank" rel="noreferrer">
                 <div className=""> Creator: {post.creatorInfo ? post.creatorInfo.name : "no-name"}</div>
             </a>
