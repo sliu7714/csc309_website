@@ -1,38 +1,39 @@
 # team59
 
-## Link To Webapp
+## ConnectUofT Link
 https://connectuoft.herokuapp.com/login
-## Setup
-To run a local version, navigate to the `sprint1/connect-uoft-frontend` folder 
-in your terminal and run `npm install` then `npm start` (if you are using npm as a package manager)
 
 ## Usage Instructions:
-note: some functionality will not be available since we do not have a backend
+Any user using the link for the first time will be presented with the Login Screen
+![login page screenshot](Files/screenshots_phase1/login.png)
 
 ### Login
-please note that you will stay logged in as a user until you decide to logout (logout in profile page)
+Please note that you will stay logged in as a user until you decide to logout (logout in profile page)
+Here are some mock credentials that you are already loaded in the database
+MOCK-DATA credentials:
+- Regular-User-1:
+  * username: user
+  * password: user
 
-regular user credentials:
-* username: user
-* password: user
+- Regular-User-2
+  * username: user1
+  * password: user1
 
-admin user credentials: 
+- Admin-User-1: 
 * username: admin
 * password: admin
 
-![login page screenshot](Files/screenshots_phase1/login.png)
 
 ### Logout
-To logout you must navigate to localhost:3000/logout
-* From there you will be able to click the logout button to log out, 
-  then click another button to navigate to the login page
-* Due to no backend this our temporary work-around to logging out
+To logout the user must navigate to your profile page and click on the "Logout" button located
+at the top-right of the page under the header
+* Logging out terminates the session and brings the user back to the login screen
 
 ### Signup
-Click on "create account" on the bottom left of the login box to navigate to the signup page \
+Click on "create account" on the bottom right of the login box to navigate to the signup page \
 Since we are not connected to a backend, signing up for a new user will only work if you do not refresh the page 
 and reset the state \
-![sign up page screenshot](Files/screenshots_phase1/signup.png)
+![sign up page screenshot](Files/screenshots_phase2/signup.png)
 
 ### Navigation
 After logging in, you may use the header to navigate the website
