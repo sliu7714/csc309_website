@@ -54,7 +54,7 @@ On the homepage, the left section can be used to search for posts.
     * If you already added a certain tag, you are not allowed to add a duplicate
 * If you want to delete a tag, click the white "x" on the right of the tag to remove it 
   from the list of tags to search for 
-Once you are done, you may press the "Search" button (since there is no backend, the search button does not do anything right now)
+Once you are done, you may press the "Search" button that will filter all the current postings with the tags selected
   
 ![search section screenshot](Files/screenshots_phase1/search.png)
 
@@ -73,7 +73,7 @@ Clicking this button will prompt the user for information to create a new post
 Once you are done, click submit to create a posting with the information provided
 (you may see the new posting object in the console but the UI will update when we connect with a backend)
 
-![create section screenshot](Files/screenshots_phase1/create.PNG)
+![create section screenshot](Files/screenshots_phase2/create.PNG)
 
 ### View/Edit Profile
 Depending on who is logged in, a profile page will be shown to the user.
