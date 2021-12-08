@@ -4,7 +4,27 @@
 https://connectuoft.herokuapp.com/login
 ## Who this is for?
 ConnectUofT's mission is to give students attending UofT the ability to create and join groups to meet new people and organize study sessions.
-## Usage Instructions:
+## User Interactions
+Regular User 
+ * Login, Logout, Signup
+ * Create, Edit, Delete their own posts
+ * Apply and Join Groups
+  * Leave a comment on the group posting
+ * Edit Profile
+ * View Profile
+ * View Joined and Made groups
+ * Search for groups to join based on tags
+ * View all groups where their status is pending
+ * View all groups where their status is denied
+
+Admin User
+ * View reported users
+ * View reported postings
+ * Delete any reported user 
+ * Delete any posting 
+ * Unreport any user
+ * Unreport any posting
+ 
 Any user using the link for the first time will be presented with the Login Screen
 ![login page screenshot](Files/screenshots_phase1/login.png)
 
