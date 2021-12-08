@@ -2,8 +2,15 @@
 import "./styles.css"
 import { deleteUser, unreportUser} from "../../actions/user"
 import {_profilePicturesWhite} from "../../data/constants";
+import {useHistory} from "react-router-dom";
 
 const ReportedUsers = ({users}) => {
+
+    const history = useHistory()
+
+    const goToProfile = (id) =>{
+        history.push(`/user/${id}`)
+    }
     const profilePictures = _profilePicturesWhite;
     return (
         <div className='reported-content profile-card-background profile-container'>
@@ -12,7 +19,7 @@ const ReportedUsers = ({users}) => {
                {(users.length === 0) ? <div>There are no users that have been reported</div>:
                users.map(user =>  
                 <div className="reported-user-handle-container">
-                    <div className="reported-user-picture-container" title={(user.name)}>
+                    <div className="reported-user-picture-container" title={(user.name)} onClick={() => goToProfile(user._id)}>
                         <img src={profilePictures[user.profileImageIndex]} alt={(user.name)} className="reported-user-picture-container__image"/>
                     </div>
                     <div className="reported-user-handle-infotmation-container">
