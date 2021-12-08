@@ -2,7 +2,8 @@
 
 ## ConnectUofT Link
 https://connectuoft.herokuapp.com/login
-
+## Who this is for?
+ConnectUofT's mission is to give students attending UofT the ability to create and join groups to meet new people and organize study sessions.
 ## Usage Instructions:
 Any user using the link for the first time will be presented with the Login Screen
 ![login page screenshot](Files/screenshots_phase1/login.png)
@@ -31,9 +32,12 @@ at the top-right of the page under the header
 
 ### Signup
 Click on "create account" on the bottom right of the login box to navigate to the signup page \
-Since we are not connected to a backend, signing up for a new user will only work if you do not refresh the page 
-and reset the state \
-![sign up page screenshot](Files/screenshots_phase2/signup.png)
+The username field can be whatever they like, however the email field has a validator associated with it.
+The password field must not be less than 4 characters.
+If a user successfully fills in the fields, a new user is created (if username is not already taken).
+The user is then prompted to return to the login page
+
+![sign up page screenshot](Files/screenshots_phase2/signup.png) ![sign up page screenshot](Files/screenshots_phase2/signup-taken.png)  ![sign up page screenshot](Files/screenshots_phase2/signup-success.png) 
 
 ### Navigation
 After logging in, you may use the header to navigate the website
@@ -41,7 +45,6 @@ After logging in, you may use the header to navigate the website
 * Click the "Manage" button to navigate to the page to manage postings
 * Click the "Create" button to bring up a popup to create a new post
 * Click the rightmost green profile icon button to navigate to the user profile page
-
 ![website header screenshot](Files/screenshots_phase1/header.png)
 
 ### Search for Posts
