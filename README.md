@@ -9,7 +9,7 @@ Regular User
  * Login, Logout, Signup
  * Create, Edit, Delete their own posts
  * Apply and Join Groups
-  * Leave a comment on the group posting
+ * Leave a comment on the group posting (if they are a creator or member)
  * Edit Profile
  * View Profile
  * View Joined and Made groups
@@ -20,6 +20,7 @@ Regular User
 Admin User
  * View reported users
  * View reported postings
+ * View the members of comments of any posting and leave a comment on any posting
  * Delete any reported user 
  * Delete any posting 
  * Unreport any user
@@ -84,15 +85,15 @@ In the header, you will find a "Create+" button for creating posts.
 Clicking this button will prompt the user for information to create a new post
 * You must enter a title for the posting in the first input box
 * You must enter a date into the second input box
-  * The date will be the end-date of the posting
-* You must enter a description into the text area
-* You must enter a capacity for the posting in the last input box
+  * The date will be the end-date of the posting and must be later than the current date
+* You can optionally enter a description into the text area
+* You must enter a capacity >= 2 for the posting in the last input box
 * You may add tags to your posting  in the input box to the left
     * press the "Add Tag" button to add a tag once you are done typing
     * If you already added a certain tag, you are not allowed to add a duplicate
 * You may click close at the top right to cancel the posting creation
-Once you are done, click submit to create a posting with the information provided
-(you may see the new posting object in the console but the UI will update when we connect with a backend)
+Once you are done, click submit to create a posting with the information provided. 
+  (You will have to refresh to see your new post)
 
 ![create section screenshot](Files/screenshots_phase2/create.png)
 
@@ -106,7 +107,7 @@ This view was changed to separate editing a profile from viewing the profile
 - Regular User and Admin
  ![regular user profile](Files/screenshots_phase2/profile-main.png)
   * For 'About Me': The user is able to view their bio
-  * For 'My Courses': You are able to viewcourses that you are taking/teaching
+  * For 'My Courses': You are able to view courses that you are taking/teaching
   * For 'Stats': You are able to view your statistics such as groups made/a member of
   ![regular user profile](Files/screenshots_phase2/profile-main-other.png)
 
@@ -144,9 +145,11 @@ To access manage postings the user must click on "Manage"
 On this page the user will be able to view all of the postings they are associated with
 * The user can filter postings by the ones they have created, that they are a member of, that they have applied to and the postings that they were denied
 * Each posting has been given a comment section where all users can communicate and share information
+  (you may have to refresh to see your new comment)
 * User created postings allow the user to see a list of applicants to their posting
   * Each applicant has an associated accept or reject button that the creator can click
 * User created postings also have the option to go into edit mode where the user can edit all fields associated with post as well as delete the post.
+  (to see the updated changes, refresh the page)
 
 ![manage section screenshot](Files/screenshots_phase2/manage-page.png)
 
