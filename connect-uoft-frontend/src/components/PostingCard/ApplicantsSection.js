@@ -1,5 +1,5 @@
 import DropdownArrow from "../DropdownArrow/DropdownArrow";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import ApplicantListItem from "./ApplicantListItem";
 import {PENDING_APPLICATION} from "../../data/constants";
 import { rejectApplicantPost, acceptApplicantPost } from "../../actions/postings";
@@ -9,17 +9,24 @@ const ApplicantSection = ({posting, updatePostings}) => {
 
     const [showApplicants, setShowApplicants] = useState(false)
 
-    const acceptApplicant =(applicantID, applicationID) =>{
-        // TODO connect to backend
-        console.log('accept', applicantID, posting._id, applicantID)
+    const [pendingApplications, setPendingApplications] = useState([])
+
+    useEffect(()=>{
+        if(posting.applicantsInfo){
+            setPendingApplications(posting.applicantsInfo.filter(app => app.applicationStatus === PENDING_APPLICATION))
+        }
+
+    }, [posting])
+
+    const acceptApplicant =(applicantID) =>{
+        // console.log('accept', applicantID, posting._id)
         acceptApplicantPost(applicantID, posting._id)
         updatePostings()
     }
 
-    const denyApplicant = (applicantID, applicationID) =>{
-        // TODO connect to backend
-        console.log('deny', applicantID)
-        rejectApplicantPost(applicantID, posting._id, applicationID)
+    const denyApplicant = (applicantID) =>{
+        // console.log('deny', applicantID)
+        rejectApplicantPost(applicantID, posting._id)
         updatePostings()
     }
 
@@ -27,19 +34,18 @@ const ApplicantSection = ({posting, updatePostings}) => {
     return(
         <div >
             <hr />
-            <span className="posting-text light-bold" >Applicants</span>
+            <span className="posting-text light-bold" >
+                Applicants {pendingApplications.length >0 ? `(${pendingApplications.length})`:null}
+            </span>
             <DropdownArrow show={showApplicants} setShow={setShowApplicants}/>
             { showApplicants ?
-                posting.applicantsInfo  && posting.applicantsInfo.length && posting.applicantsInfo.length > 0?
-                    posting.applicantsInfo.map((application) =>
-                        application.applicationStatus === PENDING_APPLICATION ?
+                pendingApplications  && pendingApplications.length && pendingApplications.length > 0?
+                    pendingApplications.map((application) =>
                         <ApplicantListItem application={application}
                                            acceptApplicant={acceptApplicant}
                                            denyApplicant={denyApplicant}
                                            key={application._id}
                         />
-                        :
-                            null
                     )
                     :
                     <div className="grey-text posting-text">
